@@ -18,33 +18,33 @@ class User extends CI_Controller{
     $this->load->view('user/add');
    }
 
-   // public function add_done(){
-   //  $header['title'] = 'ユーザ登録の完了';
-   //  $this->load->view('header', $header);
-   //  $this->load->view('user/add_done');
-   // }
-   // public function edit(){
-   //  $header['title'] = 'ユーザ編集';
-   //  $this->load->view('header', $header);
-   //  $this->load->view('user/edit');
-   // }
+   public function add_done(){
+    $header['title'] = 'ユーザ登録の完了';
+    $this->load->view('header', $header);
+    $this->load->view('user/add_done');
+   }
+   public function edit(){
+    $header['title'] = 'ユーザ編集';
+    $this->load->view('header', $header);
+    $this->load->view('user/edit');
+   }
 
-   // public function edit_done(){
-   //  $header['title'] = 'ユーザ編集の完了';
-   //  $this->load->view('header', $header);
-   //  $this->load->view('user/edit_done');
-   // }
+   public function edit_done(){
+    $header['title'] = 'ユーザ編集の完了';
+    $this->load->view('header', $header);
+    $this->load->view('user/edit_done');
+   }
    // public function delete(){
    //  $header['title'] = 'ユーザ削除';
    //  $this->load->view('header', $header);
    //  $this->load->view('user/delete');
    // }
 
-   // public function edit_done(){
-   //  $header['title'] = 'ユーザ削除の完了';
-   //  $this->load->view('header', $header);
-   //  $this->load->view('user/delete_done');
-   // }
+   public function delete_done(){
+    $header['title'] = 'ユーザ削除の完了';
+    $this->load->view('header', $header);
+    $this->load->view('user/delete_done');
+   }
 
 
   public function login(){

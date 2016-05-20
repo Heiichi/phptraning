@@ -16,7 +16,7 @@
       </div>
     </table>
     <a class="btn btn-info" href="index">一覧に戻る</a>
-    <a class="btn btn-default"href="index">編集</a>
-    <a class="btn btn-danger"href="index">削除</a>
+    <a class="btn btn-default"href="edit">編集</a>
+    <a class="btn btn-danger"href="#">削除</a>
   </div>
 </div>

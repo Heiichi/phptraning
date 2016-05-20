@@ -8,7 +8,7 @@
         <div class="col-md-12">
           <h1>ログアウト</h1>
           <p>ログアウトしました。</p>
-          <p><a href="login.php">ログイン画面に戻る</a></p>
+          <p><a href="login">ログイン画面に戻る</a></p>
         </div>
       </div>
   </div>

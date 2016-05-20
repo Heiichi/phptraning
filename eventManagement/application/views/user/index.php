@@ -14,7 +14,37 @@
         <th>人事部</th>
         <th><a class="btn btn-default" href="#">詳細</a></th>
       </tr>
+      <tr>
+        <th>11</th>
+        <th>三上</th>
+        <th>人事部</th>
+        <th><a class="btn btn-default" href="show">詳細</a></th>
+      </tr>
+      <tr>
+        <th>11</th>
+        <th>三上</th>
+        <th>人事部</th>
+        <th><a class="btn btn-default" href="show">詳細</a></th>
+      </tr>
+      <tr>
+        <th>11</th>
+        <th>三上</th>
+        <th>人事部</th>
+        <th><a class="btn btn-default" href="show">詳細</a></th>
+      </tr>
+      <tr>
+        <th>11</th>
+        <th>三上</th>
+        <th>人事部</th>
+        <th><a class="btn btn-default" href="show">詳細</a></th>
+      </tr>
+      <tr>
+        <th>11</th>
+        <th>三上</th>
+        <th>人事部</th>
+        <th><a class="btn btn-default" href="show">詳細</a></th>
+      </tr>
     </table>
-    <a class="btn btn-info" href="#">ユーザの登録</a>
+    <a class="btn btn-success" href="add">ユーザの登録</a>
   </div>
 </div>
