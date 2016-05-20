@@ -97,7 +97,7 @@ switch (ENVIRONMENT)
  * This variable must contain the name of your "system" directory.
  * Set the path if it is not in the same directory as this file.
  */
-	$system_path = 'C:/pleiades-e4.5-php-32bit-jre_20160312/pleiades/xampp/htdocs/eventManagement/system';
+	$system_path = 'C:/pleiades/xampp/htdocs/phptraining/eventManagement/system';
 
 /*
  *---------------------------------------------------------------
@@ -114,7 +114,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$application_folder = 'C:/pleiades-e4.5-php-32bit-jre_20160312/pleiades/xampp/htdocs/eventManagement/application';
+	$application_folder = 'C:/pleiades/xampp/htdocs/phptraining/eventManagement/application';
 
 /*
  *---------------------------------------------------------------

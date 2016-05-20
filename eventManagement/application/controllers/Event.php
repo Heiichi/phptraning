@@ -2,8 +2,18 @@
 class Event extends CI_Controller{
 
    public function index(){
-    echo 'Hello, world';
+     $header['title'] = 'イベント一覧';
+     $this->load->view('header', $header);
+     $this->load->view('event/index');
    }
+
+   public function event_today(){
+     $header['title'] = '本日のイベント';
+     $this->load->view('header', $header);
+     $this->load->view('event/event_today');
+
+   }
+
 
 
   public function login(){
