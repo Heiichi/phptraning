@@ -21,4 +21,10 @@ class Event extends CI_Controller{
     $this->load->view('header', $header);
     $this->load->view('event_login');
   }
+
+  public function add(){
+    $header['title'] = 'イベント登録';
+    $this->load->view('header', $header);
+    $this->load->view('event/add');
+  }
 }
