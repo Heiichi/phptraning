@@ -4,7 +4,9 @@ class User extends CI_Controller{
    public function index(){
     $header['title'] = 'ユーザー一覧';
     $this->load->view('header', $header);
-    $this->load->view('user/index');
+    $this->load->model('admin/user_model');
+    $data['users'] =$this->user_model->find_UserGroupIdEqualGroupsid();
+    $this->load->view('user/index',$data);
    }
 
    public function show(){
@@ -14,6 +16,11 @@ class User extends CI_Controller{
    }
    public function add(){
     $header['title'] = 'ユーザ登録';
+    $this->load->model('admin/user_model');
+    $user['name'] = $this->input->post('name');
+    $user['login_id'] = $this->input->post('login_id');
+    $user['login_pass'] = $this->input->post('login_pass');
+    $user['group_id'] = $this->input->post('group_id');
     $this->load->view('header', $header);
     $this->load->view('user/add');
    }
