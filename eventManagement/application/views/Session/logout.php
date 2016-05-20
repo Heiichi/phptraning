@@ -5,20 +5,10 @@
     </div>
     <div class="panel-body">
       <div class="row">
-        <div class="form-group">
-            <div class="col-md-12">
-              <input type="text" class="form-control" name="name" placeholder="ログインID" data-error="ログインIDを入力してください" required>
-              <div class="help-block with-errors"></div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-12">
-              <input type="password" class="form-control" name="name" placeholder="パスワード" data-error="パスワードを入力してください" required>
-              <div class="help-block with-errors"></div>
-            </div>
-        </div>
         <div class="col-md-12">
-          <button type="submit" class="btn btn-block btn-primary">ログイン</button>
+          <h1>ログアウト</h1>
+          <p>ログアウトしました。</p>
+          <p><a href="login.php">ログイン画面に戻る</a></p>
         </div>
       </div>
   </div>
