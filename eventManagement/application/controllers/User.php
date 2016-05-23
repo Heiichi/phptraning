@@ -15,14 +15,32 @@ class User extends CI_Controller{
     $this->load->view('user/show');
    }
    public function add(){
+    $this->load->library('form_validation');
     $header['title'] = 'ユーザ登録';
     $this->load->model('admin/user_model');
-    $user['name'] = $this->input->post('name');
-    $user['login_id'] = $this->input->post('login_id');
-    $user['login_pass'] = $this->input->post('login_pass');
-    $user['group_id'] = $this->input->post('group_id');
+    $groups['groups'] =$this->user_model->findAllGroups();
+    $this->form_validation->set_rules('name', '氏名', 'required');
+    $this->form_validation->set_rules('login_id', 'ログインID', 'required');
+    $this->form_validation->set_rules('password', 'パスワード', 'required');
     $this->load->view('header', $header);
-    $this->load->view('user/add');
+    $this->load->view('user/add',$groups);
+
+    // キャンセルボタンが押された場合は一覧画面へ移動する
+    if ($this->input->post('cancel') != null)
+    {
+        redirect('user/');
+    }
+
+    //登録が押された場合
+    if($this->input->post('add')){
+      $user['name'] = $this->input->post('name');
+      $user['login_id'] = $this->input->post('login_id');
+      $user['login_pass'] = $this->input->post('login_pass');
+      $user['group_id'] = $this->input->post('group_id');
+
+      $this->user_model->insert($user);
+      redirect('user/add_done');
+    }
    }
 
    public function add_done(){

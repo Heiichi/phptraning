@@ -9,6 +9,7 @@
   <link href="<?php echo base_url('css/style.css'); ?>" rel="stylesheet" type="text/css">
   <script src="<?php echo base_url('js/jquery-2.2.3.min.js'); ?>"></script>
   <script src="<?php echo base_url('js/bootstrap.min.js'); ?>"></script>
+  <script src="<?php echo base_url('js/validator.js'); ?>"></script>
 </head>
 <body>
 <div class="container">

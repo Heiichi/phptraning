@@ -6,8 +6,17 @@ class User_model extends CI_Model{
     return $query->result('User_model');
   }
 
+
+  // グループを全件取得
+  public function findAllGroups(){
+    $query = $this->db->query('SELECT * from groups');
+    return $query->result('User_model');
+    $test = $query->result('User_model');
+    var_dump($test);
+  }
+
   public function insert($user){
-    $this->db->insert('$user', $user);
+    $this->db->insert('users', $user);
   }
 
 }
