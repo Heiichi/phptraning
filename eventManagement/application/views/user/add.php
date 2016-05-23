@@ -13,8 +13,9 @@
           'size' => '40',
           'placeholder' => '氏名',
           'data-error' =>'入力してください',
+          'required' => 'required'
           );
-         echo form_input($data,'','required'); ?>
+         echo form_input($data); ?>
           <div class="help-block with-errors"></div>
       </fieldset>
       <fieldset class="form-group">
@@ -39,10 +40,11 @@
           'name' => 'login_pass',
           'type' => 'password',
           'id' => 'login_pass',
+          'data-minlength' =>'6',
           'class' => 'form-control',
           'size' => '40',
           'placeholder' => 'パスワード',
-          'data-error' =>'入力してください',
+          'data-error' =>'6文字以上入力してください',
           'required' =>'required'
           );
          echo form_password($data); ?>
