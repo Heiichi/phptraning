@@ -3,40 +3,49 @@
 <table class="table">
 
 	<tbody>
+		<?php foreach ($event as $value) :?>
 		<tr>
 			<th>タイトル</th>
-			<td>HTML5勉強会</td>
+			<td><?php echo $value->title; ?></td>
 		</tr>
 		<tr>
 			<th>開始時間</th>
-			<td>2016年06月15日(水)19時00分</td>
+			<td><?php echo $value->start;?></td>
 		</tr>
 		<tr>
 			<th>終了時間</th>
-			<td>2016年06月15日(水)20時00分</td>
+			<td><?php echo $value->end;?></td>
 		</tr>
 		<tr>
 			<th>場所</th>
-			<td>第1会議室</td>
+			<td><?php echo $value->place;?></td>
 		</tr>
 		<tr>
 			<th>対象グループ</th>
-			<td>技術部</td>
+			<td><?php echo $value->g_name;?></td>
 		</tr>
     <tr>
       <th>詳細</th>
-      <td>HTML5の勉強会を行います。
-           </br>対象はHTML4.01あるいはXHTML1.0を知っていて、JavaScriptの基本コーディングができる方です。</td>
+      <td><?php echo $value->detail; ?></td>
     </tr>
     <tr>
       <th>登録者</th>
-      <td>佐藤三郎</td>
+      <td><?php echo $value->u_name;?></td>
     </tr>
     <tr>
       <th>参加者</th>
-      <td>山田太郎,鈴木次郎,佐藤三郎</td>
+      <td>
+				<?php foreach ($attends as $san):?>
+					<?php echo $san->name;?> 
+				<?php endforeach; ?>
+			</td>
     </tr>
+
+	<?php endforeach; ?>
 	</tbody>
 </table>
-<input class="btn btn-primary" type="submit" value="一覧に戻る">
-<input class="btn btn-success" type="submit" value="参加する">
+<input class="btn btn-primary" type="submit" name="cancel" value="一覧に戻る">
+<input class="btn btn-success" type="submit" name="save" value="参加する">
+<input class="btn btn-success" type="submit" value="参加を取り消す">
+<input class="btn btn-default" type="submit" value="編集">
+<input class="btn btn-success" type="submit" value="削除">
