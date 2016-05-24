@@ -47,4 +47,4 @@
   	</div>
   </nav>
 </header>
-
+</div>
