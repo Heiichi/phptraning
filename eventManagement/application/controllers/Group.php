@@ -86,7 +86,7 @@
     }
 
     public function name_check($str){
-      if(strlen($str) >= 20){
+      if(!preg_match("/^[\S\s]{0,20}$/",$str)){
         $this->form_validation
           ->set_message('name_check','グループ名は20字以内で入力してください。');
         return false;

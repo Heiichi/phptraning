@@ -29,5 +29,6 @@
     </tbody>
   </table>
 
-  <button class="btn btn-primary">イベント登録</button>
+  <a href="<?php echo base_url('event/add'); ?>"><button class="btn btn-primary">イベント登録</button></a>
 </div>
+  
