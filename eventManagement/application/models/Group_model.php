@@ -14,7 +14,9 @@ class Group_model extends CI_Model{
   }
 
   public function get_count(){
-      return $this->db->count_all('groups');
+    $this->db->where('status','1');
+    $this->db->from('groups');
+    return $this->db->count_all_results();
  }
 
  public function insert($group){

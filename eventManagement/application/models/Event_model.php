@@ -15,7 +15,8 @@
       $offset = ($page - 1) * $num_per_page;
 
       $sql =
-        "SELECT * FROM `events` inner join `groups` on events.group_id = groups.id LIMIT ?,?";
+        "SELECT e.id , title,place,g.name FROM `events` as e
+          inner join `groups` as g on e.group_id = g.id ORDER BY start, end LIMIT ?,?";
 
       $query = $this->db->query($sql,array($offset,$num_per_page));
       return $query->result("Event_model");
