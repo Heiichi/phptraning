@@ -2,7 +2,7 @@
 class User_model extends CI_Model{
 
   public function find_UserGroupIdEqualGroupsid(){
-    $query = $this->db->query('SELECT users.name as uname,users.id,groups.name as name FROM users inner join  groups on users.group_id = groups.id' );
+    $query = $this->db->query('SELECT users.name as uname,users.id,groups.name as name FROM users inner join groups on users.group_id = groups.id' );
     return $query->result('User_model');
   }
 
@@ -18,7 +18,7 @@ class User_model extends CI_Model{
 
   public function find_by_page($page,$num_per_page){
     $offset = ($page-1) * $num_per_page;
-    $sql = "SELECT users.name as uname,users.id,groups.name as name FROM users inner join  groups on users.group_id = groups.id LIMIT ?,?";
+    $sql = "SELECT users.name as uname,users.id,groups.name as name FROM users inner join  groups on users.group_id = groups.id order by id desc LIMIT ?,?";
     $query = $this->db->query($sql, array($offset, $num_per_page));
     return $query->result('User_model');
   }
