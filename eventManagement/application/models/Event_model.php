@@ -61,5 +61,10 @@
     return $query->result('Event_model');
   }
 
+  public function insert($event)
+  {
+		$this->db->insert('events',$event);
+	}
+
   }
 ?>

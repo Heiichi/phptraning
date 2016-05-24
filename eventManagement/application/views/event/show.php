@@ -26,7 +26,7 @@
 		</tr>
     <tr>
       <th>詳細</th>
-      <td><?php echo $value->detail; ?></td>
+      <td><?php echo $value->detail;?></td>
     </tr>
     <tr>
       <th>登録者</th>
@@ -36,7 +36,7 @@
       <th>参加者</th>
       <td>
 				<?php foreach ($attends as $san):?>
-					<?php echo $san->name;?> 
+					<?php echo $san->name;?>
 				<?php endforeach; ?>
 			</td>
     </tr>
