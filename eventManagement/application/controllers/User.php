@@ -46,31 +46,38 @@ class User extends CI_Controller{
     $this->load->view('user/show');
    }
    public function add(){
-    $this->load->library('form_validation');
-    $header['title'] = 'ユーザ登録';
-    $this->load->model('admin/user_model');
-    $groups['groups'] =$this->user_model->findAllGroups();
-    $this->form_validation->set_rules('name', '氏名', 'required');
-    $this->form_validation->set_rules('login_id', 'ログインID', 'required');
-    $this->form_validation->set_rules('password', 'パスワード', 'required');
-    $this->load->view('header', $header);
-    $this->load->view('user/add',$groups);
 
-    // キャンセルボタンが押された場合は一覧画面へ移動する
-    if ($this->input->post('cancel') != null)
-    {
-        redirect('user/');
+    //キャンセルされたときの処理
+    if(isset($_POST["cancel"])){
+      redirect('user/');
     }
 
-    //登録が押された場合
+    //validationの設定
+    // $this->form_validation->set_rules('name','氏名','callback_name_check');
+    // $this->form_validation->set_rules('login_id','ログインID','callback_login_id_check');
+    // $this->form_validation->set_rules('login_pass','パスワード','callback_login_pass_check');
+
+
+    $header['title'] = 'ユーザ登録';
+    $this->load->helper('form');
+    $this->load->view('header',$header);
+    $this->load->model('admin/user_model');
+    $groups['groups'] =$this->user_model->findAllGroups();
+
+
+
     if($this->input->post('add')){
       $user['name'] = $this->input->post('name');
       $user['login_id'] = $this->input->post('login_id');
       $user['login_pass'] = $this->input->post('login_pass');
       $user['group_id'] = $this->input->post('group_id');
 
+      //DBへ流す
       $this->user_model->insert($user);
       redirect('user/add_done');
+    }
+    else{
+        $this->load->view('user/add',$groups);
     }
    }
 
@@ -116,11 +123,31 @@ class User extends CI_Controller{
     $this->load->view('header', $header);
     $this->load->view('user/edit_done');
    }
-   // public function delete(){
-   //  $header['title'] = 'ユーザ削除';
-   //  $this->load->view('header', $header);
-   //  $this->load->view('user/delete');
-   // }
+   public function delete($id){
+        $header['title'] = 'ユーザ削除';
+        $this->load->view('header', $header);
+        // 削除ボタンが押された場合はお知らせを削除する
+        if ($this->input->post('delete') != null)
+        {
+          $this->user_model->delete($this->input->post('id'));
+          redirect('user/delete_done');
+        }
+        // お知らせデータの取得
+        $user = $this->user_model->find_by_id($id);
+        $data['id'] = $id;
+        $data['user'] = $user;
+        $this->load->view('user/delete',$data);
+        var_dump($id);
+
+        // if ($user == null)
+        // {
+        //     redirect('user/');
+        // }
+        if ($this->input->post('cancel') != null)
+        {
+            redirect('user/');
+        }
+   }
 
    public function delete_done(){
     $header['title'] = 'ユーザ削除の完了';
