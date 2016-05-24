@@ -8,7 +8,7 @@
         <div class="col-md-12">
           <h1>グループ削除</h1>
           <p>グループの削除が完了しました。</p>
-          <p><a href="index">グループ一覧に戻る</a></p>
+          <p><a href="<?php echo base_url('group/') ?>">グループ一覧に戻る</a></p>
         </div>
       </div>
   </div>

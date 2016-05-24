@@ -20,5 +20,11 @@ class Group_model extends CI_Model{
  public function insert($group){
    $this->db->insert('groups',$group);
  }
+
+ public function update($id){
+   $sql = "UPDATE groups SET status = 0 WHERE id=?";
+
+		$query = $this->db->query($sql,array($id));
+ }
 }
  ?>
