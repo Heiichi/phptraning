@@ -65,7 +65,7 @@
 
   //eventsテーブルからid指定で1件取得
   public function getrow($id){
-  	return $this->db->get_where('events', array('id' => $id))->row();
+  		return $this->db->get_where('events', array('id' => $id))->row();
   }
   //groupsテーブルを全件取得
   public function getGroup(){
