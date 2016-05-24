@@ -63,10 +63,28 @@ class Event extends CI_Controller{
     $this->load->view('header', $header);
     $this->load->view('event_login');
   }
-
   public function add(){
     $header['title'] = 'イベント登録';
+    $this->load->model('Event_model');
+    $groups = $this->Event_model->get_groups();
+    $data['groups'] = $groups;
     $this->load->view('header', $header);
-    $this->load->view('event/add');
+    $this->load->view('event/add',$data);
   }
+  public function show($id){
+    $this->load->model('Event_model');
+
+    $event = $this->Event_model->show_find($id);
+    $attends = $this->Event_model->get_attends($id);
+    $data["event"] = $event;
+    $data["attends"] = $attends;
+    $header['title'] = 'イベント詳細';
+
+    $this->load->view('header', $header);
+
+    $this->load->view('event/show',$data);
+  }
+
+
+
 }
