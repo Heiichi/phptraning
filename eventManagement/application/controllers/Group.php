@@ -75,12 +75,14 @@
 
     }
 
-    public function delete(){
+    public function delete($id){
       $this->load->model('Group_model');
 
-      $id = $this->input->post['delete'];
-      var_dump($id);
-      exit;
+      $this->Group_model->update($id);
+
+      $header['title'] = 'グループ削除完了';
+      $this->load->view('header', $header);
+      $this->load->view('group/delete_done');
     }
 
     public function name_check($str){

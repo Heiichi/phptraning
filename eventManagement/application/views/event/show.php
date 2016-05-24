@@ -48,4 +48,4 @@
 <input class="btn btn-success" type="submit" name="save" value="参加する">
 <input class="btn btn-success" type="submit" value="参加を取り消す">
 <input class="btn btn-default" type="submit" value="編集">
-<input class="btn btn-success" type="submit" value="削除">
+<input class="btn btn-danger" type="submit" value="削除">
