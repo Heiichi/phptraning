@@ -17,9 +17,11 @@
           <th><?php echo $user->name; ?></th>
           <th><a class="btn btn-default" href="<?php echo base_url('user/edit/'.$user->id); ?>">詳細</a></th>
           <th><a class="btn btn-default" href="<?php echo base_url('user/delete/'.$user->id); ?>">削除</a></th>
+          </div>
+          </th>
         </tr>
     <?php endforeach; ?>
     </table>
-    <a class="btn btn-success" href="add">ユーザの登録</a>
+    <a class="btn btn-success" href="<?php echo base_url('user/add'); ?>">ユーザの登録</a>
   </div>
 </div>
