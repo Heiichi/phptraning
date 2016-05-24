@@ -26,7 +26,7 @@
 		</tr>
     <tr>
       <th>詳細</th>
-      <td><?php echo $value->detail; ?></td>
+      <td><?php echo $value->detail;?></td>
     </tr>
     <tr>
       <th>登録者</th>
@@ -36,7 +36,7 @@
       <th>参加者</th>
       <td>
 				<?php foreach ($attends as $san):?>
-					<?php echo $san->name;?> 
+					<?php echo $san->name;?>
 				<?php endforeach; ?>
 			</td>
     </tr>
@@ -48,4 +48,4 @@
 <input class="btn btn-success" type="submit" name="save" value="参加する">
 <input class="btn btn-success" type="submit" value="参加を取り消す">
 <input class="btn btn-default" type="submit" value="編集">
-<input class="btn btn-success" type="submit" value="削除">
+<input class="btn btn-danger" type="submit" value="削除">
