@@ -30,7 +30,7 @@
 
   		<div class="collapse navbar-collapse" id="navbarEexample7">
   			<ul class="nav navbar-nav">
-  				<li><a href="../event/index">本日のイベント</a></li>
+  				<li><a href="<?php echo base_url('event/event_today');  ?>">本日のイベント</a></li>
   				<li class="active"><a href="<?php echo base_url('event/index'); ?>">イベント管理</a></li>
   				<li><a href="<?php echo base_url('user/index'); ?>">ユーザ管理</a></li>
   			</ul>
