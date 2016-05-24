@@ -60,11 +60,12 @@
     $query = $this->db->query('SELECT id , name FROM `groups`');
     return $query->result('Event_model');
   }
-
+  
   public function insert($event)
   {
 		$this->db->insert('events',$event);
 	}
+
   //eventsテーブルからid指定で1件取得
   public function getrow($id){
     return $this->db->get_where('events', array('id' => $id))->row();

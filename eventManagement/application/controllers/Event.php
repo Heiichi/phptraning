@@ -229,14 +229,32 @@ class Event extends CI_Controller{
     }
   }
 
-  public function detail_check($str){
-    if(!preg_match("/^[\S\s]{0,100}$/",$str)){
-      $this->form_validation
-        ->set_message('detail_check','詳細は100字以内で入力してください。');
-      return false;
-    }
-    return true;
+  //ヴァリデーションチェック及びコメントのfunction
+  //タイトルの空白チェック
+  public function title_check($str){
+
+  	if($str=="" or preg_match("/^[\s ]/", $str)){
+  		$this->form_validation->
+  		set_message('title_check','タイトルを入力してください');
+  		return  FALSE;
+  	}
+	else{
+  	return TRUE;
+	}
   }
+
+//場所の空白チェック
+  	public function place_check($str){
+
+  		if($str=="" or preg_match("/^[\s ]/", $str)){
+  				$this->form_validation->
+  				set_message('place_check','場所を入力してください');
+  				return  FALSE;
+  			}
+  		else{
+  				return TRUE;
+  			}
+  		}
 
   //ヴァリデーションチェック及びコメントのfunction
   //タイトルの空白チェック
@@ -274,8 +292,6 @@ class Event extends CI_Controller{
   				return TRUE;
   			}
   		}
-
-
 //編集完了画面
   	public function edit_done(){
   			$header['title'] = '編集完了';
