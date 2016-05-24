@@ -26,7 +26,7 @@
                 <div class="modal-body">本当に削除してよろしいですか?</div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-success">OK</button>
+                  <a href="<?php echo base_url('group/delete/'. $group->id); ?>"><button type="button" class="btn btn-success">OK</button></a>
                  </div>
               </div>
             </div>
@@ -38,13 +38,9 @@
   </tbody>
 </table>
 
-<a href="<?php echo base_url('group/add') ?>"><button class="btn btn-primary">グループ登録</button></a>
+<a href="<?php echo base_url('group/add'); ?>"><button class="btn btn-primary">グループ登録</button></a>
 </div>
 
 <script>
-$('#submit').click(function(){
-    $(this).attr('action="<?php echo base_url('group/delete') ?>"name="delete"');
-
-  });
 
 </script>
