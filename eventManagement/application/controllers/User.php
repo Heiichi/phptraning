@@ -8,17 +8,19 @@ class User extends CI_Controller{
     {
         parent::__construct();
         session_start();
-
+        if($_SESSION['login'] != TRUE){
+          redirect('session/login');
+        }elseif($_SESSION['type_id'] == '1'){
+          redirect('/event');
+        }
         $this->load->model('admin/user_model');
         $this->load->view('head');
         $this->load->library('form_validation');
-        if($_SESSION['login'] != TRUE){
-        	redirect('session/login');
-        }
     }
 
    public function index($page=''){
     $header['title'] = 'ユーザー一覧';
+    $header['name'] = $_SESSION['name'];
     $this->load->view('header', $header);
     $data['users'] =$this->user_model->find_UserGroupIdEqualGroupsid();
 

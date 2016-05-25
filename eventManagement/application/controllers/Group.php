@@ -5,13 +5,16 @@
     public function __construct()
     {
         parent::__construct();
+        session_start();
+        if($_SESSION['login'] != TRUE){
+          redirect('session/login');
+        }
         $this->load->model('Group_model');
         $this->load->view('head');
         $this->load->library('form_validation');
     }
 
     public function index($page=''){
-      $this->load->model('Group_model');
       $this->load->library('pagination');
 
       if(!is_numeric($page)){
@@ -38,10 +41,7 @@
     }
 
     public function add(){
-
-      $this->load->model('Group_model');
       $this->load->helper('form');
-      $this->load->library('form_validation');
 
       $add = $this->input->post("add");
 		  $cancel = $this->input->post("cancel");
@@ -79,12 +79,9 @@
         $this->load->view('header', $header);
         $this->load->view('group/add');
       }
-
-
     }
 
     public function delete($id){
-      $this->load->model('Group_model');
 
       $this->Group_model->update($id);
 
@@ -101,9 +98,5 @@
       }
       return true;
     }
-
-
-
-
   }
 ?>

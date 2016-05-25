@@ -20,13 +20,15 @@
   				<li><a href="<?php echo base_url('event/event_today');  ?>">本日のイベント</a></li>
   				<li><a href="<?php echo base_url('event/index'); ?>">イベント管理</a></li>
           <li><a href="<?php echo base_url('group/index'); ?>">グループ管理</a></li>
-  				<li><a href="<?php echo base_url('user/index'); ?>">ユーザ管理</a></li>
+          <?php if($_SESSION['type_id'] == 2): ?>
+  				  <li><a href="<?php echo base_url('user/index'); ?>">ユーザ管理</a></li>
+          <?php endif; ?>
   			</ul>
         <ul class="nav navbar-nav navbar-right">
   				<li class="dropdown">
   					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
               <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              山田太郎 <span class="caret"></span></a>
+              <?php echo $_SESSION['name']; ?><span class="caret"></span></a>
   					<ul class="dropdown-menu" role="menu">
   						<li><a href="<?php echo base_url('Session/logout'); ?>">ログアウト</a></li>
   					</ul>
