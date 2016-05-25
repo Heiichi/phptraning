@@ -4,27 +4,25 @@ class Event extends CI_Controller{
   const NUM_PER_PAGE = 5;
 
   public function __construct()
-  {
-  	parent::__construct();
-  	session_start();
-
-  	if($_SESSION['login'] != TRUE){
-  		redirect('session/login');
-  	}
-  }
+    {
+        parent::__construct();
+        session_start();
+        if($_SESSION['login'] != TRUE){
+          redirect('session/login');
+        }
+        $this->load->model('Event_model');
+        $this->load->view('head');
+        $this->load->library('form_validation');
+    }
 
 
    public function index($page=''){
-
-     $this->load->model("Event_model");
      $this->load->library('pagination');
 
-		if(!is_numeric($page)){
-			$page = 1;
-		}
+    if(!is_numeric($page)){
+      $page = 1;
+    }
      $events = $this->Event_model->find_all($page, self::NUM_PER_PAGE);
-     $data["events"] = $events;
-
      $data["events"] = $events;
      $config['base_url'] = base_url('event/index');
      $config['total_rows'] = $this->Event_model->get_count();
@@ -41,16 +39,15 @@ class Event extends CI_Controller{
      $this->load->view('head');
      $this->load->view('header', $header);
      $this->load->view('event/index',$data);
-     var_dump($_SESSION);
    }
 
    public function event_today($page=''){
      $this->load->model("Event_model");
      $this->load->library('pagination');
 
-		if(!is_numeric($page)){
-			$page = 1;
-		}
+    if(!is_numeric($page)){
+      $page = 1;
+    }
      $events = $this->Event_model->today_event($page, self::NUM_PER_PAGE);
 
      $data["events"] = $events;
@@ -84,103 +81,58 @@ class Event extends CI_Controller{
     $cancel = $this->input->post('cancel');
     $data['selected'] = '';
 
-
-
     if($this->input->method() == 'post'){
-
       if($add === "登録"){
 
         $data['selected'] = $this->input->post('group');
+        $this->form_validation->set_rules('title','タイトル','required');
+        $this->form_validation->set_rules('start','開始時間','required|callback_time_check');
+        $this->form_validation->set_rules('end','終了時間','required|callback_time_check');
+        $this->form_validation->set_rules('place','場所','required');
+        $this->form_validation->set_rules('detail','詳細','required|callback_detail_check');
+        $this->form_validation->set_message('required','{field}を入力してください。');
+        $event = $this->validation();
 
-        $this->form_validation->set_rules(
-          'title','タイトル','required'
-        );
-        $this->form_validation->set_rules(
-          'start','開始時間','required|callback_time_check'
-        );
-        $this->form_validation->set_rules(
-          'end','終了時間','required|callback_time_check'
-        );
-        $this->form_validation->set_rules(
-          'place','場所','required'
-        );
-        $this->form_validation->set_rules(
-          'detail','詳細','required|callback_detail_check'
-        );
-
-        $this->form_validation->set_message(
-          'required','{field}を入力してください。'
-        );
-
-
-        if($this->form_validation->run()){
-
-          if($this->input->post('title') !== ''){
-            $event['title'] = $this->input->post('title');
-          }else {
-            $event['title'] = null;
-          }
-
-          if($this->input->post('start') !== ''){
-            $event['start'] = $this->input->post('start');
-          }else {
-            $event['start'] = null;
-          }
-
-          if($this->input->post('end') !== ''){
-            $event['end'] = $this->input->post('end');
-          }else {
-            $event['end'] = null;
-          }
-
-          if($this->input->post('place') !== ''){
-            $event['place'] = $this->input->post('place');
-          }else {
-            $event['place'] = null;
-          }
-
-          $event['group_id'] = $this->input->post('group');
-
-          $event['registered_by'] = 2;
-
-          if($this->input->post('detail') !== ''){
-            $event['detail'] = $this->input->post('detail');
-          }else {
-            $event['detail'] = null;
-          }
-
+        if($event != false){
           $this->Event_model->insert($event);
 
           $header['title'] = 'グループ登録完了';
           $this->load->view('header',$header);
           $this->load->view('event/add_done');
-          echo "aaa";
-
         }else{
           $header['title'] = 'イベント登録';
-
           $this->load->view('header', $header);
           $this->load->view('event/add',$data);
         }
-
       }
       if($cancel === "キャンセル"){
+
+        redirect('event/');
 
       }
 
     }else{
       $header['title'] = 'イベント登録';
-
       $this->load->view('header', $header);
       $this->load->view('event/add',$data);
     }
-
   }
+
+
   public function show($id){
     $this->load->model('Event_model');
 
     $event = $this->Event_model->show_find($id);
     $attends = $this->Event_model->get_attends($id);
+    $current_user = $this->Event_model->get_user();
+    $current_user_attends_event = $this->Event_model->user_attend($id);
+    if($current_user_attends_event ){
+      $data["participate"] = true;
+    }else{
+      $data["participate"] = false;
+    }
+
+    $data["user"] = $current_user;
     $data["event"] = $event;
     $data["attends"] = $attends;
     $header['title'] = 'イベント詳細';
@@ -190,102 +142,134 @@ class Event extends CI_Controller{
     $this->load->view('event/show',$data);
   }
 
-
-
 //編集画面
   public function edit($id){
-  	$header['title'] = 'ユーザー編集';
-  	$this->load->view('header', $header);
-  	$this->load->model('Event_model');
-  	$this->load->helper('form');
-  	$this->load->library('form_validation');
 
-  	//キャンセル押されたときの処理
-  		if (isset($_POST["cancel"])) {
-  		redirect('event/index');
-  		}
+    $this->load->model('Event_model');
+    $this->load->library('form_validation');
+    $groups = $this->Event_model->get_groups();
+    $data['groups'] = $groups;
+    $event = $this->Event_model->show_find($id);
+    $data["event"] = $event;
+    $edit = $this->input->post('edit');
+    $cancel = $this->input->post('cancel');
 
-  	//ヴァリデーション
-  		$this->form_validation->set_rules('title','タイトル','callback_title_check');
-  		$this->form_validation->set_rules('start','開始日時','callback_start_check');
-  		//$this->form_validation->set_rules('end','終了日時','required');
-  		$this->form_validation->set_rules('place','場所','callback_place_check');
-  		//$this->form_validation->set_rules('group_id','対象グループ','required');
-  		$this->form_validation->set_rules('detail','詳細','callback_detail_check');
+    if($this->input->method() == 'post'){
+      if($edit === "編集"){
 
-  	//ヴァリデーションが通ったときの処理
-  		if ($this->form_validation->run()){
-  				$update['title'] =$this->input->post('title');
-  				$update['start']=$this->input->post('start');
-  				$update['end'] =$this->input->post('end');
-  				$update['place']=$this->input->post('place');
-  				$update['group_id'] =$this->input->post('group_id');
-  				$update['detail']=$this->input->post('detail');
+        $data['selected'] = $this->input->post('group');
+        $this->form_validation->set_rules('title','タイトル','required');
+        $this->form_validation->set_rules('start','開始時間','required|callback_time_check');
+        $this->form_validation->set_rules('end','終了時間','required|callback_time_check');
+        $this->form_validation->set_rules('place','場所','required');
+        $this->form_validation->set_rules('detail','詳細','required|callback_detail_check');
+        $this->form_validation->set_message('required','{field}を入力してください。');
 
-  	//DBでアップデート処理後,edit_doneへ遷移
-  				$this->Event_model->update($update,$id);
-  				redirect('event/edit_done/');
-  				}
-  	//ヴァリデーションが通ってないとき→このページに訪れたとき
-  		else{
-  				$data['id']=$id;
-  				$data['groups']=$this->Event_model->getGroup();
-  				$data['events']=$this->Event_model->getrow($id);
-  				$this->load->view('event/edit',$data);
-  			}
-  	//$this->output->enable_profiler(TRUE);
-  }
-  public function time_check($str){
-    if(!preg_match("/^\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:?\d{0}$/",$str)){
-      $this->form_validation
-        ->set_message('time_check','形式は0000-00-00 00:00:00で入力してください。');
-      return false;
+        $event = $this->validation();
+        if($event != false){
+
+          $this->Event_model->insert($event);
+
+          $header['title'] = 'グループ登録完了';
+          $this->load->view('header',$header);
+          $this->load->view('event/edit_done');
+        }else{
+          $header['title'] = 'イベント登録';
+          $this->load->view('header', $header);
+          $this->load->view('event/edit',$data);
+        }
+      }
+      if($cancel === "キャンセル"){
+
+        redirect('event/');
+
+      }
+
     }else{
+      $header['title'] = 'イベント登録';
+      $this->load->view('header', $header);
+      $this->load->view('event/edit',$data);
+    }
+
+  }
+
+
+
+//編集完了画面
+  public function edit_done(){
+      $header['title'] = '編集完了';
+      $this->load->view('header', $header);
+      $this->load->view('event/edit_done');
+  }
+
+  public function delete($id){
+    $this->load->model('Event_model');
+
+    $this->Event_model->delete($id);
+
+    $header['title'] = 'イベントの削除完了';
+    $this->load->view('header', $header);
+    $this->load->view('event/delete_done');
+  }
+
+    public function validation(){
+      if($this->form_validation->run()){
+
+        if($this->input->post('title') !== ''){
+          $event['title'] = $this->input->post('title');
+        }else {
+          $event['title'] = null;
+        }
+
+        if($this->input->post('start') !== ''){
+          $event['start'] = $this->input->post('start');
+        }else {
+          $event['start'] = null;
+        }
+
+        if($this->input->post('end') !== ''){
+          $event['end'] = $this->input->post('end');
+        }else {
+          $event['end'] = null;
+        }
+
+        if($this->input->post('place') !== ''){
+          $event['place'] = $this->input->post('place');
+        }else {
+          $event['place'] = null;
+        }
+
+        $event['group_id'] = $this->input->post('group');
+
+        $event['registered_by'] = 2;
+
+        if($this->input->post('detail') !== ''){
+          $event['detail'] = $this->input->post('detail');
+        }else {
+          $event['detail'] = null;
+        }
+        return $event;
+      }else{
+        return false;
+      }
+    }
+
+    public function time_check($str){
+      if(!preg_match("/^\d{4}-\d{1,2}-\d{1,2} \d{0,2}:\d{0,2}:?\d{0,2}/",$str)){
+        $this->form_validation
+          ->set_message('time_check','形式は0000-00-00 00:00:00で入力してください。');
+        return false;
+      }else{
+        return true;
+      }
+    }
+
+    public function detail_check($str){
+      if(!preg_match("/^[\S\s]{0,100}$/",$str)){
+        $this->form_validation
+          ->set_message('name_check','グループ名は100字以内で入力してください。');
+        return false;
+      }
       return true;
     }
-  }
-
-
-  //ヴァリデーションチェック及びコメントのfunction
-  //タイトルの空白チェック
-  public function title_check($str){
-
-  	if($str=="" or preg_match("/^[\s ]/", $str)){
-  		$this->form_validation->
-  		set_message('title_check','タイトルを入力してください');
-  		return  FALSE;
-  	}
-	else{
-  	return TRUE;
-	}
-  }
-//開始日時のチェック
-  	public function start_check($str){
-  	  	if(!preg_match("/^\d{4}-\d{2}-\d{2}[\s ]\d{2}:\d{2}:\d{2}$/", $str)){
-  				$this->form_validation->
-  				set_message('start_check','開始日時を「0000-00-00 00:00:00」で入力してください');
-  				return  FALSE;
-  			}
-		else{
-  				return TRUE;
-			}
- 		 }
-//場所の空白チェック
-  	public function place_check($str){
-
-  		if($str=="" or preg_match("/^[\s ]/", $str)){
-  				$this->form_validation->
-  				set_message('place_check','場所を入力してください');
-  				return  FALSE;
-  			}
-  		else{
-  				return TRUE;
-  			}
-  		}
-//編集完了画面
-  	public function edit_done(){
-  			$header['title'] = '編集完了';
-  			$this->load->view('header', $header);
-  			$this->load->view('event/edit_done');
-  		}
 }

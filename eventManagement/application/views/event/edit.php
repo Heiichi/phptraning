@@ -1,123 +1,67 @@
-<!-- javascriptとCIのフォーム仕様による設定-->
-<script>
-$(document).ready(function () {
-	$('#form').submit(function(){
-		$('<input>').attr({
-		    type: 'submit',
-		    name: 'save',
-		}).appendTo('#form');
-		$('h1').css('background-color','#ccc');
-	})
-	var formData = $('#form').serialize();
-});
-</script>
 
-<!-- ヘッダー-->
-			<!-- フォーム入力-->
-
-<dziv class="col-md-9">
-            	<!-- form custom style -->
+<!-- name値 value値 未設定-->
+   <div class="col-md-9">
+            <!-- form custom style -->
       <h1><strong>イベント編集</strong></h1>
 
-<?php echo form_open();?>
-          		<div class="form-group">
-                <label>タイトル(必須)</label>
-                    <div class="error"><?php echo form_error('title','<p>','</p>')?></div>
-                <?php
-                    $title = array(
-                    		'name'        => 'title',
-                    		'class'       => 'form-control',
-                    		'value'       => $events->title,
-                    		'maxlength'   => '50',
-                    		'placeholder' => '必須' );
-                    echo form_input($title); ?>
+			<?php foreach ($event as $value ):?>
+      <?php echo form_open(); ?>
+                <div class="form-group">
+                    <?php echo form_label('タイトル(必須)','title'); ?>
+                    <?php echo form_input('title',set_value('title',$value->title),'class="form-control" placeholder="必須"'); ?>
+                    <div class="help-block with-errors"><?php echo form_error('title','<p>','</p>');?></div>
                 </div>
 
                 <div class="form-group">
-                    <label>開始日時(必須)</label>
-                    <div class="error"><?php echo form_error('start','<p>','</p>')?></div>
-                    <?php
-                        $start = array(
-                    		'name'        => 'start',
-                    		'class'       => 'form-control',
-                    		'value'       => $events->start,
-                    		'maxlength'   => '19',
-                    		'placeholder' => '0000-00-00 00:00:00 必須');
-                    echo form_input($start); ?>
+                    <?php echo form_label('開始日時(必須)','start'); ?>
+                    <?php echo form_input('start',set_value('start',$value->start),'class="form-control" placeholder="0000-00-00 00:00:00"');?>
+                    <div class="help-block with-errors"><?php echo form_error('start','<p>','</p>');?></div>
                 </div>
 
                 <div class="form-group">
-                    <label>終了日時</label>
-                    <div class="error"><?php echo form_error('end','<p>','</p>')?></div>
-                    <?php
-                    $end = array(
-                    		'name'        => 'end',
-                    		'class'       => 'form-control',
-                    		'value'       => $events->end,
-                    		'maxlength'   => '19',
-                    		'placeholder' => '0000-00-00 00:00:00');
-                    echo form_input($end); ?>
+                   <?php echo form_label('終了日時','end'); ?>
+                   <?php echo form_input('end',set_value('end',$value->end),'class="form-control" placeholder="0000-00-00 00:00:00"');?>
+                   <div class="help-block with-errors"><?php echo form_error('end','<p>','</p>');?></div>
                 </div>
 
                 <div class="form-group">
-                    <label>場所(必須)</label>
-                    <div class="error"><?php echo form_error('place','<p>','</p>')?></div>
-                    <?php
-                    $place = array(
-                    		'name'        => 'place',
-                    		'class'       => 'form-control',
-                    		'value'       => $events->place,
-                    		'maxlength'   => '255',
-                    		'placeholder' => '必須' );
-                    echo form_input($place); ?>
+                  <?php echo form_label('場所(必須)','place'); ?>
+                  <?php echo form_input('place',set_value('place',$value->place),'class="form-control" placeholder="必須"');?>
+                  <div class="help-block with-errors"><?php echo form_error('place','<p>','</p>');?></div>
                 </div>
 
-				<!-- guroupsテーブルから取得したものを使う-->
+
+
+                <?php foreach ($groups as $group): ?>
+                  <?php $options[$group->id] = $group->name; ?>
+                <?php endforeach; ?>
+
+                <!-- value値未設定 -->
                 <div class="form-group">
                     <label>対象グループ</label>
-                    <select name="group_id" class="form-control">
-                    <?php foreach ($groups as $list):?>
-                        <option value="<?php echo $list->id;?>"
-                        <?php echo set_select('group_id', $list->id); ?>
-                        <?php $select=$list->id; $set=$events->group_id;
-                        	if($select==$set):?>selected<?php endif;?>>
-                        <?php echo $list->name;?>
-                        </option>
-                    <?php endforeach;?>
-                    </select>
-                </div>
+
+                    <?php echo form_dropdown('group',$options,set_value('group',$value->group_id),'class="form-control"'); ?>
+
+                 </div>
+
+
+
+
+
 
                 <div class="form-group">
-                    <label>詳細</label>
-                    <div class="error"><?php echo form_error('detail','<p>','</p>')?></div>
-                    <?php
-                    	$textarea = array(
-                    		'name'        => 'detail',
-                    		'class'		  => 'form-control',
-                    		'value'       => $events->detail,
-                    		'rows'   => '10',
-                    		'cols'        => '20',
-                    		'placeholder' => '必須' );
-                    echo form_textarea($textarea); ?></div>
-
-                    <p>
-      				<?php
-      				  $cancel = array(
-                    		'name'        => 'cancel',
-                    		'class'		  => 'btn btn-default',
-                    		'value'       => 'キャンセル');
-      				  echo form_submit($cancel);?>
-      				<?php
-      				  $save = array(
-      				  		'name'        => 'save',
-      				  		'class'		  => 'btn btn-primary',
-      				  		'value'       => '保存');
-      				  echo form_submit($save);?>
-      				</p>
-
+                  <?php echo form_label('詳細','detail'); ?>
+                  <?php echo form_textarea('detail',set_value('detail',$value->detail),'cols="20" rows="6" class="form-control" rows="3" placeholder="100文字まで。"');?>
+                  <div class="help-block with-errors"><?php echo form_error('detail','<p>','</p>');?></div>
                 </div>
-<?php echo form_close();?>
-</div>
+
+                <?php echo form_submit('cancel','キャンセル','class="btn btn-default"');?>
+                <?php echo form_submit('edit','編集','class="btn btn-success"');?>
+                <?php echo form_close(); ?>
+							<?php endforeach; ?>
+      
+        </div>
+
 
 </body>
 </html>
