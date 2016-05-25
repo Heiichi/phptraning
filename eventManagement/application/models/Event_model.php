@@ -32,8 +32,8 @@
     }
 
     public function get_count(){
-		    return $this->db->count_all('events');
-	 }
+        return $this->db->count_all('events');
+   }
 
    public function today_get_count(){
      $this->db->where('start','NOW()');
@@ -64,8 +64,8 @@
   
   public function insert($event)
   {
-		$this->db->insert('events',$event);
-	}
+    $this->db->insert('events',$event);
+  }
 
   //eventsテーブルからid指定で1件取得
   public function getrow($id){

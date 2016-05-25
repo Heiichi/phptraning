@@ -4,6 +4,7 @@ class Event extends CI_Controller{
   const NUM_PER_PAGE = 5;
 
    public function index($page=''){
+
      $this->load->model("Event_model");
      $this->load->library('pagination');
 
@@ -175,6 +176,24 @@ class Event extends CI_Controller{
 
     $this->load->view('event/show',$data);
   }
+<<<<<<< HEAD
+
+  public function show($id){
+    $this->load->model('Event_model');
+
+    $event = $this->Event_model->show_find($id);
+    $attends = $this->Event_model->get_attends($id);
+    $data["event"] = $event;
+    $data["attends"] = $attends;
+    $header['title'] = 'イベント詳細';
+
+    $this->load->view('header', $header);
+
+    $this->load->view('event/show',$data);
+  }
+
+=======
+>>>>>>> sato-branch7
 
 //編集画面
   public function edit($id){
