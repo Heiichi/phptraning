@@ -43,7 +43,7 @@
 
   public function show_find($id){
     $sql =
-      "select title, start, end, place, g.name as g_name , detail, u.name as u_name from events as e
+      "select title, start, end, place, g.name as g_name , detail, u.name as u_name, e.group_id from events as e
       inner join groups as g on e.group_id = g.id inner join users as u ON e.registered_by = u.id where e.id =?";
 
     $query = $this->db->query($sql,array($id));
@@ -61,7 +61,7 @@
     $query = $this->db->query('SELECT id , name FROM `groups`');
     return $query->result('Event_model');
   }
-  
+
   public function insert($event)
   {
     $this->db->insert('events',$event);
