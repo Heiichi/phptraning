@@ -15,9 +15,18 @@
       </tr>
     </thead>
     <tbody>
+      <?php $check = []; ?>
+      <?php  foreach($participate as $value):?>
+        <?php $check[] = $value->events_id; ?>
+      <?php endforeach;?>
+
       <?php foreach($events as $event): ?>
         <tr>
-          <th><?php echo $event->title; ?></th>
+          <?php if(in_array($event->id,$check,true)): ?>
+            <th><?php echo $event->title; ?><span class="label label-info spanlabel">参加</span></th>
+          <?php else: ?>
+            <th><?php echo $event->title; ?></th>
+          <?php endif; ?>
           <td><?php echo $event->start; ?></td>
           <td><?php echo $event->place; ?></td>
           <td><?php echo $event->name; ?></td>
@@ -30,4 +39,3 @@
 
   <a href="<?php echo base_url('event/add'); ?>"><button class="btn btn-primary">イベント登録</button></a>
 </div>
-  

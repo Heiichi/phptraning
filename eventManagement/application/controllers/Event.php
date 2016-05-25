@@ -18,10 +18,16 @@ class Event extends CI_Controller{
 
    public function index($page=''){
      $this->load->library('pagination');
+     $id = $_SESSION['id'];
+
+
 
     if(!is_numeric($page)){
       $page = 1;
     }
+     $participate = $this->Event_model->participate($id);
+
+     $data['participate']  =  $participate;
      $events = $this->Event_model->find_all($page, self::NUM_PER_PAGE);
      $data["events"] = $events;
      $config['base_url'] = base_url('event/index');
@@ -85,12 +91,8 @@ class Event extends CI_Controller{
       if($add === "登録"){
 
         $data['selected'] = $this->input->post('group');
-        $this->form_validation->set_rules('title','タイトル','required');
-        $this->form_validation->set_rules('start','開始時間','required|callback_time_check');
-        $this->form_validation->set_rules('end','終了時間','required|callback_time_check');
-        $this->form_validation->set_rules('place','場所','required');
-        $this->form_validation->set_rules('detail','詳細','required|callback_detail_check');
-        $this->form_validation->set_message('required','{field}を入力してください。');
+
+
         $event = $this->validation();
 
         if($event != false){
@@ -125,7 +127,15 @@ class Event extends CI_Controller{
 
     $event = $this->Event_model->show_find($id);
     $attends = $this->Event_model->get_attends($id);
-    $current_user = $this->Event_model->get_user();
+    $user_name = $_SESSION["name"];
+    $registered_by = $this->Event_model->registered_by($id,$user_name);
+
+
+    $data['registered_by'] = $registered_by;
+
+
+
+    $current_user = $_SESSION["type_id"];
     $current_user_attends_event = $this->Event_model->user_attend($id);
     if($current_user_attends_event ){
       $data["participate"] = true;
@@ -179,12 +189,6 @@ class Event extends CI_Controller{
       if($edit === "編集"){
 
         $data['selected'] = $this->input->post('group');
-        $this->form_validation->set_rules('title','タイトル','required');
-        $this->form_validation->set_rules('start','開始時間','required|callback_time_check');
-        $this->form_validation->set_rules('end','終了時間','required|callback_time_check');
-        $this->form_validation->set_rules('place','場所','required');
-        $this->form_validation->set_rules('detail','詳細','required|callback_detail_check');
-        $this->form_validation->set_message('required','{field}を入力してください。');
 
         $event = $this->validation();
         if($event != false){
@@ -234,47 +238,56 @@ class Event extends CI_Controller{
     $this->load->view('event/delete_done');
   }
 
-    public function validation(){
-      if($this->form_validation->run()){
+  public function validation(){
 
-        if($this->input->post('title') !== ''){
-          $event['title'] = $this->input->post('title');
-        }else {
-          $event['title'] = null;
-        }
 
-        if($this->input->post('start') !== ''){
-          $event['start'] = $this->input->post('start');
-        }else {
-          $event['start'] = null;
-        }
+    $this->form_validation->set_rules('title','タイトル','required');
+    $this->form_validation->set_rules('start','開始時間','required|callback_time_check');
+    $this->form_validation->set_rules('end','終了時間','required|callback_time_check');
+    $this->form_validation->set_rules('place','場所','required');
+    $this->form_validation->set_rules('detail','詳細','required|callback_detail_check');
+    $this->form_validation->set_message('required','{field}を入力してください。');
 
-        if($this->input->post('end') !== ''){
-          $event['end'] = $this->input->post('end');
-        }else {
-          $event['end'] = null;
-        }
+    if($this->form_validation->run()){
 
-        if($this->input->post('place') !== ''){
-          $event['place'] = $this->input->post('place');
-        }else {
-          $event['place'] = null;
-        }
-
-        $event['group_id'] = $this->input->post('group');
-
-        $event['registered_by'] = 2;
-
-        if($this->input->post('detail') !== ''){
-          $event['detail'] = $this->input->post('detail');
-        }else {
-          $event['detail'] = null;
-        }
-        return $event;
-      }else{
-        return false;
+      if($this->input->post('title') !== ''){
+        $event['title'] = $this->input->post('title');
+      }else {
+        $event['title'] = null;
       }
+
+      if($this->input->post('start') !== ''){
+        $event['start'] = $this->input->post('start');
+      }else {
+        $event['start'] = null;
+      }
+
+      if($this->input->post('end') !== ''){
+        $event['end'] = $this->input->post('end');
+      }else {
+        $event['end'] = null;
+      }
+
+      if($this->input->post('place') !== ''){
+        $event['place'] = $this->input->post('place');
+      }else {
+        $event['place'] = null;
+      }
+
+      $event['group_id'] = $this->input->post('group');
+
+      $event['registered_by'] = 2;
+
+      if($this->input->post('detail') !== ''){
+        $event['detail'] = $this->input->post('detail');
+      }else {
+        $event['detail'] = null;
+      }
+      return $event;
+    }else{
+      return false;
     }
+  }
 
     public function time_check($str){
       if(!preg_match("/^\d{4}-\d{1,2}-\d{1,2} \d{0,2}:\d{0,2}:?\d{0,2}/",$str)){

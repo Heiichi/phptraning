@@ -1,3 +1,4 @@
+
 <div class="container">　　
 <h1>ユーザ一覧</h1>
   <div class="table-responsive">
@@ -10,6 +11,7 @@
         <th>詳細</th>
         <th>削除</th>
       </tr>
+      
       <?php foreach ($users as $user): ?>
         <tr>
           <th><?php echo $user->id; ?></th>

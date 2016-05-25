@@ -15,13 +15,9 @@
       $offset = ($page - 1) * $num_per_page;
 
       $sql =
-<<<<<<< HEAD
         "SELECT e.id , title,place,g.name FROM `events` as e
           inner join `groups` as g on e.group_id = g.id where e.status = 1 ORDER BY start, end LIMIT ?,?";
-=======
-        "SELECT e.id , title,start,place,g.name FROM `events` as e
-          inner join `groups` as g on e.group_id = g.id ORDER BY start, end LIMIT ?,?";
->>>>>>> origin/master
+
 
       $query = $this->db->query($sql,array($offset,$num_per_page));
       return $query->result("Event_model");
@@ -81,11 +77,7 @@
   public function getrow($id){
     return $this->db->get_where('events', array('id' => $id))->row();
   }
-  //groupsテーブルを全件取得
-  public function getGroup(){
-        $query=$this->db->query("SELECT * FROM groups where status = 1");
-        return $query->result("Event_model");
-  }
+
   //eventsテーブルを編集
   public function update($update,$id){
     $this->db->where('id', $id);
@@ -98,15 +90,14 @@
  		$query = $this->db->query($sql,array($id));
   }
 
-  //後の削除してください
-  public function get_user(){
-    $query = $this->db->query("
-      select u_t.name , registered_by from users as u
-        inner join user_types as u_t on u.type_id = u_t.id
-          inner join events as e on e.registered_by = u.id
-            where u.id = 3 limit 1"
-      );
+
+  public function registered_by($id,$user_name){
+    $sql =
+    "select u.name from users as u inner join events as e on e.registered_by = u.id where e.id = ? and u.name = ? ";
+
+    $query = $this->db->query($sql,array($id,$user_name));
     return $query->result('Event_model');
+      //  return $query = $this->db->simple_query($sql,array($id,$user_name));
   }
 
   public function user_attend($id){
@@ -117,6 +108,14 @@
         where u.id = 3 and a.events_id = ?";
   	$query = $this->db->query($sql,array($id));
     return $query->result('Event_model');
+  }
+
+  public function participate($id){
+    $sql =
+      "SELECT events_id FROM attends AS a INNER JOIN users AS u on a.users_id = u.id where u.id = ?";
+    $query = $this->db->query($sql,array($id));
+    return $query->result('Event_model');
+
   }
 }
 ?>
