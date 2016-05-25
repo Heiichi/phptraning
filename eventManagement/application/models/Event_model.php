@@ -24,9 +24,9 @@
 
     public function today_event($page,$num_per_page){
       $offset = ($page - 1) * $num_per_page;
-
+      $today = date('Y-m-d');
       $sql =
-        "SELECT * FROM `events` inner join `groups` on events.group_id = groups.id where start = NOW() LIMIT ?,?";
+        "SELECT * FROM `events` inner join `groups` on events.group_id = groups.id where start like '%".$today."%' LIMIT ?,?";
       $query = $this->db->query($sql,array($offset,$num_per_page));
       return $query->result("Event_model");
     }
