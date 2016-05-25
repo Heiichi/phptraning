@@ -4,8 +4,9 @@ class Session extends CI_Controller{
   public function login(){
     $header['title'] = 'ログイン';
 
-    //セッションを使う全てのページで宣言する必要がある
-    $this->load->library('session');
+    //セッションのロード
+    session_start();
+    //$this->load->library('session');
 
     $this->load->view('header', $header);
     $this->load->model('Session_model');
@@ -15,6 +16,8 @@ class Session extends CI_Controller{
 	$this->form_validation->set_rules('login_id','ログインID','required');
 	$this->form_validation->set_rules('login_pass','パスワード','required');
 
+
+
 	if($this->form_validation->run()){
     	$id=$this->input->post('login_id');
     	$pass=$this->input->post('login_pass');
@@ -22,10 +25,19 @@ class Session extends CI_Controller{
 		//$this->output->enable_profiler(TRUE);
 
     	if($data==TRUE){
-    		$session=$data;
-    		var_dump($session);
-    		$this->session->set_userdata($session);
-			// redirect('event/index');
+
+    		$_SESSION["login"]=TRUE;
+
+    		foreach ($data as $list):
+    		$_SESSION["id"]=$list->id;
+    		$_SESSION['name']=$list->name;
+    		$_SESSION['type_id']=$list->type_id;
+    		$_SESSION['group_id']=$list->group_id;
+    		endforeach;
+
+    		//var_dump($_SESSION);
+    		//var_dump($data);
+			 redirect('event/index');
     	}
 
     	if($data==FALSE){
@@ -41,6 +53,14 @@ class Session extends CI_Controller{
   }
 
   public function logout(){
+  	session_start();
+
+  	$_SESSION=array();
+  	$params=session_get_cookie_params();
+  	setcookie(session_name(),"",time()-36000,
+  	$params["path"],$params["domain"],
+  	$params["secure"],$params["httponly"]);
+  	session_destroy();
     $header['title'] = 'ログアウト';
     $this->load->view('header', $header);
     $this->load->view('Session/logout');

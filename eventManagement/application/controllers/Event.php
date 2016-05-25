@@ -4,6 +4,7 @@ class Event extends CI_Controller{
   const NUM_PER_PAGE = 5;
 
    public function index($page=''){
+
      $this->load->model("Event_model");
      $this->load->library('pagination');
 
