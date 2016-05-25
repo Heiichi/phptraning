@@ -61,7 +61,7 @@
   }
   public function get_groups()
   {
-    $query = $this->db->query('SELECT id , name FROM `groups`');
+    $query = $this->db->query('SELECT id , name FROM `groups` WHERE status = 1');
     return $query->result('Event_model');
   }
 
@@ -76,7 +76,7 @@
   }
   //groupsテーブルを全件取得
   public function getGroup(){
-        $query=$this->db->query("SELECT * FROM groups");
+        $query=$this->db->query("SELECT * FROM groups where status = 1");
         return $query->result("Event_model");
   }
   //eventsテーブルを編集

@@ -287,9 +287,9 @@ class Event extends CI_Controller{
     }
 
     public function detail_check($str){
-      if(!preg_match("/^[\S\s]{0,100}$/",$str)){
+      if(!preg_match("/^[\S | \s | あ-ん| ア-ン | ｱ-ﾝ]{0,100}+$/u",$str)){
         $this->form_validation
-          ->set_message('name_check','グループ名は100字以内で入力してください。');
+          ->set_message('detail_check','グループ名は100字以内で入力してください。');
         return false;
       }
       return true;

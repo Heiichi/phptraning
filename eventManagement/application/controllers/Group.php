@@ -94,7 +94,7 @@
     }
 
     public function name_check($str){
-      if(!preg_match("/^[\S\s]{0,20}$/",$str)){
+      if(!preg_match("/^[\S | \s | あ-ん| ア-ン | ｱ-ﾝ]{0,20}+$/u",$str)){
         $this->form_validation
           ->set_message('name_check','グループ名は20字以内で入力してください。');
         return false;
