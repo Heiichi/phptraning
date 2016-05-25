@@ -7,9 +7,14 @@ class User extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
+        session_start();
+
         $this->load->model('admin/user_model');
         $this->load->view('head');
         $this->load->library('form_validation');
+        if($_SESSION['login'] != TRUE){
+        	redirect('session/login');
+        }
     }
 
    public function index($page=''){

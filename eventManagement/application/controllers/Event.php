@@ -6,10 +6,15 @@ class Event extends CI_Controller{
   public function __construct()
     {
         parent::__construct();
+        session_start();
+        if($_SESSION['login'] != TRUE){
+          redirect('session/login');
+        }
         $this->load->model('Event_model');
         $this->load->view('head');
         $this->load->library('form_validation');
     }
+
 
    public function index($page=''){
      $this->load->library('pagination');
@@ -31,6 +36,7 @@ class Event extends CI_Controller{
      $this->pagination->initialize($config);
 
      $header['title'] = 'イベント一覧';
+     $this->load->view('head');
      $this->load->view('header', $header);
      $this->load->view('event/index',$data);
    }
