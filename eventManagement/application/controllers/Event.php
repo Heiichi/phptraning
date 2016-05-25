@@ -226,6 +226,7 @@ class Event extends CI_Controller{
   public function delete($id){
     $this->load->model('Event_model');
 
+
     $this->Event_model->delete($id);
 
     $header['title'] = 'イベントの削除完了';
