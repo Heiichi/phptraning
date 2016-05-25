@@ -1,3 +1,4 @@
+
 <div class="container">
   <h1 id="show-event">イベント一覧</h1>
 
@@ -12,8 +13,8 @@
         <th>場所</th>
         <th>対象グループ</th>
         <th>詳細</th>
-      <tr>
-    <thead>
+      </tr>
+    </thead>
     <tbody>
       <?php foreach($events as $event): ?>
         <tr>
@@ -28,5 +29,6 @@
     </tbody>
   </table>
 
-  <button class="btn btn-primary">イベント登録</button>
+  <a href="<?php echo base_url('event/add'); ?>"><button class="btn btn-primary">イベント登録</button></a>
 </div>
+  

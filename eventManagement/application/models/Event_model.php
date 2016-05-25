@@ -15,7 +15,8 @@
       $offset = ($page - 1) * $num_per_page;
 
       $sql =
-        "SELECT * FROM `events` inner join `groups` on events.group_id = groups.id LIMIT ?,?";
+        "SELECT e.id , title,place,g.name FROM `events` as e
+          inner join `groups` as g on e.group_id = g.id ORDER BY start, end LIMIT ?,?";
 
       $query = $this->db->query($sql,array($offset,$num_per_page));
       return $query->result("Event_model");
@@ -31,8 +32,8 @@
     }
 
     public function get_count(){
-		    return $this->db->count_all('events');
-	 }
+        return $this->db->count_all('events');
+   }
 
    public function today_get_count(){
      $this->db->where('start','NOW()');
@@ -60,23 +61,25 @@
     $query = $this->db->query('SELECT id , name FROM `groups`');
     return $query->result('Event_model');
   }
-
-
+  
+  public function insert($event)
+  {
+    $this->db->insert('events',$event);
+  }
 
   //eventsテーブルからid指定で1件取得
   public function getrow($id){
-  		return $this->db->get_where('events', array('id' => $id))->row();
+    return $this->db->get_where('events', array('id' => $id))->row();
   }
   //groupsテーブルを全件取得
   public function getGroup(){
-  	$query=$this->db->query("SELECT * FROM groups");
-  	return $query->result("Event_model");
+        $query=$this->db->query("SELECT * FROM groups");
+        return $query->result("Event_model");
   }
   //eventsテーブルを編集
   public function update($update,$id){
-  	$this->db->where('id', $id);
-  	$this->db->update('events', $update);
+    $this->db->where('id', $id);
+    $this->db->update('events', $update);
   }
-}
+  }
 ?>
-

@@ -75,16 +75,18 @@
 
     }
 
-    public function delete(){
+    public function delete($id){
       $this->load->model('Group_model');
 
-      $id = $this->input->post['delete'];
-      var_dump($id);
-      exit;
+      $this->Group_model->update($id);
+
+      $header['title'] = 'グループ削除完了';
+      $this->load->view('header', $header);
+      $this->load->view('group/delete_done');
     }
 
     public function name_check($str){
-      if(strlen($str) >= 20){
+      if(!preg_match("/^[\S\s]{0,20}$/",$str)){
         $this->form_validation
           ->set_message('name_check','グループ名は20字以内で入力してください。');
         return false;

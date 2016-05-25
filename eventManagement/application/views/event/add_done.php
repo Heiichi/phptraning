@@ -8,7 +8,7 @@
         <div class="col-md-12">
           <h1>イベント登録</h1>
           <p>イベントの登録が完了しました。</p>
-          <p><a href="index">イベント一覧に戻る</a></p>
+          <p><a href="<?php echo base_url('event/'); ?>">イベント一覧に戻る</a></p>
         </div>
       </div>
   </div>
