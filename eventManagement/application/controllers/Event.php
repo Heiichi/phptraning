@@ -3,17 +3,26 @@ class Event extends CI_Controller{
 
   const NUM_PER_PAGE = 5;
 
-   public function index($page=''){
+  public function __construct()
+    {
+        parent::__construct();
+        session_start();
+        if($_SESSION['login'] != TRUE){
+          redirect('session/login');
+        }
+        $this->load->model('Event_model');
+        $this->load->view('head');
+        $this->load->library('form_validation');
+    }
 
-     $this->load->model("Event_model");
+
+   public function index($page=''){
      $this->load->library('pagination');
 
-		if(!is_numeric($page)){
-			$page = 1;
-		}
+    if(!is_numeric($page)){
+      $page = 1;
+    }
      $events = $this->Event_model->find_all($page, self::NUM_PER_PAGE);
-     $data["events"] = $events;
-
      $data["events"] = $events;
      $config['base_url'] = base_url('event/index');
      $config['total_rows'] = $this->Event_model->get_count();
@@ -27,6 +36,7 @@ class Event extends CI_Controller{
      $this->pagination->initialize($config);
 
      $header['title'] = 'イベント一覧';
+     $this->load->view('head');
      $this->load->view('header', $header);
      $this->load->view('event/index',$data);
    }
@@ -35,9 +45,9 @@ class Event extends CI_Controller{
      $this->load->model("Event_model");
      $this->load->library('pagination');
 
-		if(!is_numeric($page)){
-			$page = 1;
-		}
+    if(!is_numeric($page)){
+      $page = 1;
+    }
      $events = $this->Event_model->today_event($page, self::NUM_PER_PAGE);
 
      $data["events"] = $events;
@@ -207,11 +217,11 @@ class Event extends CI_Controller{
 
 
 //編集完了画面
-	public function edit_done(){
-			$header['title'] = '編集完了';
-			$this->load->view('header', $header);
-			$this->load->view('event/edit_done');
-	}
+  public function edit_done(){
+      $header['title'] = '編集完了';
+      $this->load->view('header', $header);
+      $this->load->view('event/edit_done');
+  }
 
   public function delete($id){
     $this->load->model('Event_model');

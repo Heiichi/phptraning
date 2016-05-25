@@ -15,6 +15,11 @@ $(document).ready(function () {
     <div class="panel-heading">
       event Manager
     </div>
+          <?php
+          //認証失敗したときのエラーメッセージ
+          if(isset($message)):
+      		echo $message;
+      		endif;?>
  <?php echo form_open();?>
     <div class="panel-body">
       <div class="row">
@@ -22,13 +27,28 @@ $(document).ready(function () {
             <div class="col-md-12">
                             <div class="error"><?php echo form_error('login_id','<p>','</p>')?></div>
                     <?php
+                    //認証失敗時のログイン入力処理
+                    if(isset($id)){
                         $login_id = array(
                     		'name'        => 'login_id',
                     		'class'       => 'form-control',
                         	'placeholder' => 'ログインID',
                     		'data-error'  => 'ログインIDを入力してください',
-                    		'maxlength'   => '50','required');
-                    echo form_input($login_id); ?>
+                    		'maxlength'   => '50','required',
+                        );
+                        echo form_input($login_id,$id);
+                    }
+                    //初回訪問時のログイン入力処理
+                    else{
+                    $login_id = array(
+                    		'name'        => 'login_id',
+                    		'class'       => 'form-control',
+                    		'placeholder' => 'ログインID',
+                    		'data-error'  => 'ログインIDを入力してください',
+                    		'maxlength'   => '50','required'
+                    );
+                    echo form_input($login_id);
+					}?>
               <div class="help-block with-errors"></div>
             </div>
         </div>
@@ -37,6 +57,7 @@ $(document).ready(function () {
             <div class="col-md-12">
               <div class="error"><?php echo form_error('login_pass','<p>','</p>')?></div>
                     <?php
+                    //パスワード入力処理
                         $login_pass = array(
                     		'name'        => 'login_pass',
                     		'class'       => 'form-control',

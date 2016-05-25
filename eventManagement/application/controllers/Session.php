@@ -8,22 +8,24 @@ class Session extends CI_Controller{
     session_start();
     //$this->load->library('session');
 
-    $this->load->view('header', $header);
+    $this->load->view('head');
     $this->load->model('Session_model');
     $this->load->helper('form');
     $this->load->library('form_validation');
 
+    //空値チェックのみのヴァリデーション
 	$this->form_validation->set_rules('login_id','ログインID','required');
 	$this->form_validation->set_rules('login_pass','パスワード','required');
 
 
-
+	//ヴァリデーションが通ったときの処理
 	if($this->form_validation->run()){
     	$id=$this->input->post('login_id');
     	$pass=$this->input->post('login_pass');
     	$data=$this->Session_model->getUsers($id,$pass);
 		//$this->output->enable_profiler(TRUE);
 
+    	//ログインIDとパスが一致したとき
     	if($data==TRUE){
 
     		$_SESSION["login"]=TRUE;
@@ -34,20 +36,19 @@ class Session extends CI_Controller{
     		$_SESSION['type_id']=$list->type_id;
     		$_SESSION['group_id']=$list->group_id;
     		endforeach;
-
     		//var_dump($_SESSION);
     		//var_dump($data);
 			 redirect('event/index');
     	}
-
+    	//ログインIDとパスが一致しなかったとき
     	if($data==FALSE){
-    		redirect('Session/login');
-    	}
-
+    		$re['id']=$this->input->post('login_id');
+    		$re['message']="ログインIDまたはパスワードが違います";
+    		$this->load->view('Session/login',$re);
+    		}
 		}
+		//初回訪問時
      else{
-     		//$re['id']="";
-     		//$re['pass']="";
     		$this->load->view('Session/login');
     }
   }
@@ -62,7 +63,7 @@ class Session extends CI_Controller{
   	$params["secure"],$params["httponly"]);
   	session_destroy();
     $header['title'] = 'ログアウト';
-    $this->load->view('header', $header);
+    $this->load->view('head');
     $this->load->view('Session/logout');
   }
 

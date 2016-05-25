@@ -2,6 +2,14 @@
   class Group extends CI_Controller{
     const NUM_PER_PAGE = 5;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('Group_model');
+        $this->load->view('head');
+        $this->load->library('form_validation');
+    }
+
     public function index($page=''){
       $this->load->model('Group_model');
       $this->load->library('pagination');

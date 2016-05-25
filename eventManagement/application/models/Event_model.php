@@ -15,8 +15,13 @@
       $offset = ($page - 1) * $num_per_page;
 
       $sql =
+<<<<<<< HEAD
         "SELECT e.id , title,place,g.name FROM `events` as e
           inner join `groups` as g on e.group_id = g.id where e.status = 1 ORDER BY start, end LIMIT ?,?";
+=======
+        "SELECT e.id , title,start,place,g.name FROM `events` as e
+          inner join `groups` as g on e.group_id = g.id ORDER BY start, end LIMIT ?,?";
+>>>>>>> origin/master
 
       $query = $this->db->query($sql,array($offset,$num_per_page));
       return $query->result("Event_model");
@@ -24,9 +29,9 @@
 
     public function today_event($page,$num_per_page){
       $offset = ($page - 1) * $num_per_page;
-
+      $today = date('Y-m-d');
       $sql =
-        "SELECT * FROM `events` inner join `groups` on events.group_id = groups.id where start = NOW() LIMIT ?,?";
+        "SELECT * FROM `events` inner join `groups` on events.group_id = groups.id where start like '%".$today."%' LIMIT ?,?";
       $query = $this->db->query($sql,array($offset,$num_per_page));
       return $query->result("Event_model");
     }
