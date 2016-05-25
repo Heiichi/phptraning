@@ -3,6 +3,8 @@
     const NUM_PER_PAGE = 5;
 
     public function index($page=''){
+      session_start();
+      $header['name'] = $_SESSION['name'];
       $this->load->model('Group_model');
       $this->load->library('pagination');
 
