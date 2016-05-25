@@ -3,6 +3,17 @@ class Event extends CI_Controller{
 
   const NUM_PER_PAGE = 5;
 
+  public function __construct()
+  {
+  	parent::__construct();
+  	session_start();
+
+  	if($_SESSION['login'] != TRUE){
+  		redirect('session/login');
+  	}
+  }
+
+
    public function index($page=''){
 
      $this->load->model("Event_model");
@@ -27,8 +38,10 @@ class Event extends CI_Controller{
      $this->pagination->initialize($config);
 
      $header['title'] = 'イベント一覧';
+     $this->load->view('head');
      $this->load->view('header', $header);
      $this->load->view('event/index',$data);
+     var_dump($_SESSION);
    }
 
    public function event_today($page=''){
