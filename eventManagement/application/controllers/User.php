@@ -14,7 +14,6 @@ class User extends CI_Controller{
           redirect('/event');
         }
         $this->load->model('admin/user_model');
-        $this->load->view('head');
         $this->load->library('form_validation');
     }
 

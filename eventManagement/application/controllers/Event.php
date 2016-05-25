@@ -11,7 +11,6 @@ class Event extends CI_Controller{
           redirect('session/login');
         }
         $this->load->model('Event_model');
-        $this->load->view('head');
         $this->load->library('form_validation');
     }
 
