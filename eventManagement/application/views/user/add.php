@@ -61,6 +61,7 @@
         </select>
             <div class="help-block with-errors"></div>
       </fieldset>
+      <?php echo form_hidden("type_id",'1'); ?>
       <?php
        $options = array(
         'class' => 'btn btn-default',
