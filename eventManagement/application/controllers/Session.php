@@ -8,7 +8,7 @@ class Session extends CI_Controller{
     session_start();
     //$this->load->library('session');
 
-    $this->load->view('header', $header);
+    $this->load->view('head');
     $this->load->model('Session_model');
     $this->load->helper('form');
     $this->load->library('form_validation');
@@ -63,7 +63,7 @@ class Session extends CI_Controller{
   	$params["secure"],$params["httponly"]);
   	session_destroy();
     $header['title'] = 'ログアウト';
-    $this->load->view('header', $header);
+    $this->load->view('head');
     $this->load->view('Session/logout');
   }
 
