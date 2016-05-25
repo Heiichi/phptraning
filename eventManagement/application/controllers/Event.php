@@ -3,17 +3,21 @@ class Event extends CI_Controller{
 
   const NUM_PER_PAGE = 5;
 
-   public function index($page=''){
+  public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('Event_model');
+        $this->load->view('head');
+        $this->load->library('form_validation');
+    }
 
-     $this->load->model("Event_model");
+   public function index($page=''){
      $this->load->library('pagination');
 
     if(!is_numeric($page)){
       $page = 1;
     }
      $events = $this->Event_model->find_all($page, self::NUM_PER_PAGE);
-     $data["events"] = $events;
-
      $data["events"] = $events;
      $config['base_url'] = base_url('event/index');
      $config['total_rows'] = $this->Event_model->get_count();
