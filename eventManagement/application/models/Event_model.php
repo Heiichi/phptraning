@@ -15,8 +15,13 @@
       $offset = ($page - 1) * $num_per_page;
 
       $sql =
+<<<<<<< HEAD
+        "SELECT e.id , title,place,g.name FROM `events` as e
+          inner join `groups` as g on e.group_id = g.id where e.status = 1 ORDER BY start, end LIMIT ?,?";
+=======
         "SELECT e.id , title,start,place,g.name FROM `events` as e
           inner join `groups` as g on e.group_id = g.id ORDER BY start, end LIMIT ?,?";
+>>>>>>> origin/master
 
       $query = $this->db->query($sql,array($offset,$num_per_page));
       return $query->result("Event_model");
@@ -32,7 +37,9 @@
     }
 
     public function get_count(){
-        return $this->db->count_all('events');
+      $this->db->where('status','1');
+      $this->db->from('events');
+      return $this->db->count_all_results();
    }
 
    public function today_get_count(){
@@ -86,7 +93,7 @@
   }
 
   public function delete($id){
-    $sql = "DELETE FROM  events where id = ?";
+    $sql = "UPDATE events SET status = 0 WHERE id=?";
 
  		$query = $this->db->query($sql,array($id));
   }
