@@ -7,7 +7,7 @@
 
 		<tr>
 			<th>タイトル</th>
-			<td><?php echo $value->title; ?></td>
+			<td><?php echo $value->title; ?><?php if($participate): ?><span  class="btn btn-primary">参加</span><?php endif; ?></td>
 		</tr>
 		<tr>
 			<th>開始時間</th>
@@ -45,17 +45,19 @@
 
 	</tbody>
 </table>
-<input class="btn btn-primary" type="submit" name="cancel" value="一覧に戻る">
+<a href="<?php echo base_url('event/'); ?>"><button type="button" class="btn btn-primary" data-dismiss="modal">一覧に戻る</button></a>
 
+<?php echo form_open(); ?>
 <?php if(!$participate): ?>
-		<input class="btn btn-success" type="submit" name="save" value="参加する">
+	<span><?php echo form_submit('save','参加する','class="btn btn-success"');?></span>
 <?php else:?>
-		<input class="btn btn-success" type="submit" value="参加を取り消す">
-<?php endif; ?>
+	<span><?php echo form_submit('cancel','参加を取り消す','class="btn btn-success"');?></span>
 
+<?php endif; ?>
+<?php echo form_close(); ?>
 <?php foreach ($user as $u) :?>
 	<?php if($u->name === "admin" || $u->registered_by === $value->registered_by ): ?>
-		<input class="btn btn-default" type="submit" value="編集">
+		<a href="<?php echo base_url('event/edit/'. $value->id); ?>"><input class="btn btn-default" type="submit" value="編集"></a>
 		<a class="btn btn-default" href="#" role="button" data-toggle="modal" data-target="#myModal">
 				削除
 		</a>

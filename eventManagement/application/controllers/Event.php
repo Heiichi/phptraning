@@ -121,6 +121,7 @@ class Event extends CI_Controller{
 
   public function show($id){
     $this->load->model('Event_model');
+    $this->load->model('Attend_model');
 
     $event = $this->Event_model->show_find($id);
     $attends = $this->Event_model->get_attends($id);
@@ -140,6 +141,26 @@ class Event extends CI_Controller{
     $this->load->view('header', $header);
 
     $this->load->view('event/show',$data);
+
+    if($this->input->post('save') === "参加する"){
+      $attend["users_id"] = 3;
+
+      $attend ['events_id'] = $id;
+      $this->Attend_model->insert($attend);
+
+      redirect('event/show/'.$id);
+
+    }
+
+
+
+    if($this->input->post('cancel') === "参加を取り消す")
+    {
+      $user_id =  3;
+      $this->Attend_model->delete($user_id,$id);
+
+      redirect('event/show/'.$id);
+    }
   }
 
 //編集画面
