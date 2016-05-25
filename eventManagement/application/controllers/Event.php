@@ -36,7 +36,7 @@ class Event extends CI_Controller{
      $this->pagination->initialize($config);
 
      $header['title'] = 'イベント一覧';
-     $this->load->view('head');
+     //$this->load->view('head');
      $this->load->view('header', $header);
      $this->load->view('event/index',$data);
    }
