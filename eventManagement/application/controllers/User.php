@@ -145,7 +145,6 @@ class User extends CI_Controller{
         $data['id'] = $id;
         $data['user'] = $user;
         $this->load->view('user/delete',$data);
-        var_dump($id);
 
         // if ($user == null)
         // {

@@ -29,7 +29,6 @@ class User_model extends CI_Model{
     $query = $this->db->query('SELECT * from groups');
     return $query->result('User_model');
     $test = $query->result('User_model');
-    var_dump($test);
   }
 
   public function insert($user){
