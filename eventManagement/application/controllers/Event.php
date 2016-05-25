@@ -176,24 +176,8 @@ class Event extends CI_Controller{
 
     $this->load->view('event/show',$data);
   }
-<<<<<<< HEAD
 
-  public function show($id){
-    $this->load->model('Event_model');
 
-    $event = $this->Event_model->show_find($id);
-    $attends = $this->Event_model->get_attends($id);
-    $data["event"] = $event;
-    $data["attends"] = $attends;
-    $header['title'] = 'イベント詳細';
-
-    $this->load->view('header', $header);
-
-    $this->load->view('event/show',$data);
-  }
-
-=======
->>>>>>> sato-branch7
 
 //編集画面
   public function edit($id){
@@ -248,32 +232,6 @@ class Event extends CI_Controller{
     }
   }
 
-  //ヴァリデーションチェック及びコメントのfunction
-  //タイトルの空白チェック
-  public function title_check($str){
-
-  	if($str=="" or preg_match("/^[\s ]/", $str)){
-  		$this->form_validation->
-  		set_message('title_check','タイトルを入力してください');
-  		return  FALSE;
-  	}
-	else{
-  	return TRUE;
-	}
-  }
-
-//場所の空白チェック
-  	public function place_check($str){
-
-  		if($str=="" or preg_match("/^[\s ]/", $str)){
-  				$this->form_validation->
-  				set_message('place_check','場所を入力してください');
-  				return  FALSE;
-  			}
-  		else{
-  				return TRUE;
-  			}
-  		}
 
   //ヴァリデーションチェック及びコメントのfunction
   //タイトルの空白チェック
