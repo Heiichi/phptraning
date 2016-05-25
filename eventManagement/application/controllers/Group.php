@@ -10,7 +10,6 @@
           redirect('session/login');
         }
         $this->load->model('Group_model');
-        $this->load->view('head');
         $this->load->library('form_validation');
     }
 

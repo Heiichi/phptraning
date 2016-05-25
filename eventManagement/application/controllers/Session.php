@@ -2,13 +2,12 @@
 class Session extends CI_Controller{
 
   public function login(){
-    $header['title'] = 'ログイン';
 
     //セッションのロード
     session_start();
     //$this->load->library('session');
-
-    $this->load->view('head');
+    $header['title'] = 'ログイン';
+    $this->load->view('head',$header);
     $this->load->model('Session_model');
     $this->load->helper('form');
     $this->load->library('form_validation');
