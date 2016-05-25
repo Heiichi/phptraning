@@ -6,8 +6,8 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-md-12">
-          <h1>イベント編集</h1>
-          <p>イベントの編集が完了しました。</p>
+          <h1>イベント削除</h1>
+          <p>イベントの削除が完了しました。</p>
           <p><a href="<?php echo base_url('event/'); ?>">イベント一覧に戻る</a></p>
         </div>
       </div>
