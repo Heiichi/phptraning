@@ -114,6 +114,15 @@ class Event extends CI_Controller{
 
     $event = $this->Event_model->show_find($id);
     $attends = $this->Event_model->get_attends($id);
+    $current_user = $this->Event_model->get_user();
+    $current_user_attends_event = $this->Event_model->user_attend($id);
+    if($current_user_attends_event ){
+      $data["participate"] = true;
+    }else{
+      $data["participate"] = false;
+    }
+
+    $data["user"] = $current_user;
     $data["event"] = $event;
     $data["attends"] = $attends;
     $header['title'] = 'イベント詳細';
@@ -177,11 +186,21 @@ class Event extends CI_Controller{
 
 
 //編集完了画面
-  	public function edit_done(){
-  			$header['title'] = '編集完了';
-  			$this->load->view('header', $header);
-  			$this->load->view('event/edit_done');
-  		}
+	public function edit_done(){
+			$header['title'] = '編集完了';
+			$this->load->view('header', $header);
+			$this->load->view('event/edit_done');
+	}
+
+  public function delete($id){
+    $this->load->model('Event_model');
+
+    $this->Event_model->delete($id);
+
+    $header['title'] = 'イベントの削除完了';
+    $this->load->view('header', $header);
+    $this->load->view('event/delete_done');
+  }
 
     public function validation(){
       if($this->form_validation->run()){

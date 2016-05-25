@@ -6,7 +6,6 @@
 
 			<?php foreach ($event as $value ):?>
       <?php echo form_open(); ?>
-      <form method="post" action="">
                 <div class="form-group">
                     <?php echo form_label('タイトル(必須)','title'); ?>
                     <?php echo form_input('title',set_value('title',$value->title),'class="form-control" placeholder="必須"'); ?>
@@ -60,23 +59,7 @@
                 <?php echo form_submit('edit','編集','class="btn btn-success"');?>
                 <?php echo form_close(); ?>
 							<?php endforeach; ?>
-                <!-- モーダルウィンドウを呼び出すボタン -->
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">登録</button>
-
-                <!-- モーダルウィンドウの中身 -->
-                <div class="modal fade" id="myModal">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-
-                      <div class="modal-body">本当に削除してよろしいですか?</div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-success">OK</button>
-                       </div>
-                    </div>
-                  </div>
-                </div>
-            </form>
+      
         </div>
 
 

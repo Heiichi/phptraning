@@ -43,8 +43,11 @@
 
   public function show_find($id){
     $sql =
-      "select title, start, end, place, g.name as g_name , detail, u.name as u_name, e.group_id from events as e
-      inner join groups as g on e.group_id = g.id inner join users as u ON e.registered_by = u.id where e.id =?";
+      "select title, start, end, place, g.name as g_name ,
+      detail, u.name as u_name, e.group_id,e.id ,registered_by from events as e
+      inner join groups as g on e.group_id = g.id
+      inner join users as u ON e.registered_by = u.id
+       where e.id =?";
 
     $query = $this->db->query($sql,array($id));
     return $query->result('Event_model');
@@ -81,5 +84,32 @@
     $this->db->where('id', $id);
     $this->db->update('events', $update);
   }
+
+  public function delete($id){
+    $sql = "DELETE FROM events WHERE id=?";
+
+ 		$query = $this->db->query($sql,array($id));
   }
+
+  //後の削除してください
+  public function get_user(){
+    $query = $this->db->query("
+      select u_t.name , registered_by from users as u
+        inner join user_types as u_t on u.type_id = u_t.id
+          inner join events as e on e.registered_by = u.id
+            where u.id = 3 limit 1"
+      );
+    return $query->result('Event_model');
+  }
+
+  public function user_attend($id){
+    $sql = "
+      select events_id from attends as a
+        inner join users as u on a.users_id = u.id
+        inner join events as e on a.events_id = e.id
+        where u.id = 3 and a.events_id = ?";
+  	$query = $this->db->query($sql,array($id));
+    return $query->result('Event_model');
+  }
+}
 ?>
