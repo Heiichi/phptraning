@@ -86,7 +86,7 @@
   }
 
   public function delete($id){
-    $sql = "DELETE FROM events WHERE id=?";
+    $sql = "DELETE FROM  events where id = ?";
 
  		$query = $this->db->query($sql,array($id));
   }
