@@ -56,15 +56,16 @@
 
   <?php endif; ?>
   <?php echo form_close(); ?>
-  <?php foreach ($user as $u) :?>
-  	<?php if($u->name === "admin" || $u->registered_by === $value->registered_by ): ?>
+
+
+  	<?php if($user === 2 || $registered_by ): ?>
   		<a href="<?php echo base_url('event/edit/'. $value->id); ?>"><input class="btn btn-default" type="submit" value="編集"></a>
   		<a class="btn btn-default" href="#" role="button" data-toggle="modal" data-target="#myModal">
   				削除
   		</a>
   	<?php endif; ?>
 
-  <?php endforeach; ?>
+
 
 
 
