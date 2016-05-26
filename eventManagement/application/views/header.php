@@ -43,6 +43,11 @@
               <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
               <?php echo $_SESSION['name']; ?><span class="caret"></span></a>
   					<ul class="dropdown-menu" role="menu">
+            <?php if($_SESSION['type_id'] == 2): ?>
+              <li><a href="<?php echo base_url('post/post'); ?>">連絡事項</a></li>
+            <?php else: ?>
+              <li><a href="<?php echo base_url('post/information'); ?>">お知らせ</a></li>
+            <?php endif; ?>
   						<li><a href="<?php echo base_url('Session/logout'); ?>">ログアウト</a></li>
   					</ul>
   				</li>

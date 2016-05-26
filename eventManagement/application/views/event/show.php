@@ -48,6 +48,8 @@
   </table>
   <a href="<?php echo base_url('event/'); ?>"><button type="button" class="btn btn-primary" data-dismiss="modal">一覧に戻る</button></a>
 
+
+  <div id="c">
   <?php echo form_open(); ?>
   <?php if(!$participate): ?>
   	<span><?php echo form_submit('save','参加する','class="btn btn-success"');?></span>
@@ -56,6 +58,8 @@
 
   <?php endif; ?>
   <?php echo form_close(); ?>
+</div>
+
 
 
   	<?php if($user === 2 || $registered_by ): ?>
