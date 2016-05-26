@@ -9,7 +9,7 @@
             <!-- form custom style -->
       <h1><strong>イベント登録</strong></h1>
       <?php echo form_open(); ?>
-
+      <form method="post" action="">
                 <div class="form-group">
                     <?php echo form_label('タイトル(必須)','title'); ?>
                     <?php echo form_input('title',set_value('title'),'class="form-control" placeholder="必須"'); ?>
@@ -59,11 +59,10 @@
                 <?php echo form_submit('cancel','キャンセル','class="btn btn-default"');?>
                 <?php echo form_submit('add','登録','class="btn btn-success"');?>
                 <?php echo form_close(); ?>
-                <!-- モーダルウィンドウを呼び出すボタン -->
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">登録</button>
 
-
-
+                  </div>
+                </div>
+            </form>
         </div>
 
 
