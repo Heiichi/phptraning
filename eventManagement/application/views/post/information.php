@@ -18,6 +18,7 @@
                 <th>送信時間</th>
               </tr>
             </thead>
+
             <tbody>
               <?php foreach($posts as $post): ?>
                 <tr>

@@ -3,6 +3,7 @@ class Group_model extends CI_Model{
   public $id;
   public $name;
 
+  
   public function find_all($page,$num_per_page){
     $offset = ($page - 1) * $num_per_page;
 

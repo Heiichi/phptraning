@@ -8,7 +8,10 @@
    <div class="col-md-9">
             <!-- form custom style -->
       <h1><strong>連絡事項</strong></h1>
+
       <?php echo form_open(); ?>
+
+      <?php $options[0] = ''; ?>
         <?php foreach ($users as $user): ?>
           <?php $options[$user->id] = $user->name; ?>
         <?php endforeach; ?>
@@ -16,6 +19,18 @@
         <div class="form-group">
             <label>送信相手</label>
             <?php echo form_dropdown('user',$options,$selected,'class="form-control"'); ?>
+        </div>
+
+        <?php $g_options[0] = ''; ?>
+        <?php foreach ($groups as $group): ?>
+          <?php $g_options[$group->id] = $group->name; ?>
+        <?php endforeach; ?>
+
+        <!-- value値未設定 -->
+        <div class="form-group">
+            <label>対象グループ</label>
+            <?php echo form_dropdown('group',$g_options,$g_selected,'class="form-control"'); ?>
+
          </div>
 
          <div class="form-group">

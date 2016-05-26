@@ -14,9 +14,14 @@
     }
 
     public function post(){
+      $this->load->model("Event_model");
       $this->load->model('admin/User_model');
       $this->load->model('admin/Post_model');
       $this->load->library('form_validation');
+
+      $groups = $this->Event_model->get_groups();
+      $data['groups'] = $groups;
+      $data['g_selected'] = '';
       $user_id = $_SESSION["id"];
       $data['selected'] = '';
       $users = $this->User_model->find_all($user_id);
@@ -24,10 +29,15 @@
 
       if($this->input->method() == 'post'){
           if($this->input->post('post') === "送信"){
+
             $data['selected'] = $this->input->post('user');
+            $data['g_selected'] = $this->input->post('group');
+
+
             $post['users_id'] = $_SESSION['id'];
             $post['other_user_id'] = $this->input->post('user');
             $post['created'] = date('Y-m-d H:i:s');
+            $post['group_id'] =  $this->input->post('group');
 
 
             $this->form_validation->set_rules('title','タイトル','required|callback_title_check');
@@ -82,11 +92,12 @@
     }
 
     $other_user_id = $_SESSION['id'];
+    $other_user_group_id = $_SESSION['group_id'];
 
-    $posts = $this->Post_model->get_message($other_user_id,intval($page),self::NUM_PER_PAGE);
+    $posts = $this->Post_model->get_message($other_user_id,$other_user_group_id,intval($page),self::NUM_PER_PAGE);
 
     $config['base_url'] = base_url('post/information');
-    $config['total_rows'] = $this->Post_model->get_count();
+    $config['total_rows'] = $this->Post_model->get_count($other_user_id);
     $config['per_page'] = self::NUM_PER_PAGE;
     $config['use_page_numbers'] = TRUE;
     $config['prev_link'] = '前のページ';
@@ -98,7 +109,7 @@
     $this->pagination->initialize($config);
 
     $data["posts"] = $posts;
-    
+
 
     $header['title'] = 'お知らせ';
     $this->load->view('header', $header);

@@ -45,6 +45,7 @@
   					<ul class="dropdown-menu" role="menu">
             <?php if($_SESSION['type_id'] == 2): ?>
               <li><a href="<?php echo base_url('post/post'); ?>">連絡事項</a></li>
+              <li><a href="<?php echo base_url('post/information'); ?>">お知らせ</a></li>
             <?php else: ?>
               <li><a href="<?php echo base_url('post/information'); ?>">お知らせ</a></li>
             <?php endif; ?>
