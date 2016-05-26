@@ -24,20 +24,28 @@ class Event extends CI_Controller{
     if(!is_numeric($page)){
       $page = 1;
     }
-     $participate = $this->Event_model->participate($id);
-
-     $data['participate']  =  $participate;
-     $events = $this->Event_model->find_all($page, self::NUM_PER_PAGE);
-     $data["events"] = $events;
-     $config['base_url'] = base_url('event/index');
-     $config['total_rows'] = $this->Event_model->get_count();
-     $config['per_page'] = self::NUM_PER_PAGE;
-     $config['use_page_numbers'] = TRUE;
-     $config['prev_link'] = '前のページ';
-     $config['next_link'] = '次のページ';
-     $config['prev_tag_close'] = ' | ';
-     $config['num_tag_close'] = ' | ';
-     $config['cur_tag_close'] = '</strong> | ';
+      $participate = $this->Event_model->participate($id);
+      $data['participate']  =  $participate;
+      $events = $this->Event_model->find_all($page, self::NUM_PER_PAGE);
+      $data["events"] = $events;
+      $config['base_url'] = base_url('event/index');
+      $config['total_rows'] = $this->Event_model->get_count();
+      $config['per_page'] = self::NUM_PER_PAGE;
+      $config['full_tag_open'] = '<ul class="pagination">';
+      $config['full_tag_close'] = '</ul>';
+      $config['first_link'] = FALSE;
+      $config['last_link'] = FALSE;
+      $config['use_page_numbers'] = TRUE;
+      $config['prev_link'] = '<<';
+      $config['prev_tag_open'] = '<li>';
+      $config['prev_tag_close'] = '</li>';
+      $config['next_link'] = '>>';
+      $config['next_tag_open'] = '<li>';
+      $config['next_tag_close'] = '</li>';
+      $config['cur_tag_open'] = '<li class="active"><a href="">';
+      $config['cur_tag_close'] = '</a></li>';
+      $config['num_tag_open'] = '<li>';
+      $config['num_tag_close'] = '</li>';
      $this->pagination->initialize($config);
 
      $header['title'] = 'イベント一覧';
