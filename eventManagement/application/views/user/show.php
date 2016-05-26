@@ -1,5 +1,5 @@
 <div class="container">
-　　<h1>ユーザ詳細</h1>
+<h1>ユーザ詳細</h1>
   <div class="table-responsive">
     <table class="table table-bordered">
       <div class="row">
@@ -9,14 +9,16 @@
           <th>所属グループ</th>
         </tr>
         <tr>
-          <td>11</td>
-          <td>三上辰夫</td>
-          <td>人事部</td>
+          <td><?php echo$user->id;?></td>
+          <td><?php echo$user->name;?></td>
+          <td><?php echo$user->group_id;?></td>
         </tr>
       </div>
     </table>
-    <a class="btn btn-info" href="index">一覧に戻る</a>
-    <a class="btn btn-default"href="edit">編集</a>
-    <a class="btn btn-danger"href="#">削除</a>
+
+    <a class="btn btn-info" href="<?php echo base_url('user/index')?>">一覧に戻る</a>
+    <a class="btn btn-default" href="<?php echo base_url('user/edit/'.$user->id);?>">編集</a>
+    <a class="btn btn-danger" href="<?php echo base_url('user/delete/'.$user->id);?>">削除</a>
+
   </div>
 </div>
