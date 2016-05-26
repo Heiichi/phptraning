@@ -1,5 +1,5 @@
 <div class="container">
-　　<h1>ユーザ一覧</h1>
+　　<h1>ユーザ編集</h1>
   <div class="row">
     <?php
     $options = array('data-toggle' => 'validator');

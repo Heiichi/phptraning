@@ -8,7 +8,7 @@
         <div class="col-md-12">
           <h1>ユーザ削除</h1>
           <p>ユーザの削除が完了しました。</p>
-          <p><a href="index">ユーザ一覧に戻る</a></p>
+          <p><a href="<?php echo base_url('user/'); ?>">ユーザ一覧に戻る</a></p>
         </div>
       </div>
   </div>
