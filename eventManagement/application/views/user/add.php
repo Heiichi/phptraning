@@ -4,8 +4,8 @@
     <?php
     $options = array('data-toggle' => 'validator');
      echo form_open("User/add",$options); ?>
-      <fieldset class="form-group">
-        <label for="name">氏名<span>*</span></label>
+      <fieldset class="form-group has-feedback">
+        <label for="name" class="control-label">氏名<span>*</span></label>
         <?php $data = array(
           'name' => 'name',
           'id' => 'login',
@@ -15,14 +15,14 @@
           'required' => 'required'
           );
          echo form_input($data); ?>
-          <div class="help-block with-errors"></div>
+         <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+         <div class="help-block with-errors"></div>
       </fieldset>
       <fieldset class="form-group has-feedback">
-        <label for="login_id" class="control-label">ログインID<span>*</span></label>
+        <label for="login_id" class="control-label">ログインID(半角英数字のみ)<span>*</span></label>
         <?php $data = array(
           'name' => 'login_id',
           'type' => 'text',
-          'pattern' => '^[_A-z0-9]{1,}$',
           'id' => 'login',
           'class' => 'form-control',
           'size' => '40',
@@ -32,11 +32,11 @@
           'required' => 'required'
           );
          echo form_input($data); ?>
-            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+          <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
     <div class="help-block with-errors"></div>
       </fieldset>
       <fieldset class="form-group has-feedback">
-        <label for="login_pass">パスワード<span>*</span></label>
+        <label for="login_pass" class="control-label">パスワード<span>*</span></label>
           <?php $data = array(
           'name' => 'login_pass',
           'type' => 'password',
@@ -49,7 +49,8 @@
           'required' =>'required'
           );
          echo form_password($data); ?>
-            <div class="help-block">6文字以上の半角で入力してください。</div>
+          <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+          <div class="help-block">6文字以上の半角英数字で入力してください。</div>
       </fieldset>
       <fieldset class="form-group">
         <label for="group">所属グループ<span>*</span></label>
