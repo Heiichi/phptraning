@@ -48,7 +48,7 @@ class Session extends CI_Controller{
 
   public function logout(){
   	session_start();
-
+  	$header['title'] = 'ログアウト';
   	//セッションを破壊後ログアウト画面に遷移
   	$_SESSION=array();
   	$params=session_get_cookie_params();
@@ -56,8 +56,7 @@ class Session extends CI_Controller{
   	$params["path"],$params["domain"],
   	$params["secure"],$params["httponly"]);
   	session_destroy();
-    $header['title'] = 'ログアウト';
-    $this->load->view('head');
+    $this->load->view('head',$header);
     $this->load->view('Session/logout');
   }
 }

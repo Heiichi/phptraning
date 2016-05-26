@@ -35,7 +35,6 @@
                		'class="form-control" placeholder="必須"');?>
                   <div class="help-block with-errors"><?php echo form_error('place','<p>','</p>');?></div>
             </div>
-
   <!-- 対象グループ -->
             <?php foreach ($groups as $group): ?>
               <?php $options[$group->id] = $group->name; ?>
@@ -46,15 +45,13 @@
   				<?php echo form_dropdown('group',$options,
   						set_value('group',$value->group_id),'class="form-control"'); ?>
             </div>
-
   <!-- 詳細入力 -->
             <div class="form-group">
-              <?php echo form_label('詳細','detail'); ?>
-                <?php echo form_textarea('detail',
-                		set_value('detail',$value->detail),'cols="20" rows="6" class="form-control" rows="3" placeholder="100文字まで。"');?>
-                 <div class="help-block with-errors"><?php echo form_error('detail','<p>','</p>');?></div>
-            </div>
-
+            <?php echo form_label('詳細','detail'); ?>
+              <?php echo form_textarea('detail',
+                  set_value('detail',$value->detail),'cols="20" rows="6" class="form-control" rows="3" placeholder="必須"');?>
+               <div class="help-block with-errors"><?php echo form_error('detail','<p>','</p>');?></div>
+          </div>
   <!-- 遷移ボタン -->
                <?php echo form_submit('cancel','キャンセル','class="btn btn-default"');?>
                <?php echo form_submit('edit','編集','class="btn btn-success"');?>
