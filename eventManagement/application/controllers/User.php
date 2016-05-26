@@ -47,11 +47,6 @@ class User extends CI_Controller{
     $this->load->view('user/index',$data);
    }
 
-   public function show(){
-    $header['title'] = 'ユーザ詳細';
-    $this->load->view('header', $header);
-    $this->load->view('user/show');
-   }
    public function add(){
 
     //キャンセルされたときの処理
@@ -161,12 +156,16 @@ class User extends CI_Controller{
     $this->load->view('user/delete_done');
    }
 
+   public function show($id){
 
-  public function login(){
-    $header['title'] = 'ログイン';
-    $this->load->view('header', $header);
-    $this->load->view('event_login');
-  }
+   	$header['title'] = 'ユーザ詳細';
+   	$this->load->view('header', $header);
+   	$data['groups'] =$this->user_model->findAllGroups();
 
 
+    $user = $this->user_model->find_by_id($id);
+    $data['id'] = $id;
+    $data['user'] = $user;
+    $this->load->view('user/show',$data);
+   }
 }
