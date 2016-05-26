@@ -4,8 +4,8 @@
     <?php
     $options = array('data-toggle' => 'validator');
      echo form_open("User/edit",$options); ?>
-      <fieldset class="form-group">
-        <label for="name">氏名<span>*</span></label>
+      <fieldset class="form-group has-feedback">
+        <label for="name" class="control-label">氏名<span>*</span></label>
         <?php $data = array(
           'name' => 'name',
           'id' => 'login',
@@ -17,10 +17,11 @@
           'required' => 'required'
           );
          echo form_input($data); ?>
-          <div class="help-block with-errors"></div>
+        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+        <div class="help-block with-errors"></div>
       </fieldset>
-      <fieldset class="form-group">
-        <label for="login_id">ログインID<span>*</span></label>
+      <fieldset class="form-group has-feedback">
+        <label for="login_id" class="control-label">ログインID<span>*</span></label>
         <?php $data = array(
           'name' => 'login_id',
           'type' => 'text',
@@ -30,27 +31,29 @@
           'size' => '40',
           'placeholder' => 'ログインID',
           'value' => $user->login_id,
-          'data-error' =>'入力してください',
           'required' => 'required'
           );
          echo form_input($data); ?>
-            <div class="help-block with-errors"></div>
+          <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+          <div class="help-block with-errors"></div>
       </fieldset>
-      <fieldset class="form-group">
-        <label for="login_pass">パスワード<span>*</span></label>
+      <fieldset class="form-group has-feedback">
+        <label for="login_pass" class="control-label">パスワード<span>*</span></label>
           <?php $data = array(
           'name' => 'login_pass',
           'type' => 'password',
+          'pattern' => '^[a-zA-Z0-9!-/:-@¥[-`{-~]+$',
           'id' => 'login_pass',
           'data-minlength' =>'6',
           'class' => 'form-control',
           'size' => '40',
           'placeholder' => 'パスワード',
-          'data-error' =>'6文字以上入力してください',
+          'value' => $user->login_pass,
           'required' =>'required'
           );
          echo form_password($data); ?>
-            <div class="help-block with-errors"></div>
+          <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+          <div class="help-block">6文字以上の半角英数字で入力してください。</div>
       </fieldset>
       <fieldset class="form-group">
         <label for="group">所属グループ<span>*</span></label>
