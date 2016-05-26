@@ -6,7 +6,17 @@
   font-size: 15px;
   margin-left: 15px;
 }
-
 .margin-50{
   margin: 20px 0 0 0;
+}
+
+/*お遊び*/
+.loginCaution{
+  color: #a94442;
+
+}
+
+#forgetPassword{
+  font-size: 3px;
+  margin-top: 380px;
 }
