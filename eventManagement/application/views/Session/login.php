@@ -1,82 +1,85 @@
-<script>
-$(document).ready(function () {
-	$('#form').submit(function(){
-		$('<input>').attr({
-		    type: 'submit',
-		    name: 'login',
-		}).appendTo('#form');
-	var formData = $('#form').serialize();
-});
-</script>
-
-
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-heading">
       event Manager
     </div>
-          <?php
-          //認証失敗したときのエラーメッセージ
-          if(isset($message)):
-      		echo $message;
-      		endif;?>
- <?php echo form_open();?>
-    <div class="panel-body">
-      <div class="row">
-        <div class="form-group">
-            <div class="col-md-12">
-                            <div class="error"><?php echo form_error('login_id','<p>','</p>')?></div>
-                    <?php
-                    //認証失敗時のログイン入力処理
-                    if(isset($id)){
-                        $login_id = array(
-                    		'name'        => 'login_id',
-                    		'class'       => 'form-control',
-                        	'placeholder' => 'ログインID',
-                    		'data-error'  => 'ログインIDを入力してください',
-                    		'maxlength'   => '50','required',
-                        );
-                        echo form_input($login_id,$id);
-                    }
-                    //初回訪問時のログイン入力処理
-                    else{
-                    $login_id = array(
-                    		'name'        => 'login_id',
-                    		'class'       => 'form-control',
-                    		'placeholder' => 'ログインID',
-                    		'data-error'  => 'ログインIDを入力してください',
-                    		'maxlength'   => '50','required'
-                    );
-                    echo form_input($login_id);
-					}?>
-              <div class="help-block with-errors"></div>
-            </div>
-        </div>
+<h4><FONT color="red">
+<?php
+ //認証失敗したときのエラーメッセージ
+          if(isset($message)):echo $message;endif;?>
+</FONT></h4>
 
-        <div class="form-group">
-            <div class="col-md-12">
-              <div class="error"><?php echo form_error('login_pass','<p>','</p>')?></div>
-                    <?php
-                    //パスワード入力処理
-                        $login_pass = array(
-                    		'name'        => 'login_pass',
-                    		'class'       => 'form-control',
-                        	'placeholder' => 'パスワード',
-                    		'data-error'  => 'パスワードを入力してください',
-                    		'maxlength'   => '255','required');
-                    echo form_password($login_pass); ?>
-              <div class="help-block with-errors"></div>
-            </div>
-        </div>
+<!-- 入力フォーム-->
+ <?php
+ $options = array('data-toggle' => 'validator');
+ echo form_open("session/login",$options);?>
+ <div class="panel-body">
+  <div class="row">
+   <div class="form-group">
+    <div class="col-md-12">
+     <div class="error"><?php echo form_error('login_id','<p>','</p>')?></div>
+
+<?php
+//認証失敗時のログイン入力処理
+   if(isset($id)){
+          $login_id = array(
+                 'name'        => 'login_id',
+                 'class'       => 'form-control',
+                 'placeholder' => 'ログインID',
+                 'data-error'  => 'ログインIDを入力してください(半角英数記号)',
+                 'maxlength'   => '50',
+                 'required'    => 'required',
+                 'pattern' => '^[a-zA-Z0-9!-/:-@¥[-`{-~]+$'
+          		 );
+          echo form_input($login_id,$id);
+     }
+
+//初回訪問時のログイン入力処理
+     else{
+          $login_id = array(
+                 'name'        => 'login_id',
+                 'class'       => 'form-control',
+                 'placeholder' => 'ログインID',
+                 'data-error'  => 'ログインIDを入力してください(半角英数記号)',
+                 'maxlength'   => '50',
+                 'required'    => 'required',
+                 'pattern' => '^[a-zA-Z0-9!-/:-@¥[-`{-~]+$'
+                 );
+           echo form_input($login_id);
+	}?>
+       	<div class="help-block with-errors"></div>
+       </div>
+    </div>
 
 
-        <div class="col-md-12">
-          <?php
-      			  $login = array(
-                    		'name'        => 'login',
-                    		'value'       => 'ログイン',
-      			  			'class'		  => 'btn btn-default btn-primary');
-      				  echo form_submit($login);?>
+   <div class="form-group">
+    <div class="col-md-12">
+     <div class="error"><?php echo form_error('login_pass','<p>','</p>')?></div>
+<?php
+//パスワード入力処理
+      $login_pass = array(
+           		'name'        => 'login_pass',
+           		'class'       => 'form-control',
+           		'placeholder' => 'パスワード',
+                'data-error'  => 'パスワードを入力してください',
+                'maxlength'   => '255',
+                'required'    => 'required'
+                );
+      echo form_password($login_pass); ?>
+       <div class="help-block with-errors"></div>
+     </div>
+    </div>
+
+
+	<div class="col-md-12">
+<?php
+//ログインボタン
+      $login = array(
+                'name'        => 'login',
+                'value'       => 'ログイン',
+      			'class'		  => 'btn btn-default btn-primary'
+      			);
+       echo form_submit($login);?>
         </div>
       </div>
   </div>

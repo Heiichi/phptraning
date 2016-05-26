@@ -5,56 +5,51 @@ class Session extends CI_Controller{
 
     //セッションのロード
     session_start();
-    //$this->load->library('session');
+
     $header['title'] = 'ログイン';
     $this->load->view('head',$header);
     $this->load->model('Session_model');
     $this->load->helper('form');
     $this->load->library('form_validation');
 
-    //空値チェックのみのヴァリデーション
-	$this->form_validation->set_rules('login_id','ログインID','required');
-	$this->form_validation->set_rules('login_pass','パスワード','required');
+	//ログインボタンが押されたときの処理
+    if ($this->input->post('login') ==TRUE){
+    		$id=$this->input->post('login_id');
+    		$pass=$this->input->post('login_pass');
+    		$data=$this->Session_model->getUsers($id,$pass);
+			//$this->output->enable_profiler(TRUE);
 
-
-	//ヴァリデーションが通ったときの処理
-	if($this->form_validation->run()){
-    	$id=$this->input->post('login_id');
-    	$pass=$this->input->post('login_pass');
-    	$data=$this->Session_model->getUsers($id,$pass);
-		//$this->output->enable_profiler(TRUE);
-
-    	//ログインIDとパスが一致したとき
+    //ログインIDとパスが一致したとき
     	if($data==TRUE){
 
     		$_SESSION["login"]=TRUE;
 
     		foreach ($data as $list):
-    		$_SESSION["id"]=$list->id;
-    		$_SESSION['name']=$list->name;
-    		$_SESSION['type_id']=$list->type_id;
-    		$_SESSION['group_id']=$list->group_id;
+    			$_SESSION["id"]=$list->id;
+    			$_SESSION['name']=$list->name;
+    			$_SESSION['type_id']=$list->type_id;
+    			$_SESSION['group_id']=$list->group_id;
     		endforeach;
-    		//var_dump($_SESSION);
-    		//var_dump($data);
-			 redirect('event/index');
+
+			redirect('event/index');
     	}
-    	//ログインIDとパスが一致しなかったとき
+    //ログインIDとパスが一致しなかったとき
     	if($data==FALSE){
-    		$re['id']=$this->input->post('login_id');
-    		$re['message']="ログインIDまたはパスワードが違います";
-    		$this->load->view('Session/login',$re);
+    			$re['id']=$this->input->post('login_id');
+    			$re['message']="ログインIDまたはパスワードが違います";
+    			$this->load->view('Session/login',$re);
     		}
 		}
-		//初回訪問時
-     else{
+	//初回訪問時
+     	else{
     		$this->load->view('Session/login');
-    }
+    	}
   }
 
   public function logout(){
   	session_start();
 
+  	//セッションを破壊後ログアウト画面に遷移
   	$_SESSION=array();
   	$params=session_get_cookie_params();
   	setcookie(session_name(),"",time()-36000,
@@ -65,5 +60,4 @@ class Session extends CI_Controller{
     $this->load->view('head');
     $this->load->view('Session/logout');
   }
-
 }

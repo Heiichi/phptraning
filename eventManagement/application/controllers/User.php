@@ -160,10 +160,10 @@ class User extends CI_Controller{
 
    	$header['title'] = 'ユーザ詳細';
    	$this->load->view('header', $header);
+   	//前ページで受け取ったIDでDB接続
    	$data['groups'] =$this->user_model->findAllGroups();
-
-
     $user = $this->user_model->find_by_id($id);
+
     $data['id'] = $id;
     $data['user'] = $user;
     $this->load->view('user/show',$data);
