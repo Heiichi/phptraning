@@ -45,6 +45,6 @@
         </tr>
       <?php endforeach; ?>
     </table>
-    <a class="btn btn-success" href="<?php echo base_url('user/add'); ?>">ユーザの登録</a>
+    <a class="btn btn-primary" href="<?php echo base_url('user/add'); ?>">ユーザの登録</a>
   </div>
 </div>
