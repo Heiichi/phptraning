@@ -1,4 +1,3 @@
-
 <div class="container">
   <h1 id="show-event">イベント一覧</h1>
   <div id="pages">

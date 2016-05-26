@@ -152,7 +152,7 @@ class Event extends CI_Controller{
     $this->load->view('event/show',$data);
 
     if($this->input->post('save') === "参加する"){
-      $attend["users_id"] = 3;
+      $attend["users_id"] = $_SESSION["id"];
 
       $attend ['events_id'] = $id;
       $this->Attend_model->insert($attend);
@@ -165,7 +165,7 @@ class Event extends CI_Controller{
 
     if($this->input->post('cancel') === "参加を取り消す")
     {
-      $user_id =  3;
+      $user_id =  $_SESSION["id"];
       $this->Attend_model->delete($user_id,$id);
 
       redirect('event/show/'.$id);
@@ -275,7 +275,7 @@ class Event extends CI_Controller{
 
       $event['group_id'] = $this->input->post('group');
 
-      $event['registered_by'] = 2;
+      $event['registered_by'] = $_SESSION["id"];
 
       if($this->input->post('detail') !== ''){
         $event['detail'] = $this->input->post('detail');
