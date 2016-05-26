@@ -16,7 +16,7 @@
         <tr>
           <td><?php echo $group->name; ?></td>
           <td>
-            <a class="btn btn-default" href="#" role="button" data-toggle="modal" data-target="#myModal">
+            <a class="btn btn-danger" href="#" role="button" data-toggle="modal" data-target="#myModal">
                 削除
             </a>
             <!-- モーダルウィンドウの中身 -->
