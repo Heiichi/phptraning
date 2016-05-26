@@ -194,11 +194,11 @@ class Event extends CI_Controller{
 
           $this->Event_model->insert($event);
 
-          $header['title'] = 'グループ登録完了';
+          $header['title'] = 'イベント編集完了';
           $this->load->view('header',$header);
           $this->load->view('event/edit_done');
         }else{
-          $header['title'] = 'イベント登録';
+          $header['title'] = 'イベント編集';
           $this->load->view('header', $header);
           $this->load->view('event/edit',$data);
         }
@@ -210,7 +210,7 @@ class Event extends CI_Controller{
       }
 
     }else{
-      $header['title'] = 'イベント登録';
+      $header['title'] = 'イベント編集';
       $this->load->view('header', $header);
       $this->load->view('event/edit',$data);
     }
@@ -289,7 +289,7 @@ class Event extends CI_Controller{
   }
 
     public function time_check($str){
-      if(!preg_match("/^\d{4}-\d{1,2}-\d{1,2} \d{0,2}:\d{0,2}:?\d{0,2}/",$str)){
+      if(!preg_match("/^\d{4}-\d{2}-\d{2}[\s ]\d{2}:\d{2}:\d{2}$/",$str)){
         $this->form_validation
           ->set_message('time_check','形式は0000-00-00 00:00:00で入力してください。');
         return false;
