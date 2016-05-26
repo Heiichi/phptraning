@@ -83,7 +83,7 @@
       }
   }
 
-  public function information($page = 0){
+  public function information($page = ''){
     $this->load->model('admin/user_model');
     $this->load->model('admin/Post_model');
 
@@ -94,10 +94,9 @@
     $other_user_id = $_SESSION['id'];
     $other_user_group_id = $_SESSION['group_id'];
 
-    $posts = $this->Post_model->get_message($other_user_id,$other_user_group_id,intval($page),self::NUM_PER_PAGE);
-
+    $posts = $this->Post_model->get_message($other_user_id,$other_user_group_id,$page,self::NUM_PER_PAGE);
     $config['base_url'] = base_url('post/information');
-    $config['total_rows'] = $this->Post_model->get_count($other_user_id);
+    $config['total_rows'] = $this->Post_model->get_count($other_user_id,$other_user_group_id);
     $config['per_page'] = self::NUM_PER_PAGE;
     $config['use_page_numbers'] = TRUE;
     $config['prev_link'] = '前のページ';
