@@ -136,4 +136,6 @@ class User extends CI_Controller{
     $data['user'] = $user;
     $this->load->view('user/show',$data);
    }
+
+
 }

@@ -1,6 +1,12 @@
 <?php
 class User_model extends CI_Model{
 
+  public function find_all($id){
+    $sql = "SELECT * FROM users  WHERE NOT id = ?";
+    $query = $this->db->query($sql, array($id));
+    return $query->result('User_model');
+  }
+
   public function find_UserGroupIdEqualGroupsid(){
     $query = $this->db->query('SELECT users.name as uname,users.id,groups.name as name FROM users inner join groups on users.group_id = groups.id' );
     return $query->result('User_model');
@@ -53,5 +59,7 @@ class User_model extends CI_Model{
   public function delete($id){
     $this->db->delete('users', array('id' => $id));
   }
+
+
 }
  ?>

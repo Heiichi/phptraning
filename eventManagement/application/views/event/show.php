@@ -42,31 +42,23 @@
   				<?php endforeach; ?>
   			</td>
       </tr>
-
-
   	</tbody>
   </table>
-
-  <a><?php echo form_open(); ?>
+  <a id="c"><?php echo form_open(); ?>
   <?php if(!$participate): ?>
   <?php echo form_submit('save','参加する','class="btn btn-success"');?>
   <?php else:?>
   	<?php echo form_submit('cancel','参加を取り消す','class="btn btn-success"');?>
-
   <?php endif; ?>
   <?php echo form_close(); ?></a>
 
   <div class="margin-50">
     <a href="<?php echo base_url('event/'); ?>"><button type="button" class="btn btn-primary">一覧に戻る</button></a>
-  	<?php if($user === 2 || $registered_by ): ?>
+  	<?php if($user === '2' || $registered_by ): ?>
   		<a href="<?php echo base_url('event/edit/'. $value->id); ?>" ><button class="btn btn-info">編集</button></a>
   		<button class="btn btn-danger" href="#" role="button" data-toggle="modal" data-target="#myModal">削除</button>
   	<?php endif; ?>
   </div>
-
-
-
-
 
   <!-- モーダルウィンドウの中身 -->
   <div class="modal fade" id="myModal">
