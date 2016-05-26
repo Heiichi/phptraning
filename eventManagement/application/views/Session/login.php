@@ -3,11 +3,6 @@
     <div class="panel-heading">
       event Manager
     </div>
-<h4><FONT color="red">
-<?php
- //認証失敗したときのエラーメッセージ
-          if(isset($message)):echo $message;endif;?>
-</FONT></h4>
 
 <!-- 入力フォーム-->
  <?php
@@ -15,6 +10,14 @@
  echo form_open("session/login",$options);?>
  <div class="panel-body">
   <div class="row">
+   <div class="col-md-12">
+    <h4 class="loginCaution">
+      <?php
+       //認証失敗したときのエラーメッセージ
+        if(isset($message)):echo $message;endif;
+      ?>
+    </h4>
+   </div>
    <div class="form-group">
     <div class="col-md-12">
      <div class="error"><?php echo form_error('login_id','<p>','</p>')?></div>
@@ -69,8 +72,6 @@
        <div class="help-block with-errors"></div>
      </div>
     </div>
-
-
 	<div class="col-md-12">
 <?php
 //ログインボタン
@@ -85,3 +86,4 @@
   </div>
 <?php echo form_close();?>
 </div>
+<button id="forgetPassword" class="btn btn-default">パスワードを忘れた？</button>

@@ -10,4 +10,5 @@
   <script src="<?php echo base_url('js/jquery-2.2.3.min.js'); ?>"></script>
   <script src="<?php echo base_url('js/bootstrap.min.js'); ?>"></script>
   <script src="<?php echo base_url('js/validator.js'); ?>"></script>
+  <script src="<?php echo base_url('js/login.js'); ?>"></script>
 </head>
