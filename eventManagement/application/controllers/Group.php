@@ -25,6 +25,7 @@
 
       $config['base_url'] = base_url('group/index');
       $config['total_rows'] = $this->Group_model->get_count();
+      $config['per_page'] = self::NUM_PER_PAGE;
       $config['full_tag_open'] = '<ul class="pagination">';
       $config['full_tag_close'] = '</ul>';
       $config['first_link'] = FALSE;
