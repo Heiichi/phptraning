@@ -79,7 +79,7 @@
                 $options = array(
                   'class' => 'btn btn-success',
                   'name' => 'save');
-                echo form_submit($options,'登録'); ?>
+                echo form_submit($options,'保存'); ?>
                 <?php echo form_close(); ?>
           </div>
         </div>

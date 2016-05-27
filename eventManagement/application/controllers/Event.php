@@ -6,10 +6,10 @@ class Event extends CI_Controller{
   public function __construct()
     {
         parent::__construct();
-        session_start();
-        if($_SESSION['login'] != TRUE){
-          redirect('session/login');
-        }
+        if($this->session->userdata("is_logged_in") && $this->session->userdata("status") == "1"){//ログインしている場合の処理
+	      }else{
+		      redirect ("sessions/restricted");
+	      }
         $this->load->model('Event_model');
         $this->load->library('form_validation');
     }
@@ -18,6 +18,7 @@ class Event extends CI_Controller{
    public function index($page=''){
      $this->load->library('pagination');
      $id = $_SESSION['id'];
+     var_dump($_SESSION);
 
 
 
@@ -161,11 +162,12 @@ class Event extends CI_Controller{
 
 
     $data['registered_by'] = $registered_by;
+    $user_id = $_SESSION['id'];
 
 
 
     $current_user = $_SESSION["type_id"];
-    $current_user_attends_event = $this->Event_model->user_attend($id);
+    $current_user_attends_event = $this->Event_model->user_attend($user_id,$id);
     if($current_user_attends_event ){
       $data["participate"] = true;
     }else{
@@ -205,53 +207,51 @@ class Event extends CI_Controller{
 //編集画面
   public function edit($id){
 
+  	$header['title'] = 'イベント編集';
     $this->load->model('Event_model');
     $this->load->library('form_validation');
     $groups = $this->Event_model->get_groups();
     $data['groups'] = $groups;
     $event = $this->Event_model->show_find($id);
     $data["event"] = $event;
+
     $edit = $this->input->post('edit');
     $cancel = $this->input->post('cancel');
 
+    //編集ボタンが押されたとき
     if($this->input->method() == 'post'){
       if($edit === "編集"){
-
         $data['selected'] = $this->input->post('group');
 
         $event = $this->validation();
-        if($event != false){
-
-          $this->Event_model->insert($event);
-
-          $header['title'] = 'イベント編集完了';
-          $this->load->view('header',$header);
+     //ヴァリデーションが通ったとき
+        if($event ==TRUE){
+          $this->Event_model->update($event,$id);
+		  $this->load->view('header',$header);
           $this->load->view('event/edit_done');
-        }else{
-          $header['title'] = 'イベント編集';
+        }
+    //ヴァリデーションが通らなかったとき
+        else{
           $this->load->view('header', $header);
           $this->load->view('event/edit',$data);
         }
       }
+   //キャンセルボタンが押されたとき
       if($cancel === "キャンセル"){
 
         redirect('event/');
-
       }
-
-    }else{
-      $header['title'] = 'イベント編集';
+    }
+    //初回訪問時
+    else{
       $this->load->view('header', $header);
       $this->load->view('event/edit',$data);
     }
-
   }
-
-
 
 //編集完了画面
   public function edit_done(){
-      $header['title'] = '編集完了';
+      $header['title'] = 'イベント編集完了';
       $this->load->view('header', $header);
       $this->load->view('event/edit_done');
   }
@@ -267,12 +267,14 @@ class Event extends CI_Controller{
     $this->load->view('event/delete_done');
   }
 
+
+
   public function validation(){
 
 
     $this->form_validation->set_rules('title','タイトル','required');
-    $this->form_validation->set_rules('start','開始時間','required|callback_time_check');
-    $this->form_validation->set_rules('end','終了時間','required|callback_time_check');
+    $this->form_validation->set_rules('start','開始日時','required|callback_time_check');
+    $this->form_validation->set_rules('end','終了日時','required|callback_time_check|callback_date_check');
     $this->form_validation->set_rules('place','場所','required');
     $this->form_validation->set_rules('detail','詳細','required|callback_detail_check');
     $this->form_validation->set_message('required','{field}を入力してください。');
@@ -319,14 +321,30 @@ class Event extends CI_Controller{
   }
 
     public function time_check($str){
-      if(!preg_match("/^\d{4}-\d{2}-\d{2}[\s ]\d{2}:\d{2}:\d{2}$/",$str)){
+
+      if(!preg_match("/^\d{4}-\d{0,2}-\d{0,2}[\s ]\d{0,2}:\d{0,2}:?\d{0,2}$/",$str)){
         $this->form_validation
-          ->set_message('time_check','形式は0000-00-00 00:00:00で入力してください。');
+          ->set_message('time_check','形式は西暦-月-日 時:分:秒で入力してください。');
         return false;
       }else{
         return true;
       }
     }
+
+    public function date_check(){
+      $s = $this->input->post('start');
+      $e = $this->input->post('end');
+
+      if($s > $e){
+        $this->form_validation
+          ->set_message('date_check','終了日時は、開始日時よりも後にしてください。');
+        return false;
+      }else{
+        return true;
+      }
+
+    }
+
 
     public function detail_check($str){
       if(!preg_match("/^[\S | \s | あ-ん| ア-ン | ｱ-ﾝ]{0,100}+$/u",$str)){

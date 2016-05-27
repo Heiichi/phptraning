@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/phptraning/eventManagement';
+$config['base_url'] = 'http://localhost/phptraining/phptraning/eventManagement';
 
 /*
 |--------------------------------------------------------------------------
@@ -314,7 +314,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = 'bydKftf8mJzkZq4zD5vccrDgazxNsPdu';
+$config['encryption_key'] = 'dXyKtuo2LXrwW5dhqlO8bLLB121g8C0D';
 
 /*
 |--------------------------------------------------------------------------

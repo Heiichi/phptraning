@@ -23,7 +23,7 @@
 
   <!-- 終了日時入力 -->
           <div class="form-group">
-            <?php echo form_label('終了日時','end'); ?>
+            <?php echo form_label('終了日時(必須)','end'); ?>
               <?php echo form_input('end',set_value('end',$value->end),
               		'class="form-control" placeholder="0000-00-00 00:00:00"');?>
                  <div class="help-block with-errors"><?php echo form_error('end','<p>','</p>');?></div>
@@ -48,16 +48,26 @@
   <!-- 詳細入力 -->
             <div class="form-group">
             <?php echo form_label('詳細','detail'); ?>
-              <?php echo form_textarea('detail',
-                  set_value('detail',$value->detail),'cols="20" rows="6" class="form-control" rows="3" placeholder="必須"');?>
+              <?php
+              $detail = array(
+              		'name'        => 'detail',
+              		'value'       => $value->detail,
+              		'cols'        => '20',
+              		'rows'        => '6',
+              		'class'		  => 'form-control',
+              		'placeholder' => '必須'
+              );
+              echo form_textarea($detail);
+             // echo form_textarea('detail',
+                 // set_value('detail',$value->detail),'cols="20" rows="6" class="form-control" rows="3" placeholder="必須"');?>
                <div class="help-block with-errors"><?php echo form_error('detail','<p>','</p>');?></div>
           </div>
   <!-- 遷移ボタン -->
                <?php echo form_submit('cancel','キャンセル','class="btn btn-default"');?>
-               <?php echo form_submit('edit','編集','class="btn btn-success"');?>
+               <?php echo form_submit('edit','保存','class="btn btn-primary"');?>
 
   	<?php endforeach; ?>
-   <?php echo form_close(); ?>
+   <?php echo form_close();?>
   </div>
 </div>
 </body>

@@ -1,15 +1,10 @@
 <?php foreach($registered_by as $r_user): ?>
   <?php $register = $r_user->registered_by;  ?>
 <?php endforeach; ?>
-
 <?php $check = []; ?>
 <?php  foreach($participate as $value):?>
   <?php $check[] = $value->events_id; ?>
 <?php endforeach;?>
-
-
-
-
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-heading">

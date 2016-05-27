@@ -49,7 +49,7 @@
             <?php else: ?>
               <li><a href="<?php echo base_url('post/information'); ?>">お知らせ</a></li>
             <?php endif; ?>
-  						<li><a href="<?php echo base_url('Session/logout'); ?>">ログアウト</a></li>
+  						<li><a href="<?php echo base_url('Sessions/logout'); ?>">ログアウト</a></li>
   					</ul>
   				</li>
   			</ul>

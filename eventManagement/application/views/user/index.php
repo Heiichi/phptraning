@@ -23,7 +23,7 @@
                 <td><?php echo $user->id; ?></td>
                 <td><?php echo $user->uname; ?></td>
                 <td><?php echo $user->name; ?></td>
-                <td><a class="btn btn-primary" href="<?php echo base_url('user/show/'.$user->id); ?>">詳細</a></td>
+                <td><a class="btn btn-default" href="<?php echo base_url('user/show/'.$user->id); ?>">詳細</a></td>
                 <td>
                   <a class="btn btn-danger" href="#" role="button" data-toggle="modal" data-target="#userModal">削除
                   </a>

@@ -7,7 +7,7 @@
   		<?php foreach ($event as $value) :?>
 
   		<tr>
-  			<th>タイトル</th>
+  			<th class="col-xs-2">タイトル</th>
   			<td><?php echo $value->title; ?><?php if($participate): ?><span class="label label-info spanlabel">参加</span><?php endif; ?></td>
   		</tr>
   		<tr>
@@ -40,15 +40,18 @@
   				<?php foreach ($attends as $san):?>
   					<?php echo $san->name;?>
   				<?php endforeach; ?>
+          <?php echo $value->u_name;?>
   			</td>
       </tr>
   	</tbody>
   </table>
   <a id="c"><?php echo form_open(); ?>
+    <?php if(!$registered_by ): ?>
   <?php if(!$participate): ?>
   <?php echo form_submit('save','参加する','class="btn btn-success"');?>
   <?php else:?>
   	<?php echo form_submit('cancel','参加を取り消す','class="btn btn-success"');?>
+  <?php endif; ?>
   <?php endif; ?>
   <?php echo form_close(); ?></a>
 

@@ -2,7 +2,7 @@
   class Attend_model extends CI_Model{
 
     public $id;
-    public  $users_id;
+    public $users_id;
     public $events_id;
 
     public function insert($attend){
