@@ -5,10 +5,10 @@
     public function __construct()
     {
         parent::__construct();
-        session_start();
-        if($_SESSION['login'] != TRUE){
-          redirect('session/login');
-        }
+        if($this->session->userdata("is_logged_in")){//ログインしている場合の処理
+	      }else{
+		      redirect ("sessions/restricted");
+	      }
         $this->load->model('Group_model');
         $this->load->library('form_validation');
     }
