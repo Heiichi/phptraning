@@ -64,7 +64,7 @@
           </div>
   <!-- 遷移ボタン -->
                <?php echo form_submit('cancel','キャンセル','class="btn btn-default"');?>
-               <?php echo form_submit('edit','編集','class="btn btn-success"');?>
+               <?php echo form_submit('edit','保存','class="btn btn-primary"');?>
 
   	<?php endforeach; ?>
    <?php echo form_close(); ?>
