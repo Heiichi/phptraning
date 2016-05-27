@@ -6,9 +6,21 @@
   	<tbody>
   		<?php foreach ($event as $value) :?>
 
+        <?php $date_check = $value->end < date('Y-m-d H:i:s'); ?>
+
   		<tr>
   			<th class="col-xs-2">タイトル</th>
-  			<td><?php echo $value->title; ?><?php if($participate): ?><span class="label label-info spanlabel">参加</span><?php endif; ?></td>
+  			<td>
+          <?php if($date_check && $participate ||$date_check &&  $registered_by): ?>
+            <?php echo $value->title; ?><span class="label label-success spanlabel">参加しました</span>
+          <?php elseif($participate || $registered_by): ?>
+            <?php echo $value->title; ?><span class="label label-info spanlabel">参加</span>
+          <?php elseif($date_check): ?>
+            <?php echo $value->title; ?><span class="label label-danger spanlabel">終了</span>
+          <?php else: ?>
+            <?php echo $value->title; ?>
+          <?php endif; ?>
+       </td>
   		</tr>
   		<tr>
   			<th>開始時間</th>
@@ -45,8 +57,8 @@
       </tr>
   	</tbody>
   </table>
-  <a id="c"><?php echo form_open(); ?>
-    <?php if(!$registered_by ): ?>
+<?php echo form_open(); ?>
+    <?php if(!$registered_by && !$date_check  ): ?>
   <?php if(!$participate): ?>
   <?php echo form_submit('save','参加する','class="btn btn-success"');?>
   <?php else:?>

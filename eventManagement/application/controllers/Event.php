@@ -20,9 +20,6 @@ class Event extends CI_Controller{
    public function index($page=''){
      $this->load->library('pagination');
      $id = $_SESSION['id'];
-
-
-
     if(!is_numeric($page)){
       $page = 1;
     }
