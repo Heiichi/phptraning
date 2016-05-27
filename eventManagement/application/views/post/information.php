@@ -1,7 +1,7 @@
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-heading">
-      event Manager
+      お知らせ
     </div>
     <div class="panel-body">
       <div class="row">
@@ -32,7 +32,7 @@
               </tbody>
             </table>
 
-          <p><a href="<?php echo base_url('event/'); ?>">イベント一覧に戻る</a></p>
+          <p><a href="<?php echo base_url('event/'); ?>" class="btn btn-primary">イベント一覧に戻る</a></p>
         </div>
       </div>
   </div>
