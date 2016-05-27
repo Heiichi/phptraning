@@ -272,8 +272,8 @@ class Event extends CI_Controller{
 
 
     $this->form_validation->set_rules('title','タイトル','required');
-    $this->form_validation->set_rules('start','開始時間','required|callback_time_check');
-    $this->form_validation->set_rules('end','終了時間','required|callback_time_check|callback_date_check');
+    $this->form_validation->set_rules('start','開始日時','required|callback_time_check');
+    $this->form_validation->set_rules('end','終了日時','required|callback_time_check|callback_date_check');
     $this->form_validation->set_rules('place','場所','required');
     $this->form_validation->set_rules('detail','詳細','required|callback_detail_check');
     $this->form_validation->set_message('required','{field}を入力してください。');
@@ -336,7 +336,7 @@ class Event extends CI_Controller{
 
       if($s > $e){
         $this->form_validation
-          ->set_message('date_check','終了時刻は、開始時刻よりも後にしてください。');
+          ->set_message('date_check','終了日時は、開始日時よりも後にしてください。');
         return false;
       }else{
         return true;

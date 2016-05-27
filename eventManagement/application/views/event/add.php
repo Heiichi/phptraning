@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="form-group">
-                   <?php echo form_label('終了日時','end'); ?>
+                   <?php echo form_label('終了日時(必須)','end'); ?>
                    <?php echo form_input('end',set_value('end'),'class="form-control" placeholder="西暦-月-日 時:分:秒"');?>
                    <div class="help-block with-errors"><?php echo form_error('end','<p>','</p>');?></div>
                 </div>
