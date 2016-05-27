@@ -7,12 +7,10 @@ class User extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
-        // session_start();
-        // if($_SESSION['login'] != TRUE){
-        //   redirect('session/login');
-        // }elseif($_SESSION['type_id'] == '1'){
-        //   redirect('/event');
-        // }
+        if($this->session->userdata("is_logged_in") && $this->session->userdata("status") == "1"){//ログインしている場合の処理
+        }else{
+          redirect ("sessions/restricted");
+        }
         $this->load->model('admin/user_model');
         $this->load->library('form_validation');
     }
@@ -127,6 +125,18 @@ class User extends CI_Controller{
       $header['title'] = 'ユーザー削除完了';
       $this->load->view('header', $header);
       $this->load->view('user/delete_done');
+   }
+
+   public function ban($id){
+      $user['status'] = 0;
+      $this->user_model->banned($user, $id);
+      redirect('user/');
+   }
+
+    public function reborn($id){
+      $user['status'] = 1;
+      $this->user_model->banned($user, $id);
+      redirect('user/');
    }
    public function show($id){
 

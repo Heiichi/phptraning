@@ -6,7 +6,7 @@ class Event extends CI_Controller{
   public function __construct()
     {
         parent::__construct();
-        if($this->session->userdata("is_logged_in")){//ログインしている場合の処理
+        if($this->session->userdata("is_logged_in") && $this->session->userdata("status") == "1"){//ログインしている場合の処理
 	      }else{
 		      redirect ("sessions/restricted");
 	      }
@@ -18,6 +18,7 @@ class Event extends CI_Controller{
    public function index($page=''){
      $this->load->library('pagination');
      $id = $_SESSION['id'];
+     var_dump($_SESSION);
 
 
 
