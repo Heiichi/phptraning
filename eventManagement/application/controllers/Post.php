@@ -39,7 +39,8 @@
             $post['created'] = date('Y-m-d H:i:s');
             $post['group_id'] =  $this->input->post('group');
 
-
+            $this->form_validation->set_rules('user','送信相手','callback_select_check');
+            $this->form_validation->set_rules('group','対象グループ','callback_select_check');
             $this->form_validation->set_rules('title','タイトル','required|callback_title_check');
             $this->form_validation->set_rules('message','詳細','required|callback_message_check');
             $this->form_validation->set_message('required','{field}を入力してください。');
@@ -113,6 +114,18 @@
     $header['title'] = 'お知らせ';
     $this->load->view('header', $header);
     $this->load->view('post/information',$data);
+
+  }
+
+  public function select_check(){
+
+    if($this->input->post('user') == 0  && $this->input->post('group') == 0){
+      $this->form_validation
+        ->set_message('select_check','送信相手か対象グループを選択してください。');
+      return false;
+    }else{
+      return true;
+    }
 
   }
 
