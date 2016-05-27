@@ -1,7 +1,6 @@
 <?php foreach($registered_by as $r_user): ?>
   <?php $register = $r_user->registered_by;  ?>
 <?php endforeach; ?>
-
 <?php $check = []; ?>
 <?php  foreach($participate as $value):?>
   <?php $check[] = $value->events_id; ?>
@@ -30,13 +29,15 @@
             </tr>
           </thead>
           <tbody>
+
             <?php foreach($events as $event): ?>
+              <?php $date_check = $event->end < date('Y-m-d H:i:s'); ?>
               <tr>
-                <?php if(in_array($event->id,$check,true) || $event->registered_by === $register &&  $event->end < date('Y-m-d')):?>
+                <?php if( $date_check && in_array($event->id,$check,true) ||  $date_check && $event->registered_by === $register):?>
                   <th><?php echo $event->title; ?><span class="label label-success spanlabel">参加しました</span></th>
                 <?php elseif(in_array($event->id,$check,true) || $event->registered_by === $register): ?>
                   <th><?php echo $event->title; ?><span class="label label-info spanlabel">参加</span></th>
-                <?php  elseif($event->end < date('Y-m-d')) :?>
+                <?php  elseif($date_check) :?>
                   <th><?php echo $event->title; ?><span class="label label-danger spanlabel">終了</span></th>
                 <?php else: ?>
                   <th><?php echo $event->title; ?></th>
