@@ -1,9 +1,21 @@
+<?php foreach($registered_by as $r_user): ?>
+  <?php $register = $r_user->registered_by;  ?>
+<?php endforeach; ?>
+
+<?php $check = []; ?>
+<?php  foreach($participate as $value):?>
+  <?php $check[] = $value->events_id; ?>
+<?php endforeach;?>
+
 <div class="container">
   <h1 id="show-event">本日のイベント</h1>
 
   <div id="pages">
       <?php echo $this->pagination->create_links();?>
   </div>
+
+
+
   <table class="table table-bordered" >
     <thead>
       <tr>
@@ -20,7 +32,12 @@
       <?php else: ?>
         <?php foreach($events as $event): ?>
           <tr>
-            <th><?php echo $event->title; ?></th>
+
+            <?php if(in_array($event->id,$check,true) || $event->registered_by === $register): ?>
+              <th><?php echo $event->title; ?><span class="label label-info spanlabel">参加</span></th>
+            <?php else: ?>
+              <th><?php echo $event->title; ?></th>
+            <?php endif; ?>
             <td><?php echo $event->start; ?></td>
             <td><?php echo $event->place; ?></td>
             <td><?php echo $event->name; ?></td>

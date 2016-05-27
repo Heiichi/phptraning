@@ -25,8 +25,11 @@ class Event extends CI_Controller{
       $page = 1;
     }
      $participate = $this->Event_model->participate($id);
+     $registered_by = $this->Event_model->get_registered_by($id);
 
      $data['participate']  =  $participate;
+     $data["registered_by"] = $registered_by;
+     
      $events = $this->Event_model->find_all($page, self::NUM_PER_PAGE);
      $data["events"] = $events;
      $config['base_url'] = base_url('event/index');
@@ -50,10 +53,18 @@ class Event extends CI_Controller{
      $this->load->model("Event_model");
      $this->load->library('pagination');
 
+     $id = $_SESSION['id'];
+
     if(!is_numeric($page)){
       $page = 1;
     }
      $events = $this->Event_model->today_event($page, self::NUM_PER_PAGE);
+
+     $participate = $this->Event_model->participate($id);
+     $registered_by = $this->Event_model->get_registered_by($id);
+
+     $data["registered_by"] = $registered_by;
+     $data['participate']  =  $participate;
 
      $data["events"] = $events;
      $config['base_url'] = base_url('event/event_today');
