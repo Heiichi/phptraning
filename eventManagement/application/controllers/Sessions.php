@@ -40,6 +40,7 @@ class Sessions extends CI_Controller{
         $type_id = $list->type_id;
         $id = $list->id;
         $group_id = $list->group_id;
+        $status = $list->status;
       }
       $data = array(
     		"email" => $this->input->post("email"),
@@ -48,7 +49,8 @@ class Sessions extends CI_Controller{
         "name" => $user_name,
         "type_id" => $type_id,
         "group_id" => $group_id,
-        "id" => $id
+        "id" => $id,
+        "status" => $status
     	);
     	$this->session->set_userdata($data);
   	redirect('event/index');
