@@ -183,53 +183,51 @@ class Event extends CI_Controller{
 //編集画面
   public function edit($id){
 
+  	$header['title'] = 'イベント編集';
     $this->load->model('Event_model');
     $this->load->library('form_validation');
     $groups = $this->Event_model->get_groups();
     $data['groups'] = $groups;
     $event = $this->Event_model->show_find($id);
     $data["event"] = $event;
+
     $edit = $this->input->post('edit');
     $cancel = $this->input->post('cancel');
 
+    //編集ボタンが押されたとき
     if($this->input->method() == 'post'){
       if($edit === "編集"){
-
         $data['selected'] = $this->input->post('group');
 
         $event = $this->validation();
-        if($event != false){
-
-          $this->Event_model->insert($event);
-
-          $header['title'] = 'イベント編集完了';
-          $this->load->view('header',$header);
+     //ヴァリデーションが通ったとき
+        if($event ==TRUE){
+          $this->Event_model->update($event,$id);
+		  $this->load->view('header',$header);
           $this->load->view('event/edit_done');
-        }else{
-          $header['title'] = 'イベント編集';
+        }
+    //ヴァリデーションが通らなかったとき
+        else{
           $this->load->view('header', $header);
           $this->load->view('event/edit',$data);
         }
       }
+   //キャンセルボタンが押されたとき
       if($cancel === "キャンセル"){
 
         redirect('event/');
-
       }
-
-    }else{
-      $header['title'] = 'イベント編集';
+    }
+    //初回訪問時
+    else{
       $this->load->view('header', $header);
       $this->load->view('event/edit',$data);
     }
-
   }
-
-
 
 //編集完了画面
   public function edit_done(){
-      $header['title'] = '編集完了';
+      $header['title'] = 'イベント編集完了';
       $this->load->view('header', $header);
       $this->load->view('event/edit_done');
   }

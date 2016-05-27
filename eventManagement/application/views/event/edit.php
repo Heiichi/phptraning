@@ -48,8 +48,18 @@
   <!-- 詳細入力 -->
             <div class="form-group">
             <?php echo form_label('詳細','detail'); ?>
-              <?php echo form_textarea('detail',
-                  set_value('detail',$value->detail),'cols="20" rows="6" class="form-control" rows="3" placeholder="必須"');?>
+              <?php
+              $detail = array(
+              		'name'        => 'detail',
+              		'value'       => $value->detail,
+              		'cols'        => '20',
+              		'rows'        => '6',
+              		'class'		  => 'form-control',
+              		'placeholder' => '必須'
+              );
+              echo form_textarea($detail);
+             // echo form_textarea('detail',
+                 // set_value('detail',$value->detail),'cols="20" rows="6" class="form-control" rows="3" placeholder="必須"');?>
                <div class="help-block with-errors"><?php echo form_error('detail','<p>','</p>');?></div>
           </div>
   <!-- 遷移ボタン -->
