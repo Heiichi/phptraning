@@ -5,7 +5,7 @@
     <?php
       $options = array('data-toggle' => 'validator');
       echo form_open("sessions/login_validation",$options);
-      echo validation_errors();
+      // echo validation_errors();
     ?>
      <div class="panel-body">
       <div class="row">
