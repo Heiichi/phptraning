@@ -152,11 +152,12 @@ class Event extends CI_Controller{
 
 
     $data['registered_by'] = $registered_by;
+    $user_id = $_SESSION['id'];
 
 
 
     $current_user = $_SESSION["type_id"];
-    $current_user_attends_event = $this->Event_model->user_attend($id);
+    $current_user_attends_event = $this->Event_model->user_attend($user_id,$id);
     if($current_user_attends_event ){
       $data["participate"] = true;
     }else{
@@ -258,12 +259,14 @@ class Event extends CI_Controller{
     $this->load->view('event/delete_done');
   }
 
+
+
   public function validation(){
 
 
     $this->form_validation->set_rules('title','タイトル','required');
     $this->form_validation->set_rules('start','開始時間','required|callback_time_check');
-    $this->form_validation->set_rules('end','終了時間','required|callback_time_check');
+    $this->form_validation->set_rules('end','終了時間','required|callback_time_check|callback_date_check');
     $this->form_validation->set_rules('place','場所','required');
     $this->form_validation->set_rules('detail','詳細','required|callback_detail_check');
     $this->form_validation->set_message('required','{field}を入力してください。');
@@ -296,7 +299,7 @@ class Event extends CI_Controller{
 
       $event['group_id'] = $this->input->post('group');
 
-      $event['registered_by'] = $_SESSION["id"];
+      $event['registered_by'] = $_SESSION["type_id"];
 
       if($this->input->post('detail') !== ''){
         $event['detail'] = $this->input->post('detail');
@@ -310,14 +313,30 @@ class Event extends CI_Controller{
   }
 
     public function time_check($str){
-      if(!preg_match("/^\d{4}-\d{2}-\d{2}[\s ]\d{2}:\d{2}:\d{2}$/",$str)){
+
+      if(!preg_match("/^\d{4}-\d{0,2}-\d{0,2}[\s ]\d{0,2}:\d{0,2}:?\d{0,2}$/",$str)){
         $this->form_validation
-          ->set_message('time_check','形式は0000-00-00 00:00:00で入力してください。');
+          ->set_message('time_check','形式は西暦-月-日 時:分:秒で入力してください。');
         return false;
       }else{
         return true;
       }
     }
+
+    public function date_check(){
+      $s = $this->input->post('start');
+      $e = $this->input->post('end');
+
+      if($s > $e){
+        $this->form_validation
+          ->set_message('date_check','終了時刻は、開始時刻よりも後にしてください。');
+        return false;
+      }else{
+        return true;
+      }
+
+    }
+
 
     public function detail_check($str){
       if(!preg_match("/^[\S | \s | あ-ん| ア-ン | ｱ-ﾝ]{0,100}+$/u",$str)){

@@ -3,7 +3,7 @@
 <!-- ヘッダー-->
 
 
-
+<div class="container">
 <!-- name値 value値 未設定-->
    <div class="col-md-9">
             <!-- form custom style -->
@@ -18,13 +18,13 @@
 
                 <div class="form-group">
                     <?php echo form_label('開始日時(必須)','start'); ?>
-                    <?php echo form_input('start',set_value('start'),'class="form-control" placeholder="0000-00-00 00:00:00"');?>
+                    <?php echo form_input('start',set_value('start'),'class="form-control" placeholder="西暦-月-日 時:分:秒"');?>
                     <div class="help-block with-errors"><?php echo form_error('start','<p>','</p>');?></div>
                 </div>
 
                 <div class="form-group">
                    <?php echo form_label('終了日時','end'); ?>
-                   <?php echo form_input('end',set_value('end'),'class="form-control" placeholder="0000-00-00 00:00:00"');?>
+                   <?php echo form_input('end',set_value('end'),'class="form-control" placeholder="西暦-月-日 時:分:秒"');?>
                    <div class="help-block with-errors"><?php echo form_error('end','<p>','</p>');?></div>
                 </div>
 
@@ -66,5 +66,4 @@
         </div>
 
 
-</body>
-</html>
+</div>
