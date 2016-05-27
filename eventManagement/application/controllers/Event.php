@@ -24,23 +24,33 @@ class Event extends CI_Controller{
     if(!is_numeric($page)){
       $page = 1;
     }
-     $participate = $this->Event_model->participate($id);
-     $registered_by = $this->Event_model->get_registered_by($id);
+      $participate = $this->Event_model->participate($id);
+      $registered_by = $this->Event_model->get_registered_by($id);
 
-     $data['participate']  =  $participate;
-     $data["registered_by"] = $registered_by;
-     
-     $events = $this->Event_model->find_all($page, self::NUM_PER_PAGE);
-     $data["events"] = $events;
-     $config['base_url'] = base_url('event/index');
-     $config['total_rows'] = $this->Event_model->get_count();
-     $config['per_page'] = self::NUM_PER_PAGE;
-     $config['use_page_numbers'] = TRUE;
-     $config['prev_link'] = '前のページ';
-     $config['next_link'] = '次のページ';
-     $config['prev_tag_close'] = ' | ';
-     $config['num_tag_close'] = ' | ';
-     $config['cur_tag_close'] = '</strong> | ';
+      $data['participate']  =  $participate;
+      $data["registered_by"] = $registered_by;
+
+      $events = $this->Event_model->find_all($page, self::NUM_PER_PAGE);
+      $data["events"] = $events;
+      $config['base_url'] = base_url('event/index');
+      $config['total_rows'] = $this->Event_model->get_count();
+      $config['per_page'] = self::NUM_PER_PAGE;
+      $config['full_tag_open'] = '<ul class="pagination">';
+      $config['full_tag_close'] = '</ul>';
+      $config['first_link'] = FALSE;
+      $config['last_link'] = FALSE;
+      $config['use_page_numbers'] = TRUE;
+      $config['prev_link'] = '<<';
+      $config['prev_tag_open'] = '<li>';
+      $config['prev_tag_close'] = '</li>';
+      $config['next_link'] = '>>';
+      $config['next_tag_open'] = '<li>';
+      $config['next_tag_close'] = '</li>';
+      $config['cur_tag_open'] = '<li class="active"><a href="">';
+      $config['cur_tag_close'] = '</a></li>';
+      $config['num_tag_open'] = '<li>';
+      $config['num_tag_close'] = '</li>';
+
      $this->pagination->initialize($config);
 
      $header['title'] = 'イベント一覧';
@@ -205,11 +215,11 @@ class Event extends CI_Controller{
 
           $this->Event_model->insert($event);
 
-          $header['title'] = 'グループ登録完了';
+          $header['title'] = 'イベント編集完了';
           $this->load->view('header',$header);
           $this->load->view('event/edit_done');
         }else{
-          $header['title'] = 'イベント登録';
+          $header['title'] = 'イベント編集';
           $this->load->view('header', $header);
           $this->load->view('event/edit',$data);
         }
@@ -221,7 +231,7 @@ class Event extends CI_Controller{
       }
 
     }else{
-      $header['title'] = 'イベント登録';
+      $header['title'] = 'イベント編集';
       $this->load->view('header', $header);
       $this->load->view('event/edit',$data);
     }
@@ -300,7 +310,7 @@ class Event extends CI_Controller{
   }
 
     public function time_check($str){
-      if(!preg_match("/^\d{4}-\d{1,2}-\d{1,2} \d{0,2}:\d{0,2}:?\d{0,2}/",$str)){
+      if(!preg_match("/^\d{4}-\d{2}-\d{2}[\s ]\d{2}:\d{2}:\d{2}$/",$str)){
         $this->form_validation
           ->set_message('time_check','形式は0000-00-00 00:00:00で入力してください。');
         return false;

@@ -23,8 +23,8 @@
   				<span class="icon-bar"></span>
   				<span class="icon-bar"></span>
   			</button>
-  			<a class="navbar-brand" href="#">
-  				タイトル
+  			<a class="navbar-brand" id="eventmanager">
+  				Event Manager
   			</a>
   		</div>
 
