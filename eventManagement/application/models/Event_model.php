@@ -15,7 +15,7 @@
       $offset = ($page - 1) * $num_per_page;
 
       $sql =
-        "SELECT e.id , title,place,start,g.name,registered_by FROM `events` as e
+        "SELECT e.id , title,place,start,end,g.name,registered_by FROM `events` as e
 
           inner join `groups` as g on e.group_id = g.id where e.status = 1 ORDER BY start, end LIMIT ?,?";
       $query = $this->db->query($sql,array($offset,$num_per_page));
@@ -26,7 +26,7 @@
       $offset = ($page - 1) * $num_per_page;
       $today = date('Y-m-d');
       $sql =
-        "SELECT e.id,title,start,place,g.name,registered_by FROM `events` as e inner join `groups` as g  on e.group_id = g.id where start like '%".$today."%' LIMIT ?,?";
+        "SELECT e.id,title,start,end,place,g.name,registered_by FROM `events` as e inner join `groups` as g  on e.group_id = g.id where start like '%".$today."%' LIMIT ?,?";
       $query = $this->db->query($sql,array($offset,$num_per_page));
       return $query->result("Event_model");
 
