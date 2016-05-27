@@ -6,8 +6,6 @@
 <?php  foreach($participate as $value):?>
   <?php $check[] = $value->events_id; ?>
 <?php endforeach;?>
-
-
 <div class="container">
   <h1 id="show-event">イベント一覧</h1>
   <div id="pages">

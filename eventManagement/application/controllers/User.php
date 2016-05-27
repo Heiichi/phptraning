@@ -7,15 +7,19 @@ class User extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
-        session_start();
-        if($_SESSION['login'] != TRUE){
-          redirect('session/login');
-        }elseif($_SESSION['type_id'] == '1'){
-          redirect('/event');
-        }
+        // session_start();
+        // if($_SESSION['login'] != TRUE){
+        //   redirect('session/login');
+        // }elseif($_SESSION['type_id'] == '1'){
+        //   redirect('/event');
+        // }
         $this->load->model('admin/user_model');
         $this->load->library('form_validation');
     }
+
+  public function members(){
+    $this->load->view("members");
+  }
 
    public function index($page=''){
     $header['title'] = 'ユーザー一覧';
