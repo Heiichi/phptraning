@@ -5,10 +5,12 @@
     public function __construct()
     {
         parent::__construct();
-        if($this->session->userdata("is_logged_in") && $this->session->userdata("status") == "1"){//ログインしている場合の処理
-	      }else{
-		      redirect ("sessions/restricted");
-	      }
+        if($this->session->userdata("status") == "0"){//ログインしている場合の処理
+          redirect("sessions/userbanned");
+        }elseif($this->session->userdata("is_logged_in")){
+        }else{
+          redirect ("sessions/restricted");
+        }
         $this->load->model('Group_model');
         $this->load->library('form_validation');
     }
