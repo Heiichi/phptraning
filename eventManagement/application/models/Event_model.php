@@ -98,13 +98,13 @@
       //  return $query = $this->db->simple_query($sql,array($id,$user_name));
   }
 
-  public function user_attend($id){
+  public function user_attend($user_id,$id){
     $sql = "
       select events_id from attends as a
         inner join users as u on a.users_id = u.id
         inner join events as e on a.events_id = e.id
-        where u.id = 3 and a.events_id = ?";
-  	$query = $this->db->query($sql,array($id));
+        where u.id = ? and a.events_id = ?";
+  	$query = $this->db->query($sql,array($user_id,$id));
     return $query->result('Event_model');
   }
 
