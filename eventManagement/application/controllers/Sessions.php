@@ -26,6 +26,12 @@ class Sessions extends CI_Controller{
   	$this->load->view("sessions/restricted");
   }
 
+  public function userbanned(){
+    $header['title'] = 'banned';
+    $this->load->view('head',$header);
+    $this->load->view("sessions/userbanned");
+  }
+
 
   public function login_validation(){
     $this->load->view('head');
