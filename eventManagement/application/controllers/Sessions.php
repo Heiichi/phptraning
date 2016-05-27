@@ -6,7 +6,8 @@ class Sessions extends CI_Controller{
   }
 
   public function login(){
-    $this->load->view('head');
+    $header['title'] = 'ログイン';
+    $this->load->view('head',$header);
     $this->load->view("sessions/login");
   }
 
@@ -14,13 +15,14 @@ class Sessions extends CI_Controller{
     $this->load->view('head');
     if($this->session->userdata("is_logged_in")){	//ログインしている場合の処理
     $this->load->view("sessions/members");
-  }else{									//ログインしていない場合の処理
+  }else{//ログインしていない場合の処理
     redirect ("sessions/restricted");
   }
   }
 
   public function restricted(){
-    $this->load->view('head');
+    $header['title'] = 'restricted';
+    $this->load->view('head',$header);
   	$this->load->view("sessions/restricted");
   }
 
@@ -57,7 +59,8 @@ class Sessions extends CI_Controller{
 
   public function logout(){
   	$this->session->sess_destroy();
-    $this->load->view('head');
+    $header['title'] = 'ログアウト';
+    $this->load->view('head',$header);
     $this->load->view('Sessions/logout');
   }
 
@@ -67,7 +70,7 @@ class Sessions extends CI_Controller{
   if($this->Sessions_model->canLogIn()){	//ユーザーがログインできたあとに実行する処理
     return true;
   }else{					//ユーザーがログインできなかったときに実行する処理
-    $this->form_validation->set_message("validate_credentials", "ユーザー名かパスワードが異なります。");
+    $this->form_validation->set_message("validate_credentials", "ログインIDかパスワードが異なります。");
     return false;
   }
 }
