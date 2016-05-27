@@ -286,7 +286,7 @@ class Event extends CI_Controller{
 
       $event['group_id'] = $this->input->post('group');
 
-      $event['registered_by'] = $_SESSION["type_id"];
+      $event['registered_by'] = $_SESSION["id"];
 
       if($this->input->post('detail') !== ''){
         $event['detail'] = $this->input->post('detail');
