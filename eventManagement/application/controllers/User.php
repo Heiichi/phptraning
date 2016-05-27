@@ -130,13 +130,13 @@ class User extends CI_Controller{
    public function ban($id){
       $user['status'] = 0;
       $this->user_model->banned($user, $id);
-      redirect('user/');
+      redirect('user/show/'.$id);
    }
 
     public function reborn($id){
       $user['status'] = 1;
       $this->user_model->banned($user, $id);
-      redirect('user/');
+      redirect('user/show/' .$id);
    }
    public function show($id){
 
