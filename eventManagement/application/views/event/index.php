@@ -13,7 +13,7 @@
     <div class="panel-body">
       <div class="row">
 
-       <div class="col-md-9">
+       <div class="col-md-12">
         <h1 id="show-event">イベント一覧</h1>
         <div id="pages">
           <?php echo $this->pagination->create_links();?>

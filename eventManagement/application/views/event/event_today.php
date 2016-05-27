@@ -18,7 +18,7 @@
     <div class="panel-body">
       <div class="row">
 
-       <div class="col-md-9">
+       <div class="col-md-12">
           <h1 id="show-event">本日のイベント</h1>
 
           <div id="pages">
