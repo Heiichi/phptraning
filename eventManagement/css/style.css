@@ -22,7 +22,7 @@
 }
 
 #eventmanager {
-font-family: 'Comic Sans', 'Comic Sans MS';
+  font-family: Avenir-Roman, Avenir; font-weight: 400;
   background: whitesmoke;
   color: rgba(0,0,0,0.6);
  /* text-shadow: 2px 8px 6px rgba(0,0,0,0.2),
