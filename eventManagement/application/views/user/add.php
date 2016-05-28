@@ -67,18 +67,17 @@
                         <div class="help-block with-errors"></div>
                   </fieldset>
                   <?php echo form_hidden("type_id",'1'); ?>
-                  <?php
+                  <!-- <?php
                    $options = array(
                     'class' => 'btn btn-default',
                     'name' => 'cancel');
-                  echo form_submit($options,'キャンセル'); ?>
+                  echo form_submit($options,'キャンセル'); ?> -->
+                  <a class="btn btn-default" type="button" href="javascript:history.back();">キャンセル</a>
                   <?php
                   $options = array(
                     'class' => 'btn btn-success',
                     'name' => 'add');
                   echo form_submit($options,'登録'); ?>
-            <!--       <a class="btn btn-default"href="index" name="cancel">キャンセル</a>
-                  <a class="btn btn-success"href="index" name="add">登録</a> -->
                   <?php echo form_close(); ?>
                   </div>
                 </div>

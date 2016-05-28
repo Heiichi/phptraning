@@ -70,11 +70,7 @@
                       <div class="help-block with-errors"></div>
                 </fieldset>
                 <?php echo form_hidden("id",$id); ?>
-                <?php
-                 $options = array(
-                  'class' => 'btn btn-default',
-                  'name' => 'cancel');
-                echo form_submit($options,'キャンセル'); ?>
+                <a class="btn btn-default" type="button" href="javascript:history.back();">キャンセル</a>
                 <?php
                 $options = array(
                   'class' => 'btn btn-success',
