@@ -14,6 +14,11 @@ class Group_model extends CI_Model{
     return $query->result("Group_model");
   }
 
+  public function get_all_groups(){
+    $query = $this->db->query("SELECT id,name FROM groups WHERE status = 1");
+    return $query->result("Group_model");
+  }
+
   public function get_count(){
     $this->db->where('status','1');
     $this->db->from('groups');

@@ -18,45 +18,68 @@ class Event extends CI_Controller{
 
 
    public function index($page=''){
+     $this->load->model('Group_model');
      $this->load->library('pagination');
      $id = $_SESSION['id'];
     if(!is_numeric($page)){
       $page = 1;
     }
       $participate = $this->Event_model->participate($id);
-      $registered_by = $this->Event_model->get_registered_by($id);
-
       $data['participate']  =  $participate;
+      $registered_by = $this->Event_model->get_registered_by($id);
       $data["registered_by"] = $registered_by;
 
-      $events = $this->Event_model->find_all($page, self::NUM_PER_PAGE);
-      $data["events"] = $events;
-      $config['base_url'] = base_url('event/index');
-      $config['total_rows'] = $this->Event_model->get_count();
-      $config['per_page'] = self::NUM_PER_PAGE;
-      $config['full_tag_open'] = '<ul class="pagination">';
-      $config['full_tag_close'] = '</ul>';
-      $config['first_link'] = FALSE;
-      $config['last_link'] = FALSE;
-      $config['use_page_numbers'] = TRUE;
-      $config['prev_link'] = '<<';
-      $config['prev_tag_open'] = '<li>';
-      $config['prev_tag_close'] = '</li>';
-      $config['next_link'] = '>>';
-      $config['next_tag_open'] = '<li>';
-      $config['next_tag_close'] = '</li>';
-      $config['cur_tag_open'] = '<li class="active"><a href="">';
-      $config['cur_tag_close'] = '</a></li>';
-      $config['num_tag_open'] = '<li>';
-      $config['num_tag_close'] = '</li>';
+      $groups = $this->Group_model->get_all_groups();
+      $data['groups'] = $groups;
+      $data['g_selected'] = '';
 
-     $this->pagination->initialize($config);
+      $places = $this->Event_model->get_all_places();
+      $data['places'] = $places;
+      $data['p_selected'] = '';
 
+      if($this->input->method() == 'post'){
+        $g_id = $this->input->post('group');
+        $p_name = $this->input->post('place');
+        $data['g_selected'] = $this->input->post('group');
+        $data['p_selected'] = $this->input->post('place');
+
+        if($g_id !== "0" && $p_name !== "全て" ){
+
+          $events = $this->Event_model->find_group_place($g_id,$p_name,$page, self::NUM_PER_PAGE);
+          $data["events"] = $events;
+          $count = $this->Event_model->get_group_place_count($g_id,$p_name);
+
+        }elseif($g_id !== "0"){
+
+          $events = $this->Event_model->find_group($g_id,$page, self::NUM_PER_PAGE);
+          $data["events"] = $events;
+          $count = $this->Event_model->get_group_count($g_id);
+
+        }elseif($p_name !== "全て"){
+          $events = $this->Event_model->find_place($p_name,$page, self::NUM_PER_PAGE);
+          $data["events"] = $events;
+          $count = $this->Event_model->get_place_count($p_name);
+
+        }elseif($g_id === "0" && $p_name === "全て" ){
+          $events = $this->Event_model->find_all($page, self::NUM_PER_PAGE);
+          $data["events"] = $events;
+          $count = $this->Event_model->get_count();
+        }
+
+      }else{
+        $events = $this->Event_model->find_all($page, self::NUM_PER_PAGE);
+        $data["events"] = $events;
+        $count = $this->Event_model->get_count();
+      }
+
+
+      $url = base_url('event/index');
+      $this->config_set($url,$count);
      $header['title'] = 'イベント一覧';
-     //$this->load->view('head');
      $this->load->view('header', $header);
      $this->load->view('event/index',$data);
    }
+
 
    public function event_today($page=''){
      $this->load->model("Event_model");
@@ -76,25 +99,15 @@ class Event extends CI_Controller{
      $data['participate']  =  $participate;
 
      $data["events"] = $events;
-     $config['base_url'] = base_url('event/event_today');
-     $config['total_rows'] = $this->Event_model->today_get_count();
-     $config['per_page'] = self::NUM_PER_PAGE;
-     $config['full_tag_open'] = '<ul class="pagination">';
-     $config['full_tag_close'] = '</ul>';
-     $config['first_link'] = FALSE;
-     $config['last_link'] = FALSE;
-     $config['use_page_numbers'] = TRUE;
-     $config['prev_link'] = '<<';
-     $config['prev_tag_open'] = '<li>';
-     $config['prev_tag_close'] = '</li>';
-     $config['next_link'] = '>>';
-     $config['next_tag_open'] = '<li>';
-     $config['next_tag_close'] = '</li>';
-     $config['cur_tag_open'] = '<li class="active"><a href="">';
-     $config['cur_tag_close'] = '</a></li>';
-     $config['num_tag_open'] = '<li>';
-     $config['num_tag_close'] = '</li>';
-     $this->pagination->initialize($config);
+
+     $url = base_url('event/event_today');
+
+     $count = $this->Event_model->today_get_count();
+
+     $config = $this->config_set($url,$count);
+
+
+
      $header['title'] = '本日のイベント';
      $this->load->view('header', $header);
      $this->load->view('event/event_today',$data);
@@ -150,6 +163,7 @@ class Event extends CI_Controller{
 
 
   public function show($id){
+
     $this->load->model('Event_model');
     $this->load->model('Attend_model');
 
@@ -163,8 +177,8 @@ class Event extends CI_Controller{
     $user_id = $_SESSION['id'];
 
 
-
     $current_user = $_SESSION["type_id"];
+
     $current_user_attends_event = $this->Event_model->user_attend($user_id,$id);
     if($current_user_attends_event ){
       $data["participate"] = true;
@@ -175,19 +189,26 @@ class Event extends CI_Controller{
     $data["user"] = $current_user;
     $data["event"] = $event;
     $data["attends"] = $attends;
+
+
     $header['title'] = 'イベント詳細';
 
     $this->load->view('header', $header);
 
+
+
+
+
     $this->load->view('event/show',$data);
 
     if($this->input->post('save') === "参加する"){
+
       $attend["users_id"] = $_SESSION["id"];
 
       $attend ['events_id'] = $id;
       $this->Attend_model->insert($attend);
 
-      redirect('event/show/'.$id);
+
 
     }
 
@@ -198,7 +219,7 @@ class Event extends CI_Controller{
       $user_id =  $_SESSION["id"];
       $this->Attend_model->delete($user_id,$id);
 
-      redirect('event/show/'.$id);
+
     }
   }
 
@@ -351,5 +372,29 @@ class Event extends CI_Controller{
         return false;
       }
       return true;
+    }
+
+    public function config_set($url,$count){
+
+      $config['base_url'] = $url;
+      $config['total_rows'] = $count;
+      $config['per_page'] = self::NUM_PER_PAGE;
+      $config['full_tag_open'] = '<ul class="pagination">';
+      $config['full_tag_close'] = '</ul>';
+      $config['first_link'] = FALSE;
+      $config['last_link'] = FALSE;
+      $config['use_page_numbers'] = TRUE;
+      $config['prev_link'] = '<<';
+      $config['prev_tag_open'] = '<li>';
+      $config['prev_tag_close'] = '</li>';
+      $config['next_link'] = '>>';
+      $config['next_tag_open'] = '<li>';
+      $config['next_tag_close'] = '</li>';
+      $config['cur_tag_open'] = '<li class="active"><a href="">';
+      $config['cur_tag_close'] = '</a></li>';
+      $config['num_tag_open'] = '<li>';
+      $config['num_tag_close'] = '</li>';
+
+      return $this->pagination->initialize($config);
     }
 }

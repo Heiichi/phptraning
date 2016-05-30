@@ -1,5 +1,4 @@
 
-
 <!-- ヘッダー-->
 
 
@@ -57,7 +56,7 @@
                 </div>
 
                 <?php echo form_submit('cancel','キャンセル','class="btn btn-default"');?>
-                <?php echo form_submit('add','登録','class="btn btn-success"');?>
+                <?php echo form_submit('add','登録','id ="submit" class="btn btn-success"');?>
                 <?php echo form_close(); ?>
 
                   </div>
