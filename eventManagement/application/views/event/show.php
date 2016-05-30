@@ -46,6 +46,14 @@
 
 <div id = "k">
 <div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      イベント登録
+    </div>
+    <div class="panel-body">
+      <div class="row">
+  <!-- name値 value値 未設定-->
+ <div class="col-md-12">
   <h1>イベント詳細</h1>
 
   <table class="table">
@@ -141,4 +149,8 @@
 
 
   <?php endforeach; ?>
+</div>
+</div>
+</div>
+</div>
 </div>

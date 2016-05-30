@@ -343,7 +343,7 @@ class Event extends CI_Controller{
 
       if(!preg_match("/^\d{4}-\d{0,2}-\d{0,2}[\s ]\d{0,2}:\d{0,2}:?\d{0,2}$/",$str)){
         $this->form_validation
-          ->set_message('time_check','形式は西暦-月-日 時:分:秒で入力してください。');
+          ->set_message('time_check','形式は西暦-月-日 時:分:秒(半角数字)で入力してください。');
         return false;
       }else{
         return true;
@@ -368,7 +368,7 @@ class Event extends CI_Controller{
     public function detail_check($str){
       if(!preg_match("/^[\S | \s | あ-ん| ア-ン | ｱ-ﾝ]{0,100}+$/u",$str)){
         $this->form_validation
-          ->set_message('detail_check','グループ名は100字以内で入力してください。');
+          ->set_message('detail_check','詳細は100字以内で入力してください。');
         return false;
       }
       return true;
