@@ -1,12 +1,17 @@
-<?php foreach($registered_by as $r_user): ?>
-  <?php $register = $r_user->registered_by;  ?>
-<?php endforeach; ?>
+
 
 <?php $check = []; ?>
 <?php  foreach($participate as $value):?>
   <?php $check[] = $value->events_id; ?>
 <?php endforeach;?>
 
+<?php if($registered_by): ?>
+  <?php foreach($registered_by as $r_user): ?>
+    <?php $register = $r_user->registered_by;  ?>
+  <?php endforeach; ?>
+<?php else: ?>
+  <?php $register = 0; ?>
+<?php endif; ?>
 
 
 <div class="container">
@@ -19,7 +24,7 @@
       <div class="row">
 
        <div class="col-md-12">
-          <h2 id="show-event">本日のイベント</h2>
+          <h1 id="show-event">本日のイベント</h1>
 
           <div id="pages">
               <?php echo $this->pagination->create_links();?>
