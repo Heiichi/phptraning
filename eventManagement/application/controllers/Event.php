@@ -232,15 +232,22 @@ class Event extends CI_Controller{
     $data['groups'] = $groups;
     $event = $this->Event_model->show_find($id);
     $data["event"] = $event;
-    $edit = $this->input->post('edit');
+    $save = $this->input->post('save');
     $cancel = $this->input->post('cancel');
 
+ //キャンセルボタンが押されたとき
+    if($cancel === "キャンセル"){
+    	redirect('event/');
+    }
+
+ //保存ボタンが押されたとき
     if($this->input->method() == 'post'){
-      if($edit === "保存"){
+      if($save === "保存"){
 
         $data['selected'] = $this->input->post('group');
+		$event = $this->validation();
 
-        $event = $this->validation();
+ //ヴァリデーションが通ったとき
         if($event != false){
 
           $this->Event_model->update($event,$id);
@@ -248,24 +255,21 @@ class Event extends CI_Controller{
           $header['title'] = 'イベント編集完了';
           $this->load->view('header',$header);
           $this->load->view('event/edit_done');
-        }else{
+        }
+ //ヴァリデーションに引っかかったとき
+        else{
           $header['title'] = 'イベント編集';
           $this->load->view('header', $header);
           $this->load->view('event/edit',$data);
         }
       }
-      if($cancel === "キャンセル"){
-
-        redirect('event/');
-
-      }
-
-    }else{
+    }
+ //初回訪問の処理
+    else{
       $header['title'] = 'イベント編集';
       $this->load->view('header', $header);
       $this->load->view('event/edit',$data);
     }
-
   }
 
 //編集完了画面
