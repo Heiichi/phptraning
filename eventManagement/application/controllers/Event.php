@@ -37,9 +37,16 @@ class Event extends CI_Controller{
       $data['places'] = $places;
       $data['p_selected'] = '';
 
-      if($this->input->method() == 'post'){
+
+
+
+      if($_SERVER["REQUEST_METHOD"] === 'POST'){
+    
         $g_id = $this->input->post('group');
         $p_name = $this->input->post('place');
+
+
+
         $data['g_selected'] = $this->input->post('group');
         $data['p_selected'] = $this->input->post('place');
 
@@ -48,6 +55,7 @@ class Event extends CI_Controller{
           $events = $this->Event_model->find_group_place($g_id,$p_name,$page, self::NUM_PER_PAGE);
           $data["events"] = $events;
           $count = $this->Event_model->get_group_place_count($g_id,$p_name);
+
 
         }elseif($g_id !== "0"){
 
@@ -219,54 +227,49 @@ class Event extends CI_Controller{
       $user_id =  $_SESSION["id"];
       $this->Attend_model->delete($user_id,$id);
 
-
     }
   }
 
 //編集画面
   public function edit($id){
 
+  	$header['title'] = 'イベント編集';
     $this->load->model('Event_model');
     $this->load->library('form_validation');
     $groups = $this->Event_model->get_groups();
     $data['groups'] = $groups;
     $event = $this->Event_model->show_find($id);
     $data["event"] = $event;
-    $save = $this->input->post('save');
+
+    $edit = $this->input->post('edit');
     $cancel = $this->input->post('cancel');
 
- //キャンセルボタンが押されたとき
-    if($cancel === "キャンセル"){
-    	redirect('event/');
-    }
-
- //保存ボタンが押されたとき
+    //編集ボタンが押されたとき
     if($this->input->method() == 'post'){
-      if($save === "保存"){
-
+      if($edit === "編集"){
         $data['selected'] = $this->input->post('group');
-		$event = $this->validation();
 
- //ヴァリデーションが通ったとき
-        if($event != false){
-
+        $event = $this->validation();
+     //ヴァリデーションが通ったとき
+        if($event ==TRUE){
           $this->Event_model->update($event,$id);
-
-          $header['title'] = 'イベント編集完了';
-          $this->load->view('header',$header);
+		  $this->load->view('header',$header);
           $this->load->view('event/edit_done');
         }
- //ヴァリデーションに引っかかったとき
+    //ヴァリデーションが通らなかったとき
         else{
-          $header['title'] = 'イベント編集';
           $this->load->view('header', $header);
           $this->load->view('event/edit',$data);
         }
       }
+   //キャンセルボタンが押されたとき
+      if($cancel === "キャンセル"){
+
+        redirect('event/');
+      }
     }
- //初回訪問の処理
+    //初回訪問時
     else{
-      $header['title'] = 'イベント編集';
       $this->load->view('header', $header);
       $this->load->view('event/edit',$data);
     }
@@ -345,9 +348,9 @@ class Event extends CI_Controller{
 
     public function time_check($str){
 
-      if(!preg_match("/^\d{4}-\d{2}-\d{2}[\s ]\d{2}:\d{2}$/",$str)){
+      if(!preg_match("/^\d{4}-\d{0,2}-\d{0,2}[\s ]\d{0,2}:\d{0,2}:?\d{0,2}$/",$str)){
         $this->form_validation
-          ->set_message('time_check','形式は西暦-月-日 時:分で入力してください。');
+          ->set_message('time_check','形式は西暦-月-日 時:分:秒で入力してください。');
         return false;
       }else{
         return true;
@@ -372,7 +375,7 @@ class Event extends CI_Controller{
     public function detail_check($str){
       if(!preg_match("/^[\S | \s | あ-ん| ア-ン | ｱ-ﾝ]{0,100}+$/u",$str)){
         $this->form_validation
-          ->set_message('detail_check','詳細は100字以内で入力してください。');
+          ->set_message('detail_check','グループ名は100字以内で入力してください。');
         return false;
       }
       return true;
