@@ -21,7 +21,7 @@ class Event extends CI_Controller{
      $this->load->model('Group_model');
      $this->load->library('pagination');
      $id = $_SESSION['id'];
-    if(!is_numeric($page)){
+    if(!is_numeric($page) || $this->input->method() == 'post'){
       $page = 1;
     }
       $participate = $this->Event_model->participate($id);
@@ -38,6 +38,7 @@ class Event extends CI_Controller{
       $data['p_selected'] = '';
 
       if($_SERVER["REQUEST_METHOD"] === 'POST'){
+
         $g_id = $this->input->post('group');
         $p_name = $this->input->post('place');
 
@@ -46,6 +47,7 @@ class Event extends CI_Controller{
 
         if($g_id !== "0" && $p_name !== "全て" ){
 
+
           $events = $this->Event_model->find_group_place($g_id,$p_name,$page, self::NUM_PER_PAGE);
           $data["events"] = $events;
           $count = $this->Event_model->get_group_place_count($g_id,$p_name);
@@ -53,16 +55,19 @@ class Event extends CI_Controller{
 
         }elseif($g_id !== "0"){
 
+
           $events = $this->Event_model->find_group($g_id,$page, self::NUM_PER_PAGE);
           $data["events"] = $events;
           $count = $this->Event_model->get_group_count($g_id);
 
         }elseif($p_name !== "全て"){
+
           $events = $this->Event_model->find_place($p_name,$page, self::NUM_PER_PAGE);
           $data["events"] = $events;
           $count = $this->Event_model->get_place_count($p_name);
 
         }elseif($g_id === "0" && $p_name === "全て" ){
+
           $events = $this->Event_model->find_all($page, self::NUM_PER_PAGE);
           $data["events"] = $events;
           $count = $this->Event_model->get_count();
