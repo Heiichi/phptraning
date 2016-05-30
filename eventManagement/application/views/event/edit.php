@@ -17,7 +17,7 @@
          <div class="form-group">
            <?php echo form_label('開始日時(必須)','start'); ?>
              <?php echo form_input('start',set_value('start',$value->start),
-             		'class="form-control" placeholder="0000-00-00 00:00:00"');?>
+             		'class="form-control" placeholder="0000-00-00 00:00"');?>
                 <div class="help-block with-errors"><?php echo form_error('start','<p>','</p>');?></div>
          </div>
 
@@ -25,7 +25,7 @@
           <div class="form-group">
             <?php echo form_label('終了日時(必須)','end'); ?>
               <?php echo form_input('end',set_value('end',$value->end),
-              		'class="form-control" placeholder="0000-00-00 00:00:00"');?>
+              		'class="form-control" placeholder="0000-00-00 00:00"');?>
                  <div class="help-block with-errors"><?php echo form_error('end','<p>','</p>');?></div>
           </div>
   <!-- 場所入力 -->

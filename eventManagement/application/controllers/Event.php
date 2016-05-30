@@ -341,9 +341,9 @@ class Event extends CI_Controller{
 
     public function time_check($str){
 
-      if(!preg_match("/^\d{4}-\d{0,2}-\d{0,2}[\s ]\d{0,2}:\d{0,2}:?\d{0,2}$/",$str)){
+      if(!preg_match("/^\d{4}-\d{2}-\d{2}[\s ]\d{2}:\d{2}$/",$str)){
         $this->form_validation
-          ->set_message('time_check','形式は西暦-月-日 時:分:秒で入力してください。');
+          ->set_message('time_check','形式は西暦-月-日 時:分で入力してください。');
         return false;
       }else{
         return true;
