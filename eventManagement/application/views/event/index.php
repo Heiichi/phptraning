@@ -155,7 +155,7 @@
           </tbody>
         </table>
 
-        <a href=""><button id="add" class="btn btn-primary">イベント登録</button></a>
+        <a href="<?php echo base_url('event/add');?>"><button id="add" class="btn btn-primary">イベント登録</button></a>
       </div>
     </div>
   </div>
