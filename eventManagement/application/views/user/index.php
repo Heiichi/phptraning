@@ -4,6 +4,7 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-md-12">
+      <h2>ユーザ一覧</h2>
         <div class="table-responsive">
           <nav>
             <?php echo $this->pagination->create_links(); ?>
