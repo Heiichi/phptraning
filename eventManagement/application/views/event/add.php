@@ -1,12 +1,17 @@
 
+
 <!-- ヘッダー-->
-
-
-<div class="container">
-<!-- name値 value値 未設定-->
-   <div class="col-md-9">
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        イベント登録
+      </div>
+      <div class="panel-body">
+        <div class="row">
+    <!-- name値 value値 未設定-->
+   <div class="col-md-12">
             <!-- form custom style -->
-      <h1><strong>イベント登録</strong></h1>
+      <h1>イベント登録</h1>
       <?php echo form_open(); ?>
       <form method="post" action="">
                 <div class="form-group">
@@ -44,11 +49,6 @@
 
                  </div>
 
-
-
-
-
-
                 <div class="form-group">
                   <?php echo form_label('詳細','detail'); ?>
                   <?php echo form_textarea('detail',set_value('detail'),'cols="20" rows="6" class="form-control" rows="3" placeholder="100文字まで。"');?>
@@ -56,13 +56,13 @@
                 </div>
 
                 <?php echo form_submit('cancel','キャンセル','class="btn btn-default"');?>
-                <?php echo form_submit('add','登録','id ="submit" class="btn btn-success"');?>
+                <?php echo form_submit('add','登録','class="btn btn-success"');?>
                 <?php echo form_close(); ?>
+                </form>
 
                   </div>
                 </div>
-            </form>
+
         </div>
-
-
-</div>
+      </div>
+   </div>
