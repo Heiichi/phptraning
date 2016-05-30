@@ -7,7 +7,7 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-md-12">
-          <h1 id="show-group">グループ一覧</h1>
+          <h2 id="show-group">グループ一覧</h2>
 
           <div id="pages">
             <?php echo $this->pagination->create_links();?>
