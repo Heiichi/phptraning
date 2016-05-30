@@ -226,43 +226,47 @@ class Event extends CI_Controller{
 //編集画面
   public function edit($id){
 
-  	$header['title'] = 'イベント編集';
     $this->load->model('Event_model');
     $this->load->library('form_validation');
     $groups = $this->Event_model->get_groups();
     $data['groups'] = $groups;
     $event = $this->Event_model->show_find($id);
     $data["event"] = $event;
-
-    $edit = $this->input->post('edit');
+    $save = $this->input->post('save');
     $cancel = $this->input->post('cancel');
 
-    //編集ボタンが押されたとき
-    if($this->input->method() == 'post'){
-      if($edit === "編集"){
-        $data['selected'] = $this->input->post('group');
+ //キャンセルボタンが押されたとき
+    if($cancel === "キャンセル"){
+    	redirect('event/');
+    }
 
-        $event = $this->validation();
-     //ヴァリデーションが通ったとき
-        if($event ==TRUE){
+ //保存ボタンが押されたとき
+    if($this->input->method() == 'post'){
+      if($save === "保存"){
+
+        $data['selected'] = $this->input->post('group');
+		$event = $this->validation();
+
+ //ヴァリデーションが通ったとき
+        if($event != false){
+
           $this->Event_model->update($event,$id);
-		  $this->load->view('header',$header);
+
+          $header['title'] = 'イベント編集完了';
+          $this->load->view('header',$header);
           $this->load->view('event/edit_done');
         }
-    //ヴァリデーションが通らなかったとき
+ //ヴァリデーションに引っかかったとき
         else{
+          $header['title'] = 'イベント編集';
           $this->load->view('header', $header);
           $this->load->view('event/edit',$data);
         }
       }
-   //キャンセルボタンが押されたとき
-      if($cancel === "キャンセル"){
-
-        redirect('event/');
-      }
     }
-    //初回訪問時
+ //初回訪問の処理
     else{
+      $header['title'] = 'イベント編集';
       $this->load->view('header', $header);
       $this->load->view('event/edit',$data);
     }
@@ -341,9 +345,9 @@ class Event extends CI_Controller{
 
     public function time_check($str){
 
-      if(!preg_match("/^\d{4}-\d{0,2}-\d{0,2}[\s ]\d{0,2}:\d{0,2}:?\d{0,2}$/",$str)){
+      if(!preg_match("/^\d{4}-\d{2}-\d{2}[\s ]\d{2}:\d{2}$/",$str)){
         $this->form_validation
-          ->set_message('time_check','形式は西暦-月-日 時:分:秒(半角数字)で入力してください。');
+          ->set_message('time_check','形式は西暦-月-日 時:分で入力してください。');
         return false;
       }else{
         return true;

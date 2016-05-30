@@ -22,13 +22,13 @@
 
                 <div class="form-group">
                     <?php echo form_label('開始日時(必須)','start'); ?>
-                    <?php echo form_input('start',set_value('start'),'class="form-control" placeholder="西暦-月-日 時:分:秒"');?>
+                    <?php echo form_input('start',set_value('start'),'class="form-control" placeholder="2016-05-31 15:40"');?>
                     <div class="help-block with-errors"><?php echo form_error('start','<p>','</p>');?></div>
                 </div>
 
                 <div class="form-group">
                    <?php echo form_label('終了日時(必須)','end'); ?>
-                   <?php echo form_input('end',set_value('end'),'class="form-control" placeholder="西暦-月-日 時:分:秒"');?>
+                   <?php echo form_input('end',set_value('end'),'class="form-control" placeholder="2016-05-31 16:10"');?>
                    <div class="help-block with-errors"><?php echo form_error('end','<p>','</p>');?></div>
                 </div>
 
