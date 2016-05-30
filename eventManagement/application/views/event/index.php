@@ -100,7 +100,7 @@
               <?php echo form_dropdown('place',$p_options,$p_selected,'id="group" class="form-control"'); ?>
           </div>
 
-          <p><?php echo form_submit('post','抽出','id="submit" class="btn btn-success"');?></p>
+          <p><?php echo form_submit('post','検索','id="submit" class="btn btn-success"');?></p>
         <?php echo form_close(); ?>
 
 
