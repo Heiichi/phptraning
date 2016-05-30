@@ -48,7 +48,7 @@
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-heading">
-      イベント登録
+      イベント編集
     </div>
     <div class="panel-body">
       <div class="row">
