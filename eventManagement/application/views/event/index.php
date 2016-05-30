@@ -1,49 +1,59 @@
-<script>
+<!-- <script>
   $(
     function (){
 
-      $('form').submit(
+      $('#search').click(
         function(){
 
-          $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+
+
+          $.ajaxPrefilter(function(options) {
+            options.type = 'POST'
             options.async = true;
           });
 
-          var group = document.getElementById('group');
-          var place = document.getElementById('place');
-
-          var gName = group.name;
-          var pName = place.name
+          // var group = document.getElementById('group');
+          // var place = document.getElementById('place');
+          //
+          // var gName = group.name;
+          // var pName = place.name
 
           var gData ={};
           var pData ={};
 
-          var gValue= group.value;
-          var pValue = place.value;
+          // var gValue= group.value;
+          // var pValue = place.value;
 
 
-          // var gName = $('#group').attr('name');
-          // var pName = $('#place').attr('name');
+          var gName = $('#group').attr('name');
+          var pName = $('#place').attr('name');
+
           //
-          // var gData[gName] = $('#group').val();
-          // var pData[pName] = $('#place').val();
+          // gData[gName] = $('#group').val();
+          // pData[pName] = $('#place').val();
+          gValue = $('#group').val();
+          pValue = $('#place').val();
+          var data = { 'group':gValue , 'place':pValue};
 
-          var form = $(this);
 
 
-          $('form').html('<button type="button" class="btn btn-success">送信中...</button>');
+
+
+          $('form').html('<p><button disabled="true" type="button" class="btn btn-success">検索中...</button></p>');
 
           $.ajax({
-              type: form.attr('method'),
-              url: form.attr('action'),
+              type: 'POST',
+              url: 'http://localhost/phptraining8/eventManagement/event/index',
               dataType: 'html',
-              data: {gName:gValue,pName:pValue},
+              data: data,
               timeout: 5000,
             }).done(function(data){
 
-              $('body').html(data);
-            }).fail(function(){
-              alert('エラーが発生しました。更新をしてください。');
+              $('body').load('http://localhost/phptraining8/eventManagement/event/index');
+            }).fail(function(XMLHttpRequest, textStatus, errorThrown){
+              alert("XMLHttpRequest : " + XMLHttpRequest.status);
+              alert("textStatus : " + textStatus);
+              alert("errorThrown : " + errorThrown.message);
             });
 
 
@@ -51,15 +61,22 @@
 
       );
 
+
+
     }
 
   );
-</script>
+</script> -->
 
 
-<!-- <?php foreach($registered_by as $r_user): ?>
+
+<?php if($registered_by): ?>
+<?php foreach($registered_by as $r_user): ?>
   <?php $register = $r_user->registered_by;  ?>
-<?php endforeach; ?> -->
+<?php endforeach; ?>
+<?php else: ?>
+  <?php $register= 0; ?>
+<?php endif; ?>
 <?php $check = []; ?>
 <?php  foreach($participate as $value):?>
   <?php $check[] = $value->events_id; ?>
@@ -84,7 +101,7 @@
       <div class="row">
 
        <div class="col-md-12">
-        <h2 id="show-event">イベント一覧</h2>
+        <h1 id="show-event">イベント一覧</h1>
         <div id="pages">
           <?php echo $this->pagination->create_links();?>
         </div>
@@ -92,15 +109,15 @@
         <?php echo form_open(); ?>
           <div class="form-group">
             <label>所属グループ</label>
-              <?php echo form_dropdown('group',$g_options,$g_selected,'id="place" class="form-control"'); ?>
+              <?php echo form_dropdown('group',$g_options,$g_selected,'id="group" class="form-control"'); ?>
           </div>
 
           <div class="form-group">
             <label>場所</label>
-              <?php echo form_dropdown('place',$p_options,$p_selected,'id="group" class="form-control"'); ?>
+              <?php echo form_dropdown('place',$p_options,$p_selected,'id="place" class="form-control"'); ?>
           </div>
 
-          <p><?php echo form_submit('post','検索','id="submit" class="btn btn-success"');?></p>
+          <p><?php echo form_submit('post','検索','id="search" class="btn btn-success"');?></p>
         <?php echo form_close(); ?>
 
 
@@ -118,13 +135,12 @@
 
             <?php foreach($events as $event): ?>
               <?php $date_check = $event->end < date('Y-m-d H:i:s'); ?>
-              <?php $register = $event->registered_by;  ?>
               <tr>
                 <?php if( $date_check && in_array($event->id,$check,true) ||  $date_check && $event->registered_by === $register):?>
                   <td><?php echo $event->title; ?><span class="label label-success spanlabel">参加しました</span></td>
                 <?php elseif(in_array($event->id,$check,true) || $event->registered_by === $register): ?>
                   <td><?php echo $event->title; ?><span class="label label-info spanlabel">参加</span></td>
-                <?php elseif($date_check) :?>
+                <?php  elseif($date_check) :?>
                   <td><?php echo $event->title; ?><span class="label label-danger spanlabel">終了</span></td>
                 <?php else: ?>
                   <td><?php echo $event->title; ?></td>
@@ -139,7 +155,7 @@
           </tbody>
         </table>
 
-        <a href="<?php echo base_url('event/add'); ?>"><button id="add" class="btn btn-primary">イベント登録</button></a>
+        <a href=""><button id="add" class="btn btn-primary">イベント登録</button></a>
       </div>
     </div>
   </div>

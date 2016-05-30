@@ -13,11 +13,10 @@
           var name = $('#submit').attr('name');
           postData[name] = $('#submit').val();
 
-
           var form = $(this);
 
 
-          $('form').html('<button type="button" class="btn btn-success">送信中...</button>');
+          $('form').html('<button type="button" disabled="true" class="btn btn-success">送信中...</button>');
 
           $.ajax({
               type: form.attr('method'),
@@ -28,6 +27,7 @@
 
               timeout: 5000,
             }).done(function(data){
+
 
               $('body').load(form.attr('action'));
             }).fail(function(){
@@ -46,14 +46,6 @@
 
 <div id = "k">
 <div class="container">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      イベント編集
-    </div>
-    <div class="panel-body">
-      <div class="row">
-  <!-- name値 value値 未設定-->
- <div class="col-md-12">
   <h1>イベント詳細</h1>
 
   <table class="table">
@@ -119,8 +111,7 @@
   <?php else:?>
   	<?php echo form_submit('cancel','参加を取り消す','id="submit" class="btn btn-success"');?>
   <?php endif; ?>
-
-  <?php echo form_close(); ?>
+<?php echo form_close(); ?>
 
 
   <div class="margin-50">
@@ -149,8 +140,4 @@
 
 
   <?php endforeach; ?>
-</div>
-</div>
-</div>
-</div>
 </div>
