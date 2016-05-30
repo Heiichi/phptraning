@@ -82,9 +82,9 @@
             );
             echo form_submit($login);
           ?>
+            <button id="forgetPassword" class="btn btn-default">パスワードを忘れた？</button>
         </div>
       </div>
     </div>
   <?php echo form_close();?>
 </div>
-            <button id="forgetPassword" class="btn btn-default">パスワードを忘れた？</button>

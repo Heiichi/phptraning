@@ -19,7 +19,6 @@ class Sessions extends CI_Controller{
     redirect ("sessions/restricted");
   }
   }
-
   public function restricted(){
     $header['title'] = 'restricted';
     $this->load->view('head',$header);
@@ -32,10 +31,9 @@ class Sessions extends CI_Controller{
     $this->load->view("sessions/userbanned");
   }
 
-
   public function login_validation(){
-    $this->load->view('head');
-    //$this->form_validation->set_rules("email", "メール", "required|callback_validate_credentials");
+  	$header['title'] = 'ログイン';
+  	$this->load->view('head',$header);
     $this->form_validation->set_rules("login_id", "ログインID", "required|callback_validate_credentials");
 	  $this->form_validation->set_rules("login_pass", "パスワード", "required");
 
