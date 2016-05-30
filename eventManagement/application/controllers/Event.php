@@ -37,15 +37,10 @@ class Event extends CI_Controller{
       $data['places'] = $places;
       $data['p_selected'] = '';
 
-
-
-
       if($_SERVER["REQUEST_METHOD"] === 'POST'){
 
         $g_id = $this->input->post('group');
         $p_name = $this->input->post('place');
-
-
 
         $data['g_selected'] = $this->input->post('group');
         $data['p_selected'] = $this->input->post('place');
