@@ -69,9 +69,14 @@
 </script> -->
 
 
+
+<?php if($registered_by): ?>
 <?php foreach($registered_by as $r_user): ?>
   <?php $register = $r_user->registered_by;  ?>
 <?php endforeach; ?>
+<?php else: ?>
+  <?php $register= 0; ?>
+<?php endif; ?>
 <?php $check = []; ?>
 <?php  foreach($participate as $value):?>
   <?php $check[] = $value->events_id; ?>
