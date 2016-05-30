@@ -1,3 +1,4 @@
+
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -33,7 +34,7 @@
 
                           <div class="modal-body">本当に削除してよろしいですか?</div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button class="btn btn-default" data-dismiss="modal">Cancel</button>
                             <a href="<?php echo base_url('group/delete/'. $group->id); ?>"><button type="button" class="btn btn-success">OK</button></a>
                            </div>
                         </div>

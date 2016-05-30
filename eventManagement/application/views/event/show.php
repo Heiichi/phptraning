@@ -1,10 +1,57 @@
+
+<script>
+  $(
+    function (){
+
+      $('form').click(
+        function(){
+
+          $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+            options.async = true;
+          });
+          var postData = {};
+          var name = $('#submit').attr('name');
+          postData[name] = $('#submit').val();
+
+
+          var form = $(this);
+
+
+          $('form').html('<button type="button" class="btn btn-success">送信中...</button>');
+
+          $.ajax({
+              type: form.attr('method'),
+              url: form.attr('action'),
+
+              dataType: 'html',
+              data: postData,
+
+              timeout: 5000,
+            }).done(function(data){
+
+              $('body').load(form.attr('action'));
+            }).fail(function(){
+              alert('エラーが発生しました。更新をしてください。');
+            });
+
+
+        }
+
+      );
+
+    }
+
+  );
+</script>
+
+<div id = "k">
 <div class="container">
   <h1>イベント詳細</h1>
 
   <table class="table">
 
   	<tbody>
-  		<?php foreach ($event as $value) :?>
+      <?php foreach ($event as $value) :?>
 
         <?php $date_check = $value->end < date('Y-m-d H:i:s'); ?>
 
@@ -57,15 +104,16 @@
       </tr>
   	</tbody>
   </table>
+
 <?php echo form_open(); ?>
-    <?php if(!$registered_by && !$date_check  ): ?>
-  <?php if(!$participate): ?>
-  <?php echo form_submit('save','参加する','class="btn btn-success"');?>
+    <?php if(!$registered_by && !$date_check && !$participate ): ?>
+     <?php echo form_submit('save','参加する','id="submit" class="btn btn-success"');?>
   <?php else:?>
-  	<?php echo form_submit('cancel','参加を取り消す','class="btn btn-success"');?>
+  	<?php echo form_submit('cancel','参加を取り消す','id="submit" class="btn btn-success"');?>
   <?php endif; ?>
-  <?php endif; ?>
-  <?php echo form_close(); ?></a>
+
+  <?php echo form_close(); ?>
+
 
   <div class="margin-50">
     <a href="<?php echo base_url('event/'); ?>"><button type="button" class="btn btn-primary">一覧に戻る</button></a>
@@ -88,5 +136,9 @@
   		</div>
   	</div>
   </div>
+
+</div>
+
+
   <?php endforeach; ?>
 </div>
